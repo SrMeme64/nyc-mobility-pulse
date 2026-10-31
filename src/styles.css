@@ -279,17 +279,21 @@ main > section {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
-.year-strip-icon {
+.year-strip-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted-2);
   flex-shrink: 0;
 }
 .year-strip-scroll {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   padding: 3px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -297,6 +301,7 @@ main > section {
   overflow-x: auto;
   scrollbar-width: none;
   max-width: 100%;
+  scroll-behavior: smooth;
 }
 .year-strip-scroll::-webkit-scrollbar {
   display: none;
@@ -307,7 +312,7 @@ main > section {
   color: var(--muted);
   font-size: 11.5px;
   font-weight: 600;
-  padding: 6px 10px;
+  padding: 6px 11px;
   border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
@@ -325,6 +330,120 @@ main > section {
 }
 .year-strip-scroll button:active {
   transform: scale(0.96);
+}
+
+/* Selector compacto (móvil y tablet) */
+.year-select {
+  display: none;
+  position: relative;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.year-select-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.year-select-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.year-select-btn > svg:first-child {
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+.year-select-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.year-select-btn strong {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.year-select-chevron {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.year-select-btn.open .year-select-chevron {
+  transform: rotate(180deg);
+}
+
+.year-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 258px;
+  max-width: calc(100vw - 32px);
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, #111c30, #0b1424);
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6);
+  animation: fade-in 0.18s ease both;
+}
+.year-menu-all {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.year-menu-all:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+.year-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 6px;
+}
+.year-menu-grid button {
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.15s ease;
+}
+.year-menu-grid button:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+.year-menu-grid button:active {
+  transform: scale(0.95);
+}
+.year-menu-all.active,
+.year-menu-grid button.active {
+  background: linear-gradient(135deg, #ffd23f, #ffb020);
+  color: #171203;
+  box-shadow: 0 6px 18px rgba(255, 210, 63, 0.22);
 }
 
 .topbar-progress {
@@ -2136,7 +2255,7 @@ main > section {
     padding: 0 18px;
   }
   html {
-    scroll-padding-top: 140px;
+    scroll-padding-top: 96px;
   }
   .topbar {
     margin: 0 -18px;
@@ -2144,17 +2263,14 @@ main > section {
   }
   .topbar-inner {
     height: auto;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding: 10px 0 9px;
-    row-gap: 8px;
   }
   .year-strip {
-    order: 3;
-    width: 100%;
-    margin-left: 0;
+    display: none;
   }
-  .year-strip-scroll {
-    width: 100%;
+  .year-select {
+    display: block;
   }
   .section-ghost {
     display: none;
@@ -2200,12 +2316,6 @@ main > section {
 @media (max-width: 640px) {
   body {
     font-size: 14px;
-  }
-  /* La tira de años se envuelve para que ningún año quede oculto. */
-  .year-strip-scroll {
-    flex-wrap: wrap;
-    overflow-x: visible;
-    border-radius: 14px;
   }
   /* El aviso del heatmap se cortaba a la derecha en pantallas estrechas. */
   .heatmap-status {
@@ -2290,6 +2400,22 @@ main > section {
   .leaflet-map,
   .map-skeleton {
     height: 340px;
+  }
+}
+
+@media (max-width: 420px) {
+  .year-select-label {
+    display: none;
+  }
+  .year-select-btn {
+    gap: 6px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-text {
+    display: none;
   }
 }
 

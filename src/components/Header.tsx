@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { CarTaxiFront, CalendarRange } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { CalendarRange, CarTaxiFront, ChevronDown } from 'lucide-react'
 import type { Year } from '../lib/types'
 
 interface Props {
@@ -13,6 +13,10 @@ const SECTIONS = ['demanda', 'geografia', 'economia', 'eficiencia', 'metodologia
 export function Header({ years, year, onYear }: Props) {
   const [progress, setProgress] = useState(0)
   const [active, setActive] = useState('')
+  const [open, setOpen] = useState(false)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const selectRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     let frame = 0
@@ -43,6 +47,50 @@ export function Header({ years, year, onYear }: Props) {
     }
   }, [])
 
+  // Mantiene visible el año activo cuando la tira no cabe completa.
+  useEffect(() => {
+    const strip = stripRef.current
+    const btn = strip?.querySelector<HTMLElement>('button.active')
+    if (!strip || !btn) return
+    const s = strip.getBoundingClientRect()
+    const b = btn.getBoundingClientRect()
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    strip.scrollTo({
+      left: strip.scrollLeft + (b.left - s.left) - (s.width - b.width) / 2,
+      behavior: reduce ? 'auto' : 'smooth',
+    })
+  }, [year])
+
+  // Cierra el menú al hacer clic fuera o con Escape.
+  useEffect(() => {
+    if (!open) return
+    const onPointer = (e: PointerEvent) => {
+      if (!selectRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+    document.addEventListener('pointerdown', onPointer)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointer)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  // Al abrir con teclado, el foco entra al menú con Tab; no forzamos el foco
+  // para no dibujar un anillo doble sobre la opción activa al usar el ratón.
+  const pick = (value: Year) => {
+    onYear(value)
+    setOpen(false)
+    triggerRef.current?.focus()
+  }
+
+  const current = year === 'all' ? 'Todos' : String(year)
+
   return (
     <header className="topbar">
       <div className="topbar-inner">
@@ -64,9 +112,10 @@ export function Header({ years, year, onYear }: Props) {
           <a href="#metodologia" className={active === 'metodologia' ? 'active' : ''}>Metodología</a>
         </nav>
 
+        {/* Escritorio: tira de años en una sola línea. */}
         <div className="year-strip" role="group" aria-label="Filtrar por año">
-          <CalendarRange size={14} className="year-strip-icon" aria-hidden="true" />
-          <div className="year-strip-scroll">
+          <span className="year-strip-label">Año</span>
+          <div className="year-strip-scroll" ref={stripRef}>
             <button
               type="button"
               className={year === 'all' ? 'active' : ''}
@@ -87,6 +136,48 @@ export function Header({ years, year, onYear }: Props) {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Móvil y tablet: selector compacto con menú. */}
+        <div className="year-select" ref={selectRef}>
+          <button
+            type="button"
+            ref={triggerRef}
+            className={`year-select-btn ${open ? 'open' : ''}`}
+            aria-expanded={open}
+            aria-controls="year-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <CalendarRange size={15} aria-hidden="true" />
+            <span className="year-select-label">Año</span>
+            <strong>{current}</strong>
+            <ChevronDown size={15} className="year-select-chevron" aria-hidden="true" />
+          </button>
+          {open && (
+            <div className="year-menu" id="year-menu" role="group" aria-label="Elegir año">
+              <button
+                type="button"
+                className={`year-menu-all ${year === 'all' ? 'active' : ''}`}
+                aria-pressed={year === 'all'}
+                onClick={() => pick('all')}
+              >
+                Todos los años
+              </button>
+              <div className="year-menu-grid">
+                {[...years].reverse().map((y) => (
+                  <button
+                    key={y}
+                    type="button"
+                    className={year === y ? 'active' : ''}
+                    aria-pressed={year === y}
+                    onClick={() => pick(y)}
+                  >
+                    {y}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <span

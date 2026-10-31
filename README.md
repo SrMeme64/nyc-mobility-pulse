@@ -50,8 +50,9 @@ planificación de turnos y evaluación de tarifas. Incluye una capa operativa
 
 ### Experiencia de uso
 
-- **Selector de año en chips** (`Todos`, 2025 … 2015): cada indicador, gráfica y
-  mapa se recalcula al instante sin recargar la página.
+- **Selector de año**: tira de chips en escritorio y selector compacto con menú
+  en móvil y tablet; cada indicador, gráfica y mapa se recalcula al instante sin
+  recargar la página.
 - **Guía de lectura** al inicio y un botón **«¿Cómo leer esta gráfica?»** en cada
   visualización, con qué muestra cada eje, qué mirar y qué conclusión extraer.
 - **Animaciones de entrada** por sección y **conteo animado** de los KPI al
