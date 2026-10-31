@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import type { BoxRow, Year } from '../lib/types'
 import { fmtInt } from '../lib/format'
 
@@ -13,20 +14,36 @@ const COLORS: Record<string, string> = {
   'Fin de semana': '#5b8cff',
   Madrugada: '#ff5c8a',
 }
+// En pantallas estrechas la etiqueta larga se solapa con la vecina.
+const SHORT: Record<string, string> = { 'Fin de semana': 'Finde' }
 
 export function BoxPlot({ rows, year }: Props) {
-  const data = GROUPS.map((g) => rows.find((r) => r.grp === g && String(r.year) === String(year))).filter(
-    (r): r is BoxRow => Boolean(r),
-  )
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(560)
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width ?? 0
+      if (w > 0) setWidth(Math.max(280, Math.round(w)))
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
+  const data = GROUPS.map((g) =>
+    rows.find((r) => r.grp === g && String(r.year) === String(year)),
+  ).filter((r): r is BoxRow => Boolean(r))
   if (!data.length) return <p className="empty">Sin datos para este año.</p>
 
+  const narrow = width < 430
   const max = Math.max(...data.map((d) => d.p95)) * 1.12
-  const top = 12
-  const bottom = 42
-  const left = 44
-  const right = 16
-  const width = 560
-  const height = 250
+  const top = 14
+  const bottom = narrow ? 46 : 42
+  const left = 38
+  const right = 10
+  const height = narrow ? 232 : 250
   const plotW = width - left - right
   const plotH = height - top - bottom
   const step = plotW / data.length
@@ -35,7 +52,7 @@ export function BoxPlot({ rows, year }: Props) {
   const ticks = Array.from({ length: 5 }, (_, i) => (max / 4) * i)
 
   return (
-    <div className="boxplot">
+    <div className="boxplot" ref={wrapRef}>
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Distribución de la duración por franja horaria">
         {ticks.map((t, i) => (
           <g key={i}>
@@ -82,7 +99,7 @@ export function BoxPlot({ rows, year }: Props) {
                 {d.median}′
               </text>
               <text x={cx} y={height - 22} textAnchor="middle" className="bp-label">
-                {d.grp}
+                {narrow ? (SHORT[d.grp] ?? d.grp) : d.grp}
               </text>
               <text x={cx} y={height - 8} textAnchor="middle" className="bp-n">
                 n = {fmtInt(d.n)}

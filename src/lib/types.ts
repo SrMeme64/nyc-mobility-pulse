@@ -87,7 +87,7 @@ export interface ScatterRow {
   fare: number
   duration: number
   tip_pct: number
-  payment_type: number
+  payment_type: number | null
 }
 
 export interface RouteRow {

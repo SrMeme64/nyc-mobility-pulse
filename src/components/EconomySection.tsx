@@ -15,6 +15,7 @@ import { fmtCompact, fmtInt, fmtMoney2, fmtPct } from '../lib/format'
 import { histFor, paymentFor } from '../lib/data'
 import { ChartTooltip } from './ui'
 import { ANIMATE } from '../lib/motion'
+import { ChartHelp } from './ChartHelp'
 
 interface Props {
   fare: HistRow[]
@@ -25,6 +26,16 @@ interface Props {
 }
 
 const PAY_COLORS = ['#ffd23f', '#34d3c0', '#5b8cff', '#ff5c8a', '#8fa0b8', '#3a4a63']
+const DURATION = ANIMATE ? 750 : 0
+
+const PAY_SHORT: Record<number, string> = {
+  1: 'Tarjeta',
+  2: 'Efectivo',
+  3: 'Sin cargo',
+  4: 'Disputa',
+  5: 'Desconocido',
+  6: 'Anulado',
+}
 
 function Histogram({
   rows,
@@ -92,6 +103,7 @@ function Histogram({
           fill={color}
           radius={[2, 2, 0, 0]}
           isAnimationActive={ANIMATE}
+          animationDuration={DURATION}
         />
       </BarChart>
     </ResponsiveContainer>
@@ -106,7 +118,7 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
 
   return (
     <div className="economy-grid">
-      <section className="card" id="economia">
+      <section className="card">
         <header className="card-head">
           <div>
             <h3 className="card-title">Distribución de tarifas</h3>
@@ -114,13 +126,25 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
           </div>
           <span className="card-badge">media {fmtMoney2(kpi.avg_fare)}</span>
         </header>
-        <Histogram
-          rows={fareData}
-          color="#ffd23f"
-          unit="Tarifa"
-          reference={kpi.avg_fare}
-          maxBin={80}
-          step={10}
+        <div className="chart-canvas">
+          <Histogram
+            rows={fareData}
+            color="#ffd23f"
+            unit="Tarifa"
+            reference={kpi.avg_fare}
+            maxBin={80}
+            step={10}
+          />
+        </div>
+        <p className="chart-axis">eje X: tarifa en USD · eje Y: número de viajes</p>
+        <ChartHelp
+          points={[
+            'Cada barra agrupa los viajes cuyo precio cae en ese rango de dólares.',
+            'La altura indica cuántos viajes hay: la barra más alta es el precio más común.',
+            'La línea punteada «media» ayuda a ver si la mayoría paga menos que el promedio (sesgo a la derecha).',
+            'La cola hacia la derecha son pocos viajes muy caros: no son errores, son trayectos largos o con peajes.',
+          ]}
+          note="Se agrupan en intervalos de 2 USD; el último grupo (80+) concentra los valores extremos."
         />
       </section>
 
@@ -132,13 +156,25 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
           </div>
           <span className="card-badge">media {kpi.avg_distance.toFixed(1)} mi</span>
         </header>
-        <Histogram
-          rows={distData}
-          color="#34d3c0"
-          unit="Distancia"
-          reference={kpi.avg_distance}
-          maxBin={30}
-          step={5}
+        <div className="chart-canvas">
+          <Histogram
+            rows={distData}
+            color="#34d3c0"
+            unit="Distancia"
+            reference={kpi.avg_distance}
+            maxBin={30}
+            step={5}
+          />
+        </div>
+        <p className="chart-axis">eje X: millas recorridas · eje Y: número de viajes</p>
+        <ChartHelp
+          points={[
+            'Cada barra cuenta los viajes que recorrieron esa cantidad de millas.',
+            'La mayoría de los viajes urbanos son cortos: se concentran en las primeras barras.',
+            'Compara esta forma con la de tarifas: si ambas se parecen, el precio sigue sobre todo a la distancia.',
+            'La cola de la derecha son traslados largos, por ejemplo a aeropuertos.',
+          ]}
+          note="El último grupo (30+) reúne todos los viajes de 30 millas o más."
         />
       </section>
 
@@ -162,6 +198,7 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
                   paddingAngle={2}
                   stroke="none"
                   isAnimationActive={ANIMATE}
+                  animationDuration={DURATION}
                 >
                   {payData.map((p, i) => (
                     <Cell key={p.type} fill={PAY_COLORS[i % PAY_COLORS.length]} />
@@ -186,7 +223,9 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
             {payData.map((p, i) => (
               <li key={p.type}>
                 <span className="dot" style={{ background: PAY_COLORS[i % PAY_COLORS.length] }} />
-                <span className="pay-name">{p.name}</span>
+                <span className="pay-name" title={p.name}>
+                  {PAY_SHORT[p.type] ?? p.name}
+                </span>
                 <span className="pay-share">{fmtPct((p.trips / Math.max(1, total)) * 100, 1)}</span>
                 <span className="pay-tip" title={`Propina media ${fmtPct(p.tip_pct)}`}>
                   <span style={{ width: `${Math.min(100, p.tip_pct * 4)}%` }} />
@@ -199,6 +238,14 @@ export function EconomySection({ fare, distance, payment, kpi, year }: Props) {
         <p className="chart-note">
           La propina solo se registra en pagos electrónicos; en efectivo suele quedar en cero.
         </p>
+        <ChartHelp
+          points={[
+            'El anillo reparte los viajes según cómo se pagaron: tarjeta, efectivo u otro medio.',
+            'El porcentaje junto a cada nombre es su peso sobre el total de viajes.',
+            'La barra verde azulada mide la propina media declarada en ese método de pago.',
+            'En efectivo la propina aparece cerca de 0 % porque el sistema no la registra, no porque no exista.',
+          ]}
+        />
       </section>
     </div>
   )

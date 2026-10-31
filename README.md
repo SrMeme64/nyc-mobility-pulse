@@ -48,6 +48,21 @@ planificación de turnos y evaluación de tarifas. Incluye una capa operativa
 - Dispersión distancia vs. tarifa con correlación.
 - Tabla de rutas más frecuentes.
 
+### Experiencia de uso
+
+- **Selector de año en chips** (`Todos`, 2025 … 2015): cada indicador, gráfica y
+  mapa se recalcula al instante sin recargar la página.
+- **Guía de lectura** al inicio y un botón **«¿Cómo leer esta gráfica?»** en cada
+  visualización, con qué muestra cada eje, qué mirar y qué conclusión extraer.
+- **Animaciones de entrada** por sección y **conteo animado** de los KPI al
+  cambiar de año, con transiciones suaves entre estados.
+- **Interacción directa**: tooltips con cifras exactas, celdas del heatmap
+  navegables con teclado, selección de zona en el mapa con detalle emergente,
+  control de zoom y botón para limpiar la selección.
+- **Diseño responsive** (escritorio, tablet y móvil) con tablas y heatmap
+  desplazables, y respeto a `prefers-reduced-motion` para quien prefiere menos
+  movimiento.
+
 ---
 
 ## 2. Demo

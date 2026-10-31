@@ -30,6 +30,14 @@ export function Footer() {
           >
             NYC TLC Trip Record Data <ExternalLink size={13} />
           </a>
+          <span className="footer-label">Documento de la fase 1</span>
+          <a
+            href="https://github.com/SrMeme64/nyc-mobility-pulse/blob/main/docs/Justificacion_Fase1.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Justificación (PDF) <ExternalLink size={13} />
+          </a>
           <span className="footer-label">Stack</span>
           <p>React · TypeScript · Recharts · Leaflet · DuckDB</p>
         </div>

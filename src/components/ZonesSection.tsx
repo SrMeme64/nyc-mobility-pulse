@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet'
+import { GeoJSON, MapContainer, TileLayer, ZoomControl } from 'react-leaflet'
 import type { FeatureCollection, Geometry } from 'geojson'
 import 'leaflet/dist/leaflet.css'
-import { ArrowUpRight, Layers, MapPin } from 'lucide-react'
+import { ArrowUpRight, Layers, MapPin, MousePointerClick, X } from 'lucide-react'
 import type { ZoneFeatureProps, ZoneRow, Year } from '../lib/types'
 import { fmtInt, fmtMoney2, fmtPct, heatColor } from '../lib/format'
 import { zonesFor } from '../lib/data'
 import { Segmented } from './ui'
+import { ChartHelp } from './ChartHelp'
 
 type Metric = 'pickups' | 'dropoffs' | 'avg_fare'
 type Geo = FeatureCollection<Geometry, ZoneFeatureProps>
@@ -17,6 +18,25 @@ interface Props {
 }
 
 const BOROUGHS = ['Todos', 'Manhattan', 'Queens', 'Brooklyn', 'Bronx', 'Staten Island', 'EWR']
+
+const METRIC_LABEL: Record<Metric, string> = {
+  pickups: 'viajes con origen en la zona',
+  dropoffs: 'viajes con destino en la zona',
+  avg_fare: 'tarifa media del viaje',
+}
+
+const HELP_MAP = [
+  'Cada polígono es una zona de taxi de la TLC. El color representa la métrica elegida arriba.',
+  'Con «Origen» ves dónde empiezan los viajes; con «Destino», dónde terminan; con «Tarifa», cuánto cuesta moverse ahí.',
+  'Usa los chips de borough para aislar Manhattan, Queens, Brooklyn, Bronx, Staten Island o el aeropuerto EWR.',
+  'Pasa el cursor para un resumen rápido y haz clic para fijar la zona y ver su detalle completo abajo.',
+]
+
+const HELP_LIST = [
+  'Ordena las zonas por número de viajes que se originan en ellas.',
+  'La barra compara cada zona con la primera de la lista; el porcentaje es su peso sobre el total.',
+  'Haz clic en una fila para resaltar esa zona en el mapa.',
+]
 
 export function ZonesSection({ rows, year }: Props) {
   const [metric, setMetric] = useState<Metric>('pickups')
@@ -52,6 +72,7 @@ export function ZonesSection({ rows, year }: Props) {
 
   const top = visible.slice(0, 10)
   const maxTop = Math.max(1, ...top.map((z) => z.pickups))
+  const totalPickups = zones.reduce((a, z) => a + z.pickups, 0)
 
   const values = zones
     .filter((z) => borough === 'Todos' || z.borough === borough)
@@ -86,8 +107,7 @@ export function ZonesSection({ rows, year }: Props) {
           <div>
             <h3 className="card-title">Geografía de la demanda</h3>
             <p className="card-sub">
-              {fmtInt(zones.reduce((a, z) => a + z.pickups, 0))} viajes con zona de origen ·{' '}
-              {zones.length} zonas activas
+              {fmtInt(totalPickups)} viajes con zona de origen · {zones.length} zonas activas
             </p>
           </div>
           <Segmented
@@ -130,6 +150,7 @@ export function ZonesSection({ rows, year }: Props) {
                 [40.92, -73.69],
               ]}
               scrollWheelZoom={false}
+              zoomControl={false}
               className="leaflet-map"
               attributionControl
             >
@@ -138,6 +159,7 @@ export function ZonesSection({ rows, year }: Props) {
                 attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
                 className="map-tiles"
               />
+              <ZoomControl position="bottomright" />
               <GeoJSON
                 key={`${year}-${metric}-${borough}`}
                 data={geoData}
@@ -145,9 +167,9 @@ export function ZonesSection({ rows, year }: Props) {
                   const z = feature ? byId.get((feature.properties as ZoneFeatureProps).zoneId) : undefined
                   return {
                     fillColor: colorFor(z),
-                    fillOpacity: selected != null && z?.zone_id !== selected ? 0.45 : 0.82,
+                    fillOpacity: selected != null && z?.zone_id !== selected ? 0.42 : 0.82,
                     color: selected != null && z?.zone_id === selected ? '#ffffff' : '#070b14',
-                    weight: selected != null && z?.zone_id === selected ? 2 : 0.6,
+                    weight: selected != null && z?.zone_id === selected ? 2.2 : 0.6,
                   }
                 }}
                 onEachFeature={(feature, layer) => {
@@ -169,9 +191,8 @@ export function ZonesSection({ rows, year }: Props) {
           {!geoError && !geoData && <div className="map-skeleton" />}
 
           <div className="map-legend">
-            <span>
-              {metric === 'avg_fare' ? fmtMoney2(min) : '0'}
-            </span>
+            <span className="map-legend-title">{METRIC_LABEL[metric]}</span>
+            <span>{metric === 'avg_fare' ? fmtMoney2(min) : '0'}</span>
             <span className="map-gradient" />
             <span>{metric === 'avg_fare' ? fmtMoney2(max) : fmtInt(max)}</span>
           </div>
@@ -192,12 +213,22 @@ export function ZonesSection({ rows, year }: Props) {
               <div><dt>Duración</dt><dd>{selectedZone.avg_duration.toFixed(1)} min</dd></div>
               <div><dt>Propina</dt><dd>{fmtPct(selectedZone.tip_pct)}</dd></div>
             </dl>
+            <button
+              type="button"
+              className="zone-clear"
+              onClick={() => setSelected(null)}
+              aria-label="Quitar la selección de zona"
+            >
+              <X size={14} />
+            </button>
           </div>
         ) : (
           <p className="map-hint">
-            <ArrowUpRight size={14} /> Haz clic en una zona para ver su detalle.
+            <MousePointerClick size={14} /> Haz clic en una zona del mapa o en la lista para ver su detalle.
           </p>
         )}
+
+        <ChartHelp points={HELP_MAP} />
       </section>
 
       <section className="card top-zones">
@@ -206,10 +237,11 @@ export function ZonesSection({ rows, year }: Props) {
             <h3 className="card-title">Top zonas por origen</h3>
             <p className="card-sub">Participación sobre el total de viajes</p>
           </div>
+          <span className="card-badge"><ArrowUpRight size={13} /> top 10</span>
         </header>
         <ol className="zone-list">
           {top.map((z, i) => {
-            const share = (z.pickups / Math.max(1, zones.reduce((a, b) => a + b.pickups, 0))) * 100
+            const share = (z.pickups / Math.max(1, totalPickups)) * 100
             return (
               <li key={z.zone_id}>
                 <button
@@ -234,6 +266,7 @@ export function ZonesSection({ rows, year }: Props) {
             )
           })}
         </ol>
+        <ChartHelp points={HELP_LIST} title="¿Cómo leer esta lista?" />
       </section>
     </div>
   )

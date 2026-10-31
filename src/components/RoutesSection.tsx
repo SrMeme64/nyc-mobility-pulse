@@ -1,6 +1,7 @@
 import { ArrowRight, Route as RouteIcon } from 'lucide-react'
 import type { RouteRow, Year } from '../lib/types'
 import { fmtInt, fmtMoney2 } from '../lib/format'
+import { ChartHelp } from './ChartHelp'
 
 interface Props {
   rows: RouteRow[]
@@ -75,6 +76,17 @@ export function RoutesSection({ rows, year }: Props) {
           </tbody>
         </table>
       </div>
+      <p className="table-hint">Desliza la tabla para ver tarifa y duración →</p>
+      <p className="chart-axis">la barra bajo cada ruta compara su frecuencia con la ruta número 1</p>
+      <ChartHelp
+        points={[
+          'Cada fila es un par origen → destino que se repite en la muestra; se excluyen los viajes que empiezan y terminan en la misma zona.',
+          'La columna «Viajes» es cuántas veces aparece ese par; la barra lo compara con la ruta más frecuente.',
+          '«Tarifa» y «Duración» son promedios de ese corredor, útiles para estimar costo y tiempo.',
+          'Un corredor con muchos viajes y tarifa alta es candidato a refuerzo de capacidad o a tarifa dinámica.',
+        ]}
+        note="Las rutas se calculan sobre la muestra de 500,000 viajes por año, así que el orden es representativo pero no es el censo completo."
+      />
     </section>
   )
 }
