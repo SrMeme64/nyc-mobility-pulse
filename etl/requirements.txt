@@ -1,0 +1,5 @@
+# Dependencias del pipeline de datos (Python 3.10+)
+duckdb>=1.1
+shapely>=2.0
+pyshp>=2.3
+pyproj>=3.6

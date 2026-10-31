@@ -1,0 +1,35 @@
+# Dependencias y build
+node_modules/
+dist/
+.vite/
+
+# Datos crudos y derivados pesados
+*.csv
+!taxi_zone_lookup.csv
+!data/zones.csv
+data/samples/
+data/taxi_mobility.duckdb
+data/geo/
+data/*.duckdb
+data/*.parquet
+
+# Archivos temporales del ETL
+_*.py
+_*.txt
+__pycache__/
+*.pyc
+
+# Enunciado del curso (no forma parte del entregable)
+Proyectos*.pdf
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# R (carpeta original del curso)
+.Rproj.user/
+.Rhistory
+.RData

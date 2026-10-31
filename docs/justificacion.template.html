@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Justificación Fase 1 — NYC Mobility Pulse</title>
+<style>
+  @page {
+    size: A4;
+    margin: 17mm 16mm 16mm 16mm;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    color: #1a2230;
+    font-size: 10.2pt;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4, .sans {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  }
+  h1 { font-size: 25pt; line-height: 1.05; letter-spacing: -0.03em; margin: 0; }
+  h2 {
+    font-size: 14pt;
+    margin: 22px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e8b800;
+    letter-spacing: -0.01em;
+    break-after: avoid;
+  }
+  h3 { font-size: 11.4pt; margin: 14px 0 4px; color: #101827; break-after: avoid; }
+  p { margin: 0 0 7px; text-align: justify; hyphens: auto; }
+  ul, ol { margin: 4px 0 9px; padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  strong { color: #0d1526; }
+  small { color: #5a687c; }
+  a { color: #8a6d00; text-decoration: none; }
+  code {
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 8.6pt;
+    background: #f1f4f8;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  .cover {
+    height: 258mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    position: relative;
+  }
+  .cover-top { border-top: 10px solid #ffd23f; padding-top: 16px; }
+  .cover-kicker {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8a6d00;
+    font-weight: 700;
+  }
+  .cover h1 { font-size: 40pt; margin-top: 18px; max-width: 15ch; }
+  .cover-sub {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 14pt;
+    color: #3c4a5f;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  .cover-band {
+    height: 12mm;
+    background: linear-gradient(90deg, #ffd23f 0%, #ffd23f 62%, #101827 62%, #101827 100%);
+    margin: 26px 0;
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 26px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 9.4pt;
+  }
+  .cover-meta div { border-top: 1px solid #dbe1ea; padding-top: 6px; }
+  .cover-meta span {
+    display: block;
+    font-size: 7.4pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7a8799;
+    margin-bottom: 2px;
+  }
+  .cover-foot {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 8.4pt;
+    color: #6b7789;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #dbe1ea;
+    padding-top: 8px;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: #101827;
+    color: #ffd23f;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 7.6pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .toc {
+    page-break-after: always;
+  }
+  .toc h2 { border-bottom-color: #101827; }
+  .toc ol { font-family: "Inter", Arial, sans-serif; font-size: 10pt; padding-left: 0; list-style: none; }
+  .toc li { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px dotted #cfd6e0; }
+  .toc li span:first-child { color: #8a6d00; font-weight: 700; width: 22px; }
+  .toc li span:last-child { color: #6b7789; margin-left: auto; font-size: 8.6pt; }
+
+  .lead {
+    font-size: 11pt;
+    color: #33415a;
+    border-left: 3px solid #ffd23f;
+    padding: 2px 0 2px 12px;
+    margin: 8px 0 14px;
+  }
+  .callout {
+    background: #fbf7e6;
+    border: 1px solid #f0dfa0;
+    border-radius: 6px;
+    padding: 9px 12px;
+    margin: 9px 0;
+    break-inside: avoid;
+    font-size: 9.6pt;
+  }
+  .callout strong { color: #6b5300; }
+  .note {
+    background: #f4f6f9;
+    border-left: 3px solid #101827;
+    padding: 8px 11px;
+    margin: 8px 0;
+    font-size: 9.5pt;
+    break-inside: avoid;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 8.5pt;
+    margin: 8px 0 12px;
+    break-inside: avoid;
+  }
+  th {
+    background: #101827;
+    color: #fff;
+    text-align: left;
+    padding: 5px 6px;
+    font-weight: 600;
+    font-size: 7.8pt;
+    letter-spacing: 0.02em;
+  }
+  td {
+    padding: 4.5px 6px;
+    border-bottom: 1px solid #e2e7ee;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f8f9fb; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .table-caption {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 7.8pt;
+    color: #6b7789;
+    margin: -6px 0 12px;
+  }
+  .kpi-formula {
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 8.4pt;
+    background: #f1f4f8;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .box {
+    border: 1px solid #dbe1ea;
+    border-radius: 6px;
+    padding: 9px 11px;
+    break-inside: avoid;
+    font-size: 9.5pt;
+  }
+  .box h4 {
+    margin: 0 0 4px;
+    font-size: 9.4pt;
+    color: #101827;
+  }
+  .insight-list { padding-left: 0; list-style: none; }
+  .insight-list li {
+    padding: 7px 0 7px 28px;
+    border-bottom: 1px solid #e2e7ee;
+    position: relative;
+    font-size: 9.6pt;
+  }
+  .insight-list li::before {
+    content: "→";
+    position: absolute;
+    left: 6px;
+    color: #b38f00;
+    font-weight: 700;
+  }
+  .figure {
+    margin: 10px 0 14px;
+    break-inside: avoid;
+  }
+  .figure img { width: 100%; border: 1px solid #dbe1ea; border-radius: 6px; }
+  .figure figcaption {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 7.8pt;
+    color: #6b7789;
+    margin-top: 4px;
+  }
+  .page-break { page-break-before: always; }
+  .avoid { break-inside: avoid; }
+  .signature {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 9pt;
+  }
+  .signature div { border-top: 1px solid #101827; padding-top: 5px; }
+  .footer-note {
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 7.8pt;
+    color: #6b7789;
+    margin-top: 20px;
+    border-top: 1px solid #dbe1ea;
+    padding-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ PORTADA -->
+<section class="cover">
+  <div class="cover-top">
+    <span class="cover-kicker">Proyecto 4 · Fase 1 · Análisis y justificación</span>
+    <h1>NYC Mobility Pulse</h1>
+    <p class="cover-sub">
+      Dashboard táctico de movilidad urbana con datos abiertos de<br />
+      NYC Yellow Taxi Trip Records
+    </p>
+    <div class="cover-band"></div>
+    <p style="max-width: 62ch; font-size: 10.5pt; color: #3c4a5f; text-align: left;">
+      Documento de justificación de las actividades de análisis: audiencia,
+      objetivos, preprocesamiento de datos, selección del tipo de dashboard y
+      arquitectura de la solución.
+    </p>
+  </div>
+
+  <div class="cover-meta">
+    <div><span>Módulo</span>Visualización de datos</div>
+    <div><span>Docente</span>Jessica Carmin Mendiola Fuentes</div>
+    <div><span>Equipo</span>Mobility Pulse</div>
+    <div><span>Integrantes</span>Javier Rodríguez Rodríguez<br />Diego Alonso López Ballesta</div>
+    <div><span>Tema</span>Transporte, ciudades inteligentes y sostenibilidad urbana</div>
+    <div><span>Dataset</span>NYC TLC Yellow Taxi Trip Records</div>
+    <div><span>Fuente</span>NYC Taxi &amp; Limousine Commission</div>
+    <div><span>Fecha</span>{{FECHA}}</div>
+  </div>
+
+  <div class="cover-foot">
+    <span>Documento académico · Fase 1</span>
+    <span>Datos abiertos · uso educativo</span>
+  </div>
+</section>
+
+<!-- ================================================================ TOC -->
+<section class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li><span>01</span><span>Resumen ejecutivo</span><span>3</span></li>
+    <li><span>02</span><span>Contexto y definición del problema</span><span>3</span></li>
+    <li><span>03</span><span>Análisis de la audiencia</span><span>4</span></li>
+    <li><span>04</span><span>Objetivos del dashboard</span><span>5</span></li>
+    <li><span>05</span><span>Selección del tipo de dashboard</span><span>6</span></li>
+    <li><span>06</span><span>Dataset y variables</span><span>7</span></li>
+    <li><span>07</span><span>Preprocesamiento de datos</span><span>8</span></li>
+    <li><span>08</span><span>Indicadores y visualizaciones</span><span>11</span></li>
+    <li><span>09</span><span>Arquitectura de la solución</span><span>13</span></li>
+    <li><span>10</span><span>Hallazgos y lectura del tablero</span><span>14</span></li>
+    <li><span>11</span><span>Limitaciones y sesgos</span><span>15</span></li>
+    <li><span>12</span><span>Conclusiones</span><span>16</span></li>
+    <li><span>13</span><span>Referencias</span><span>16</span></li>
+  </ol>
+  <div class="note" style="margin-top: 22px;">
+    <strong>Repositorio y demo.</strong> El código, el pipeline reproducible y el
+    dashboard se publican en GitHub Pages. La muestra de trabajo contiene
+    {{TOTAL_SAMPLE}} viajes (500,000 por año) y el reporte de calidad conserva los
+    totales exactos de los archivos fuente.
+  </div>
+</section>
+
+<!-- ============================================================== 1-2 -->
+<h2>01 · Resumen ejecutivo</h2>
+<p class="lead">
+  Nueva York produce cientos de millones de viajes en taxi al año. Convertir ese
+  volumen en decisiones requiere algo más que un tablero vistoso: exige definir
+  quién lo va a leer, qué decisión habilita y cómo se limpian los datos antes de
+  graficarlos. Este documento justifica esas decisiones.
+</p>
+<p>
+  El proyecto <strong>NYC Mobility Pulse</strong> construye un dashboard táctico
+  sobre los registros de viajes de taxi amarillo publicados por la NYC Taxi &amp;
+  Limousine Commission (TLC). El tablero responde a tres preguntas: cuándo se
+  mueve la ciudad, dónde se concentra la demanda y cuánto cuesta y qué tan
+  eficiente es cada viaje. Para ello se procesaron {{SOURCE_GB}} GB de archivos
+  CSV correspondientes a ocho años ({{YEARS}}), se aplicó un esquema de limpieza
+  documentado y se extrajo una muestra reproducible de 500,000 viajes por año.
+</p>
+<p>
+  La solución combina una capa de datos reproducible (Python + DuckDB + Parquet),
+  una capa analítica (agregados exportados a JSON) y una capa de presentación
+  (React, Recharts y Leaflet) publicada como sitio estático en GitHub Pages. El
+  resultado es un tablero que un gerente de operaciones puede leer en menos de un
+  minuto y que un analista puede auditar hasta el registro original.
+</p>
+
+<h2>02 · Contexto y definición del problema</h2>
+<p>
+  El taxi amarillo es uno de los termómetros más finos de la actividad urbana de
+  Nueva York. Sus viajes registran hora, coordenadas o zona, distancia, duración,
+  tarifa, propina y método de pago. Esa combinación permite observar fenómenos
+  que otras fuentes no capturan con el mismo detalle: la caída de la demanda
+  durante la pandemia, la recuperación del ocio nocturno, la presión de la
+  congestión en horas pico o la dependencia del efectivo en determinados
+  corredores.
+</p>
+<p>
+  Sin embargo, el dataset original no es un tablero: son archivos anuales de
+  varios gigabytes, con esquemas que cambian entre años, fechas en formatos
+  distintos, importes con separadores de miles y registros corruptos. Un analista
+  sin un proceso definido tarda horas en llegar a la primera respuesta y corre el
+  riesgo de comparar años que no son comparables.
+</p>
+<div class="callout">
+  <strong>Problema que resuelve el dashboard:</strong> reducir el tiempo y la
+  ambigüedad para responder preguntas de capacidad, cobertura y precio de la
+  movilidad en taxi, con una lectura visual común para perfiles técnicos y no
+  técnicos, y con un pipeline auditable que garantice que las cifras comparadas
+  provienen de criterios homogéneos.
+</div>
+<p>
+  El alcance se limita a los viajes en <em>yellow taxi</em>. No incluye Uber, Lyft,
+  taxis verdes ni transporte público. Tampoco pretende explicar la demanda con
+  variables externas (clima, eventos, precio del combustible): el objetivo es
+  descriptivo y de seguimiento, no causal.
+</p>
+
+<!-- ============================================================== 3 -->
+<h2>03 · Análisis de la audiencia</h2>
+<p>
+  El dashboard tiene una audiencia primaria y tres secundarias. La diferencia
+  entre ellas no es el nivel de interés, sino el <strong>nivel de detalle</strong>
+  y la <strong>frecuencia de uso</strong>. El diseño prioriza la audiencia
+  primaria y deja capas de exploración para las demás.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 22%;">Perfil</th>
+      <th style="width: 30%;">Decisiones que toma</th>
+      <th style="width: 30%;">Nivel de detalle</th>
+      <th style="width: 18%;">Frecuencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Gerencia de operaciones y flota</strong><br /><small>Audiencia primaria</small></td>
+      <td>Asignar turnos y unidades, anticipar picos, decidir dónde posicionar flota y cómo ajustar tarifas o incentivos.</td>
+      <td>Alto: año, mes, día, hora y zona. Necesita comparar contra el año anterior y detectar desvíos.</td>
+      <td>Semanal / mensual</td>
+    </tr>
+    <tr>
+      <td><strong>Analistas de movilidad</strong><br /><small>Audiencia técnica</small></td>
+      <td>Validar hipótesis, construir modelos de demanda, auditar la calidad de los datos y preparar reportes.</td>
+      <td>Muy alto: acceso a la muestra, diccionario de variables, reglas de limpieza y base DuckDB.</td>
+      <td>Bajo demanda</td>
+    </tr>
+    <tr>
+      <td><strong>Planificación urbana</strong><br /><small>Audiencia institucional</small></td>
+      <td>Identificar corredores congestionados, zonas con baja cobertura y oportunidades de política pública.</td>
+      <td>Medio: mapas por zona y borough, rutas frecuentes, duración y velocidad.</td>
+      <td>Mensual / trimestral</td>
+    </tr>
+    <tr>
+      <td><strong>Dirección y comunicación</strong><br /><small>Audiencia ejecutiva</small></td>
+      <td>Entender la tendencia general, comunicar resultados y decidir si se requiere una acción.</td>
+      <td>Bajo: KPIs, serie histórica y tres o cuatro hallazgos claros.</td>
+      <td>Mensual</td>
+    </tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 1. Perfiles de audiencia, decisiones y nivel de detalle requerido.</p>
+
+<h3>Implicaciones de diseño</h3>
+<ul>
+  <li><strong>Jerarquía visual:</strong> los KPIs y la serie mensual aparecen primero;
+    el detalle por zona, ruta y distribución queda después. Un lector ejecutivo
+    puede detenerse en la primera pantalla sin perderse.</li>
+  <li><strong>Filtro de año global:</strong> todas las visualizaciones responden al
+    mismo selector para evitar comparaciones accidentales entre periodos.</li>
+  <li><strong>Comparación explícita:</strong> la serie mensual muestra el año previo
+    disponible, no un promedio ciego, porque la pregunta operativa es “¿estamos
+    por encima o por debajo del año pasado?”.</li>
+  <li><strong>Exploración progresiva:</strong> el mapa permite hacer clic en una zona
+    y ver su detalle; la tabla de rutas y el boxplot añaden profundidad sin
+    saturar la primera lectura.</li>
+  <li><strong>Transparencia:</strong> la sección de metodología declara la muestra,
+    las reglas de limpieza y el porcentaje de registros válidos. Un analista puede
+    reconstruir el resultado con los scripts del repositorio.</li>
+</ul>
+
+<!-- ============================================================== 4 -->
+<h2>04 · Objetivos del dashboard</h2>
+<h3>Objetivo general</h3>
+<p>
+  Diseñar e implementar un dashboard táctico que permita <strong>monitorear y
+  comparar la demanda, la geografía y la economía de los viajes en taxi amarillo
+  de Nueva York</strong> entre 2015 y 2025, con una muestra reproducible y un
+  proceso de limpieza documentado, para apoyar decisiones de capacidad,
+  posicionamiento y precio.
+</p>
+<h3>Objetivos específicos</h3>
+<ol>
+  <li>Identificar los patrones temporales de la demanda (mes, día de la semana y
+    hora) y detectar los periodos de mayor y menor actividad.</li>
+  <li>Localizar las zonas y boroughs con mayor concentración de viajes, así como
+    los corredores origen–destino más frecuentes.</li>
+  <li>Comparar la estructura económica del viaje (tarifa, tarifa por milla,
+    propina y método de pago) entre años.</li>
+  <li>Evaluar la eficiencia del viaje (duración, velocidad y distancia) y
+    contrastar hora pico contra valle y fin de semana.</li>
+  <li>Documentar y automatizar el preprocesamiento para que los resultados sean
+    reproducibles y auditables.</li>
+</ol>
+
+<h3>Preguntas que el tablero debe responder</h3>
+<div class="two-col">
+  <div class="box">
+    <h4>Demanda</h4>
+    <p>¿Qué mes, día y hora concentran más viajes? ¿Cómo cambió la demanda
+    respecto al año anterior? ¿Dónde se produjo la caída de 2020?</p>
+  </div>
+  <div class="box">
+    <h4>Territorio</h4>
+    <p>¿Qué zonas originan más viajes? ¿Qué boroughs concentran la actividad?
+    ¿Qué rutas se repiten más y cuánto duran?</p>
+  </div>
+  <div class="box">
+    <h4>Economía</h4>
+    <p>¿Cuánto cuesta un viaje típico? ¿Cuánto se paga por milla? ¿Qué método de
+    pago deja más propina?</p>
+  </div>
+  <div class="box">
+    <h4>Eficiencia</h4>
+    <p>¿Cuánto tarda un viaje en hora pico frente a un valle? ¿La tarifa crece
+    linealmente con la distancia? ¿Qué velocidad media tiene la ciudad?</p>
+  </div>
+</div>
+
+<!-- ============================================================== 5 -->
+<h2>05 · Selección del tipo de dashboard</h2>
+<p>
+  La literatura distingue tres tipos de dashboard según su horizonte temporal y
+  su audiencia. La elección no es estética: determina la frecuencia de
+  actualización, el nivel de agregación y el tipo de decisión que habilita.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 16%;">Tipo</th>
+      <th style="width: 28%;">Propósito</th>
+      <th style="width: 28%;">Horizonte / actualización</th>
+      <th style="width: 28%;">Encaje con el proyecto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Operativo</strong></td>
+      <td>Monitorear métricas en tiempo real para decisiones del día.</td>
+      <td>Minutos u horas; datos en vivo.</td>
+      <td>Parcial: el dataset es histórico y se publica por lotes; no hay feed en vivo.</td>
+    </tr>
+    <tr>
+      <td><strong>Táctico</strong></td>
+      <td>Analizar el rendimiento a medio plazo y apoyar decisiones gerenciales.</td>
+      <td>Semanas o meses; comparación entre periodos.</td>
+      <td><strong>Alto:</strong> años completos, comparación interanual, zonas y tarifas.</td>
+    </tr>
+    <tr>
+      <td><strong>Estratégico</strong></td>
+      <td>Visión de largo plazo para la alta dirección.</td>
+      <td>Años; pocos indicadores muy agregados.</td>
+      <td>Parcial: el tablero tiene detalle operativo que excede una vista estratégica.</td>
+    </tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 2. Comparación de tipos de dashboard y su encaje con el proyecto.</p>
+
+<div class="callout">
+  <strong>Decisión: dashboard táctico con capacidad de exploración operativa.</strong>
+  La unidad de análisis es el año y el mes; la comparación principal es
+  interanual; la audiencia primaria es gerencia de operaciones. El tablero no
+  pretende reemplazar un sistema de despacho en tiempo real (operativo), pero sí
+  permite bajar al detalle de hora y zona cuando se necesita investigar un
+  desvío. Se descarta el estratégico puro porque la riqueza del dataset —263
+  zonas, 168 franjas horarias, rutas— se perdería en un solo indicador agregado.
+</div>
+<p>
+  Esta elección también responde a la naturaleza de GitHub Pages: al ser un sitio
+  estático, no hay consultas en vivo ni actualización minuto a minuto. Un
+  dashboard operativo exigiría un backend y una base de datos expuesta; el
+  enfoque táctico es coherente con la arquitectura elegida y con el uso real del
+  dataset, que la TLC publica con rezago.
+</p>
+
+<!-- ============================================================== 6 -->
+<h2>06 · Dataset y variables</h2>
+<p>
+  El conjunto proviene del portal de datos abiertos de la TLC. Cada archivo anual
+  contiene los viajes de taxi amarillo con columnas que evolucionaron con los
+  años: 2015 usa <code>pickup_datetime</code> y coordenadas; desde 2016 se
+  incorporan <code>PULocationID</code> y <code>DOLocationID</code>; en años
+  recientes se añaden recargos de congestión y tarifas aeroportuarias.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Archivo</th>
+      <th class="num">Tamaño</th>
+      <th class="num">Registros fuente</th>
+      <th class="num">Válidos</th>
+      <th class="num">Muestra</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{QUALITY_ROWS}}
+  </tbody>
+</table>
+<p class="table-caption">Tabla 3. Volumen por año, registros válidos tras la limpieza y muestra extraída.</p>
+<p>
+  Los años 2016, 2023 y 2024 no forman parte del conjunto entregado. El tablero
+  los declara como huecos y no interpola valores: una línea que une 2022 con 2025
+  sin advertirlo sería una lectura engañosa.
+</p>
+
+<h3>Variables relevantes</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 26%;">Variable</th>
+      <th style="width: 16%;">Tipo</th>
+      <th>Significado y uso</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>pickup_datetime</code> / <code>tpep_pickup_datetime</code></td><td>fecha-hora</td><td>Inicio del viaje. Base para mes, día, hora y duración.</td></tr>
+    <tr><td><code>dropoff_datetime</code> / <code>tpep_dropoff_datetime</code></td><td>fecha-hora</td><td>Fin del viaje. Permite calcular duración y detectar registros inválidos.</td></tr>
+    <tr><td><code>trip_distance</code></td><td>decimal (mi)</td><td>Distancia recorrida. Se usa para tarifa por milla y velocidad.</td></tr>
+    <tr><td><code>PULocationID</code>, <code>DOLocationID</code></td><td>entero</td><td>Zona TLC de origen y destino (1–265). Base del mapa y las rutas.</td></tr>
+    <tr><td><code>pickup_latitude</code>, <code>pickup_longitude</code></td><td>decimal</td><td>Coordenadas disponibles en 2015; se usan para asignar zona por point-in-polygon.</td></tr>
+    <tr><td><code>fare_amount</code></td><td>decimal (USD)</td><td>Tarifa base antes de impuestos y propina.</td></tr>
+    <tr><td><code>tip_amount</code></td><td>decimal (USD)</td><td>Propina registrada; solo confiable en pagos electrónicos.</td></tr>
+    <tr><td><code>total_amount</code></td><td>decimal (USD)</td><td>Monto total cobrado. Se usa para el ingreso agregado.</td></tr>
+    <tr><td><code>payment_type</code></td><td>categórico</td><td>1 tarjeta, 2 efectivo, 3 sin cargo, 4 disputa, 5 desconocido, 6 anulado.</td></tr>
+    <tr><td><code>passenger_count</code></td><td>entero</td><td>Pasajeros declarados; se usa como control de calidad.</td></tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 4. Diccionario de variables utilizadas en el dashboard.</p>
+
+<!-- ============================================================== 7 -->
+<h2>07 · Preprocesamiento de datos</h2>
+<p>
+  El preprocesamiento se diseñó como un pipeline de cuatro etapas reproducible.
+  Cada decisión se implementó en código y se registra en el reporte de calidad;
+  no se hicieron ajustes manuales sobre los archivos.
+</p>
+
+<h3>7.1 Identificación y entendimiento</h3>
+<p>
+  Primero se inspeccionaron los encabezados y una muestra de filas de cada
+  archivo. Se identificaron cuatro problemas estructurales:
+</p>
+<ul>
+  <li><strong>Esquemas distintos:</strong> 2015 usa nombres en minúscula y
+    coordenadas; 2016+ usa <code>VendorID</code>, <code>tpep_*</code> y
+    <code>PULocationID</code>. Se construyó un esquema común con
+    <code>COALESCE</code> y detección de columnas por archivo.</li>
+  <li><strong>Formatos de fecha heterogéneos:</strong> <code>2015 Aug 18 08:31:49 AM</code>
+    y <code>01/01/2019 12:46:40 AM</code>. Se probaron formatos en cascada y se
+    validó que la fecha cayera dentro del año del archivo.</li>
+  <li><strong>Números con separador de miles:</strong> aparecen importes como
+    <code>"-1,242.3"</code> entre comillas. Se eliminó la coma antes de convertir
+    a <code>DOUBLE</code> con <code>TRY_CAST</code> para no romper el pipeline.</li>
+  <li><strong>Registros corruptos:</strong> el archivo de 2018 contiene fechas con
+    año 2084 y viajes con duración negativa o nula. Se descartan por regla, no se
+    corrigen a mano.</li>
+</ul>
+
+<h3>7.2 Limpieza aplicada</h3>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 26%;">Regla</th>
+      <th style="width: 30%;">Criterio</th>
+      <th>Justificación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Fecha válida</td><td>Pickup y dropoff parseables; pickup dentro del año del archivo.</td><td>Evita mezclar años y descarta el año corrupto 2084.</td></tr>
+    <tr><td>Duración</td><td>Entre 1 minuto y 6 horas.</td><td>Elimina viajes de 0 s y registros con duraciones imposibles.</td></tr>
+    <tr><td>Distancia</td><td>Entre 0.1 y 100 millas.</td><td>Descarta distancias nulas y valores absurdos para la ciudad.</td></tr>
+    <tr><td>Importes</td><td>Tarifa entre 0 y 500 USD; total entre 0 y 1,500 USD; propina entre 0 y 300 USD.</td><td>Excluye reembolsos, disputas y errores de captura sin recortar viajes normales.</td></tr>
+    <tr><td>Pasajeros</td><td>Entre 0 y 8 cuando el dato existe.</td><td>El campo es opcional; se conserva el nulo, se descarta el imposible.</td></tr>
+    <tr><td>Zonas</td><td><code>PULocationID</code> y <code>DOLocationID</code> entre 1 y 265.</td><td>El catálogo TLC tiene 263 zonas; los códigos fuera de rango son errores.</td></tr>
+    <tr><td>Coordenadas</td><td>Dentro de la caja NYC (lat 40.4–41.1, lon −74.3 a −73.6).</td><td>Solo aplica a 2015; descarta puntos fuera de la ciudad.</td></tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 5. Reglas de limpieza y su justificación.</p>
+
+<h3>7.3 Manejo de valores atípicos</h3>
+<p>
+  Se adoptó un criterio de <strong>descarte</strong> y no de imputación. La razón
+  es conceptual: el dashboard describe viajes reales; reemplazar una tarifa
+  extrema por la media inventaría un viaje que no ocurrió y distorsionaría la
+  distribución. Los umbrales se fijaron con conocimiento del dominio (tarifas y
+  distancias plausibles en NYC) y se validaron contra la distribución observada.
+</p>
+<p>
+  Para la visualización de la dispersión se aplicó un recorte adicional
+  (distancia 0.2–25 mi, tarifa 2–90 USD, duración 2–120 min) para que la nube de
+  puntos sea legible. Ese recorte es <strong>solo visual</strong>: los KPIs y las
+  distribuciones se calculan con la muestra completa ya limpia.
+</p>
+<div class="note">
+  <strong>Resultado de la limpieza.</strong> De {{TOTAL_ROWS}} registros fuente,
+  quedaron {{VALID_ROWS}} válidos ({{VALID_PCT}}). Las principales causas de
+  descarte fueron duraciones fuera de rango, distancias nulas o extremas y
+  coordenadas fuera de NYC en 2015.
+</div>
+
+<h3>7.4 Integración de datos</h3>
+<p>
+  La integración se resolvió con DuckDB, que permite leer CSV completos sin
+  cargarlos en memoria y escribir Parquet columnar. El flujo es:
+</p>
+<ol>
+  <li><strong>Extracción y normalización:</strong> cada CSV se lee como texto, se
+    normalizan nombres y tipos, y se aplican las reglas de limpieza.</li>
+  <li><strong>Muestreo:</strong> se toma una muestra aleatoria de 500,000 viajes
+    por año con <em>reservoir sampling</em> y semilla 42. La muestra es
+    reproducible y conserva la estructura del año.</li>
+  <li><strong>Persistencia:</strong> las muestras se guardan en
+    <code>data/samples/*.parquet</code> y se materializa la base
+    <code>data/taxi_mobility.duckdb</code> con las tablas
+    <code>trips_sample</code>, <code>zones</code> y <code>quality</code>.</li>
+  <li><strong>Enriquecimiento geográfico:</strong> para 2015 se hace un join
+    espacial punto-en-polígono contra el shapefile oficial de zonas TLC, porque
+    ese año no trae <code>PULocationID</code>.</li>
+  <li><strong>Agregación:</strong> se calculan KPIs, series mensuales, matriz
+    hora × día, métricas por zona y borough, histogramas, boxplot, dispersión y
+    rutas. El resultado se exporta a <code>public/data/dashboard.json</code>.</li>
+</ol>
+<p>
+  Esta separación permite que el sitio estático cargue en segundos y que
+  cualquier persona pueda reconstruir las cifras ejecutando los cuatro scripts
+  del directorio <code>etl/</code>.
+</p>
+
+<h3>7.5 Reporte de calidad</h3>
+<p>
+  El pipeline genera <code>data/quality_report.json</code> con el total de
+  registros, los válidos, los descartes por regla y el tiempo de procesamiento
+  por año. Ese reporte alimenta la tabla 3 y la sección de metodología del
+  dashboard. La muestra final contiene {{TOTAL_SAMPLE}} viajes.
+</p>
+
+<!-- ============================================================== 8 -->
+<h2>08 · Indicadores y visualizaciones</h2>
+<p>
+  Cada visualización responde a una pregunta y habilita una decisión. No se
+  incluyeron gráficos “decorativos”: si un elemento no cambia una lectura, se
+  retiró.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 24%;">Indicador / visual</th>
+      <th style="width: 30%;">Definición</th>
+      <th>Pregunta que responde</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Viajes analizados</td><td>Conteo de viajes de la muestra del periodo.</td><td>¿Cuál es el volumen de actividad?</td></tr>
+    <tr><td>Ingreso total</td><td>Suma de <code>total_amount</code>.</td><td>¿Cuánto dinero mueve la operación?</td></tr>
+    <tr><td>Tarifa promedio</td><td>Media de <code>fare_amount</code>.</td><td>¿Cuánto cuesta un viaje típico?</td></tr>
+    <tr><td>Tarifa por milla</td><td><span class="kpi-formula">Σ fare / Σ distancia</span></td><td>¿Cuánto se cobra por unidad de distancia?</td></tr>
+    <tr><td>Propina promedio</td><td><span class="kpi-formula">100 × Σ tip / Σ fare</span></td><td>¿Qué tan generoso es el pasajero?</td></tr>
+    <tr><td>Velocidad promedio</td><td><span class="kpi-formula">distancia / (duración / 60)</span>, filtrada 1–60 mph.</td><td>¿Qué tan congestionada está la ciudad?</td></tr>
+    <tr><td>Serie mensual</td><td>Viajes por mes; barras del año y línea del año previo.</td><td>¿Cómo evoluciona la demanda y cómo se compara con el año anterior?</td></tr>
+    <tr><td>Mapa de calor</td><td>Matriz 7 días × 24 horas.</td><td>¿Cuándo se concentra la demanda dentro de la semana?</td></tr>
+    <tr><td>Coropleta de zonas</td><td>Viajes por zona TLC; métricas de origen, destino y tarifa.</td><td>¿Dónde se origina y dónde termina la demanda?</td></tr>
+    <tr><td>Ranking de zonas</td><td>Top 10 por viajes de origen y participación.</td><td>¿Qué zonas son críticas para la operación?</td></tr>
+    <tr><td>Histogramas</td><td>Distribución de tarifa y distancia por rangos.</td><td>¿Cuál es la forma de la distribución y dónde está la masa?</td></tr>
+    <tr><td>Método de pago</td><td>Participación y propina media por tipo.</td><td>¿Qué canal de pago deja más propina?</td></tr>
+    <tr><td>Boxplot</td><td>Cuartiles de duración por franja: pico, valle, fin de semana, madrugada.</td><td>¿Cuánto penaliza la congestión al viaje?</td></tr>
+    <tr><td>Dispersión</td><td>Distancia vs. tarifa; color por método de pago; correlación.</td><td>¿La tarifa crece con la distancia? ¿Hay valores atípicos?</td></tr>
+    <tr><td>Rutas</td><td>Top 10 pares origen–destino.</td><td>¿Qué corredores requieren capacidad?</td></tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 6. Indicadores, definición y pregunta de decisión.</p>
+
+<h3>Criterios de selección visual</h3>
+<ul>
+  <li><strong>Línea y barras para el tiempo:</strong> la comparación entre años se
+    lee mejor con barras (año seleccionado) y una línea de referencia (año
+    previo) que con dos áreas superpuestas.</li>
+  <li><strong>Mapa de calor para dos dimensiones categóricas:</strong> 168 celdas
+    permiten ver de un golpe el ritmo semanal; una tabla de 168 filas no.</li>
+  <li><strong>Coropleta para geografía:</strong> la zona es la unidad operativa
+    real; un mapa de puntos con 500,000 viajes sería ilegible y pesado.</li>
+  <li><strong>Boxplot para comparar distribuciones:</strong> la media de duración
+    esconde la dispersión; los cuartiles muestran si el pico afecta a todos los
+    viajes o solo a la cola.</li>
+  <li><strong>Dispersión con muestra:</strong> se grafican 320 puntos por año para
+    mantener el rendimiento y evitar sobrexplotación visual.</li>
+</ul>
+
+<!-- ============================================================== 9 -->
+<h2>09 · Arquitectura de la solución</h2>
+<p>
+  La solución se organiza en tres capas. La primera es reproducible y vive en
+  Python; la segunda es un contrato de datos en JSON; la tercera es la interfaz
+  React publicada como sitio estático.
+</p>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 18%;">Capa</th>
+      <th style="width: 34%;">Tecnología</th>
+      <th>Responsabilidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Datos</td><td>Python 3.10, DuckDB, Parquet, Shapely</td><td>Lectura de CSV, limpieza, muestreo, join espacial y base de datos.</td></tr>
+    <tr><td>Agregados</td><td>SQL + JSON</td><td>KPIs, series, matriz horaria, zonas, histogramas, boxplot, dispersión y rutas.</td></tr>
+    <tr><td>Presentación</td><td>React 19, TypeScript, Vite, Recharts, Leaflet</td><td>Interfaz, filtros, tooltips, mapa interactivo y diseño responsive.</td></tr>
+    <tr><td>Despliegue</td><td>GitHub Actions + GitHub Pages</td><td>Build automático y publicación del sitio estático.</td></tr>
+  </tbody>
+</table>
+<p class="table-caption">Tabla 7. Capas de la arquitectura.</p>
+<p>
+  La base de datos elegida es <strong>DuckDB</strong>, una base analítica
+  embebida. Se prefirió sobre PostgreSQL o MongoDB porque el proyecto es
+  analítico, de solo lectura y de un solo equipo: DuckDB no requiere servidor,
+  lee CSV y Parquet de forma nativa, y permite reproducir todo el pipeline en una
+  laptop. La base resultante contiene 4 millones de viajes y el catálogo de
+  zonas, y puede consultarse con SQL estándar.
+</p>
+<p>
+  El dashboard no consulta la base en vivo porque GitHub Pages no ejecuta
+  backend. En su lugar, el paso 04 exporta agregados a
+  <code>public/data/dashboard.json</code>. Es una decisión deliberada de
+  arquitectura: reduce el tiempo de carga, evita exponer credenciales y mantiene
+  el sitio gratuito y público. El costo es que los datos no se actualizan solos;
+  para actualizarlos se vuelve a ejecutar el pipeline y se hace commit del JSON.
+</p>
+
+<!-- ============================================================== 10 -->
+<h2>10 · Hallazgos y lectura del tablero</h2>
+<p>
+  Los siguientes hallazgos se obtuvieron con la muestra y se actualizan
+  automáticamente al cambiar el año en el dashboard.
+</p>
+<ul class="insight-list">
+  {{INSIGHTS}}
+</ul>
+
+<figure class="figure">
+  <img src="img/dashboard.png" alt="Vista superior del dashboard NYC Mobility Pulse" />
+  <figcaption>Figura 1. Vista general del dashboard: KPIs, serie mensual y lecturas rápidas.</figcaption>
+</figure>
+
+<!-- ============================================================== 11 -->
+<h2>11 · Limitaciones y sesgos</h2>
+<ul>
+  <li><strong>Muestra, no censo.</strong> El tablero usa 500,000 viajes por año.
+    Las proporciones son representativas, pero los conteos absolutos no deben
+    compararse con las cifras oficiales de la TLC. El reporte de calidad incluye
+    los totales fuente para contextualizar.</li>
+  <li><strong>Propina subestimada en efectivo.</strong> El campo
+    <code>tip_amount</code> solo es confiable en pagos electrónicos; en efectivo
+    suele registrarse como cero. Por eso el indicador se lee como “propina
+    declarada”, no como propina real.</li>
+  <li><strong>Cobertura geográfica de 2015.</strong> Ese año no trae
+    <code>PULocationID</code>; la zona se asigna por point-in-polygon. Los viajes
+    cuyos puntos caen fuera de los polígonos quedan sin zona y no entran en el
+    mapa, aunque sí en los KPIs generales.</li>
+  <li><strong>Años faltantes.</strong> 2016, 2023 y 2024 no están en el conjunto.
+    Las comparaciones interanuales usan el año previo disponible y el tablero lo
+    indica explícitamente.</li>
+  <li><strong>Marzo de 2018 duplicado en la fuente.</strong> El archivo original
+    de la TLC para ese mes contiene unos 18.9 millones de filas frente a 8–9
+    millones en los demás meses. El bloque no es un duplicado exacto, así que se
+    conserva y se señala en la serie mensual en lugar de eliminarlo con un
+    criterio arbitrario.</li>
+  <li><strong>Sesgo de servicio.</strong> El taxi amarillo tiene una distribución
+    geográfica distinta a la de otras modalidades. Los hallazgos describen ese
+    servicio, no toda la movilidad de Nueva York.</li>
+  <li><strong>Datos estáticos.</strong> GitHub Pages no permite consultas en vivo;
+    la actualización requiere volver a ejecutar el pipeline.</li>
+</ul>
+
+<!-- ============================================================== 12 -->
+<h2>12 · Conclusiones</h2>
+<p>
+  La Fase 1 permitió convertir un conjunto de archivos masivos y heterogéneos en
+  una base de decisión coherente. El análisis de audiencia definió qué mostrar y
+  en qué orden; los objetivos acotaron el alcance; el preprocesamiento garantizó
+  que los años fueran comparables; y la elección de un dashboard táctico alineó
+  la interfaz con el uso real del dataset y con las restricciones de un sitio
+  estático.
+</p>
+<p>
+  El resultado es <strong>NYC Mobility Pulse</strong>: un tablero que permite
+  pasar de la tendencia general a la zona específica en pocos clics, con un
+  pipeline reproducible y una declaración explícita de sus límites. La siguiente
+  fase puede profundizar en modelos de demanda, actualización automática de datos
+  o integración con otras fuentes de movilidad.
+</p>
+
+<div class="signature">
+  <div>Javier Rodríguez Rodríguez</div>
+  <div>Diego Alonso López Ballesta</div>
+</div>
+
+<!-- ============================================================== 13 -->
+<h2>13 · Referencias</h2>
+<ol style="font-size: 9.2pt;">
+  <li>NYC Taxi &amp; Limousine Commission. <em>TLC Trip Record Data</em>.
+    https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</li>
+  <li>NYC TLC. <em>Taxi Zone Lookup</em> y <em>Taxi Zones shapefile</em>.
+    https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv</li>
+  <li>DuckDB Foundation. <em>DuckDB Documentation</em>. https://duckdb.org/docs/</li>
+  <li>React. <em>React Documentation</em>. https://react.dev/</li>
+  <li>Recharts. <em>Recharts Documentation</em>. https://recharts.org/</li>
+  <li>Leaflet. <em>Leaflet Documentation</em>. https://leafletjs.com/</li>
+  <li>GitHub. <em>GitHub Pages Documentation</em>.
+    https://docs.github.com/pages</li>
+</ol>
+
+<div class="footer-note">
+  Documento generado a partir de <code>docs/justificacion.template.html</code> y
+  de los resultados del pipeline (<code>data/quality_report.json</code> y
+  <code>public/data/dashboard.json</code>). Equipo Mobility Pulse · Módulo de
+  Visualización de datos · {{FECHA}}.
+</div>
+
+</body>
+</html>
