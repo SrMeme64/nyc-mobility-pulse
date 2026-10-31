@@ -52,13 +52,12 @@ planificación de turnos y evaluación de tarifas. Incluye una capa operativa
 
 ## 2. Demo
 
-El sitio se publica como **sitio estático** en GitHub Pages. El workflow
-`.github/workflows/deploy.yml` construye y despliega automáticamente en cada
-push a `main`.
+El sitio está publicado como **sitio estático** en GitHub Pages:
 
-```
-https://<usuario>.github.io/<repositorio>/
-```
+**https://srmeme64.github.io/nyc-mobility-pulse/**
+
+El workflow `.github/workflows/deploy.yml` construye y despliega automáticamente
+en cada push a `main`.
 
 La configuración de Vite usa `base: './'`, por lo que funciona tanto en la raíz
 como en un subdirectorio de GitHub Pages sin cambiar el nombre del repositorio.
