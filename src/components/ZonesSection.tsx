@@ -73,6 +73,10 @@ export function ZonesSection({ rows, year }: Props) {
   const top = visible.slice(0, 10)
   const maxTop = Math.max(1, ...top.map((z) => z.pickups))
   const totalPickups = zones.reduce((a, z) => a + z.pickups, 0)
+  const manhattanPickups = zones
+    .filter((z) => z.borough === 'Manhattan')
+    .reduce((a, z) => a + z.pickups, 0)
+  const manhattanShare = totalPickups ? (manhattanPickups / totalPickups) * 100 : 0
 
   const values = zones
     .filter((z) => borough === 'Todos' || z.borough === borough)
@@ -107,7 +111,8 @@ export function ZonesSection({ rows, year }: Props) {
           <div>
             <h3 className="card-title">Geografía de la demanda</h3>
             <p className="card-sub">
-              {fmtInt(totalPickups)} viajes con zona de origen · {zones.length} zonas activas
+              {fmtInt(totalPickups)} viajes con zona de origen · {zones.length} zonas activas ·{' '}
+              {fmtPct(manhattanShare)} en Manhattan
             </p>
           </div>
           <Segmented

@@ -1,0 +1,305 @@
+================================================================================
+VERSIÓN LIMPIA PARA GOOGLE FORMS · NYC MOBILITY PULSE · FASE 4
+================================================================================
+Copia cada bloque tal cual: los textos sin viñeta van en el campo "Descripción";
+las líneas con "·" son preguntas; las líneas con "-" son opciones.
+
+Cada ítem de escala (U1, C1, K1…) es una pregunta independiente de tipo
+"Escala lineal" de 1 a 5. No uses cuadrículas: el prellenado desde el sitio no
+las admite y la exportación se complica.
+
+No incluye notas de análisis ni instrucciones internas: esas están en
+cuestionario_fase4.txt.
+
+================================================================================
+TÍTULO DEL FORMULARIO
+================================================================================
+Evaluación del dashboard NYC Mobility Pulse — Fase 4
+
+================================================================================
+DESCRIPCIÓN DEL FORMULARIO (portada)
+================================================================================
+Este cuestionario evalúa el dashboard NYC Mobility Pulse, un tablero sobre la
+movilidad de Nueva York construido con datos públicos de taxis amarillos (TLC).
+
+Usted participa como consultor anónimo. No se le pedirá su nombre, su correo ni
+ningún dato que permita identificarle. Responda con sinceridad: no hay respuestas
+correctas ni incorrectas, y su mirada crítica es el insumo de la evaluación.
+
+Antes de comenzar:
+1. Abra el dashboard en otra pestaña: https://srmeme64.github.io/nyc-mobility-pulse/
+2. Explore el tablero durante 3 a 5 minutos, sin ayuda de nadie.
+3. Vuelva a este formulario y responda. Tiempo total estimado: 12 a 15 minutos.
+
+Al continuar, usted acepta participar de forma voluntaria y confirma que puede
+abandonar el cuestionario en cualquier momento.
+
+================================================================================
+SECCIÓN 1 · CONSENTIMIENTO
+================================================================================
+Descripción de la sección:
+Antes de continuar, confirme que participa de forma voluntaria y anónima.
+
+· ¿Acepta participar en esta evaluación?
+- Sí, acepto
+- No acepto
+
+(Lógica: "No acepto" → ir a la sección 12 · Cierre.)
+
+================================================================================
+SECCIÓN 2 · PERFIL DEL CONSULTOR (ANÓNIMO)
+================================================================================
+Descripción de la sección:
+Estos datos describen su perfil, no su identidad. Se usan para comparar los
+resultados entre perfiles con distinta experiencia y formación.
+
+· ¿Cuál es su rango de edad?
+- 18 a 24 años
+- 25 a 34 años
+- 35 a 44 años
+- 45 a 54 años
+- 55 años o más
+
+· ¿Con qué género se identifica?
+- Femenino
+- Masculino
+- No binario
+- Prefiero no responder
+- Otra
+
+· ¿Cuál es su nivel académico máximo?
+- Bachillerato o equivalente
+- Técnico superior
+- Licenciatura en curso
+- Licenciatura concluida
+- Maestría
+- Doctorado
+
+· ¿Cuál es su área de formación principal?
+- Ingeniería en Datos
+- Ingeniería en Sistemas o Computación
+- Estadística o Matemáticas
+- Economía o Finanzas
+- Ciencias Sociales o Urbanismo
+- Diseño o Comunicación
+- Otra
+
+· ¿Cuál es su ocupación actual?
+- Estudiante
+- Docente
+- Analista de datos o de inteligencia de negocio
+- Ingeniero o ingeniera de datos
+- Investigador o investigadora
+- Consultor o consultora
+- Otra
+
+· Si es estudiante, ¿en qué momento de su trayectoria está?
+- 1.º a 3.º semestre
+- 4.º a 6.º semestre
+- 7.º a 9.º semestre
+- 10.º semestre o más
+- Egresado o egresada
+- No aplica
+
+· ¿Qué experiencia tiene usando dashboards (Power BI, Tableau, Looker, etc.)?
+- Ninguna
+- Baja (los he visto, pero no los he usado)
+- Media (los uso de vez en cuando)
+- Alta (los uso con frecuencia o los construyo)
+
+· ¿Con qué frecuencia usa herramientas de visualización de datos?
+- Nunca
+- Algunas veces al año
+- Mensualmente
+- Semanalmente
+- A diario
+
+· ¿Qué conocimiento previo tiene de los datos TLC de Nueva York?
+- Ninguno
+- He oído hablar del dataset
+- Conozco el dataset y sus variables
+- He trabajado con él
+
+· ¿Qué tan familiarizado está con la ciudad de Nueva York?
+- No la conozco
+- La conozco por mapas o referencias
+- La he visitado
+- He vivido allí
+
+· ¿En qué dispositivo respondió principalmente?
+- Laptop o computadora de escritorio
+- Tableta
+- Teléfono móvil
+
+· ¿Había evaluado antes un dashboard o un producto de datos?
+- Sí
+- No
+
+· Si eligió "Otra" en género, formación u ocupación, especifique.
+Tipo: respuesta corta (opcional)
+Ayuda: El sitio la rellena automáticamente.
+
+================================================================================
+SECCIÓN 3 · TAREAS DE USO
+================================================================================
+Descripción de la sección:
+Con el dashboard abierto en otra pestaña, resuelva las cuatro tareas. No hay
+tiempo límite. Si no encuentra la respuesta, escriba NO ENCONTRADA y continúe.
+
+· En la serie histórica (filtro "Todos"), ¿en qué año y mes se registra el punto
+más bajo de viajes? Escriba año y mes.
+Tipo: respuesta corta
+Ayuda: Escriba año y mes (por ejemplo: 2019, julio). Si no la encontró: NO ENCONTRADA.
+
+· Con el filtro en 2025, ¿cuál es el mes con más viajes? Escriba el mes.
+Tipo: respuesta corta
+Ayuda: Si no la encontró: NO ENCONTRADA.
+
+· Con el filtro en 2025, ¿cuál es la zona con más recogidas? Escriba el nombre de
+la zona.
+Tipo: respuesta corta
+Ayuda: Puede consultarlo en el mapa o en el ranking. Si no la encontró: NO ENCONTRADA.
+
+· Con el filtro en 2025, en el heatmap de día y hora, ¿cuál es el día y la hora
+de mayor demanda? Escriba día y hora.
+Tipo: respuesta corta
+Ayuda: Ejemplo de formato: "lunes, 8:00". Si no la encontró: NO ENCONTRADA.
+
+· ¿Qué tan difícil le resultó completar las cuatro tareas?
+Tipo: escala lineal 1 a 5
+Etiqueta 1: Muy difícil
+Etiqueta 5: Muy fácil
+
+· ¿Cuánto tiempo dedicó al conjunto de las cuatro tareas?
+- Menos de 2 minutos
+- De 2 a 5 minutos
+- De 5 a 10 minutos
+- Más de 10 minutos
+
+================================================================================
+SECCIÓN 4 · USABILIDAD PERCIBIDA
+================================================================================
+Descripción de la sección:
+Indique su grado de acuerdo con cada afirmación.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+U1. Encontré rápidamente la información que buscaba.
+U2. Los filtros y botones son intuitivos.
+U3. El recorrido de la página va de lo general a lo particular.
+U4. No necesité ayuda externa para moverme por el tablero.
+U5. En general, el tablero es fácil de usar.
+
+================================================================================
+SECCIÓN 5 · COMPRENSIÓN DE LA INFORMACIÓN
+================================================================================
+Descripción de la sección:
+Evalúe si el tablero comunica lo que muestra, sin necesidad de explicaciones.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+C1. Los títulos de las secciones anuncian con claridad su contenido.
+C2. Los ejes, leyendas y unidades se entienden sin explicación adicional.
+C3. Entendí qué mide cada KPI sin consultar la metodología.
+C4. El mapa y su escala de color se explican por sí mismos.
+C5. Pude formular al menos una conclusión propia sobre la movilidad de Nueva York.
+
+================================================================================
+SECCIÓN 6 · PERTINENCIA DE LOS KPIs
+================================================================================
+Descripción de la sección:
+Evalúe si los indicadores responden a la pregunta del proyecto.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+K1. Los KPIs responden a la pregunta "cuándo, dónde y a qué costo se mueve la ciudad".
+K2. Identifiqué con facilidad el KPI más importante.
+K3. Los indicadores son suficientes para describir el fenómeno.
+K4. Los indicadores son distintos entre sí, sin redundancias evidentes.
+
+================================================================================
+SECCIÓN 7 · ESTÉTICA Y COHERENCIA VISUAL
+================================================================================
+Descripción de la sección:
+Evalúe la forma, no el contenido: color, jerarquía, tipografía y proporciones.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+E1. Los colores ayudan a interpretar los datos.
+E2. La jerarquía visual indica qué mirar primero.
+E3. La tipografía es legible en pantalla.
+E4. Los tamaños y proporciones de los gráficos son adecuados.
+
+================================================================================
+SECCIÓN 8 · INTERACTIVIDAD Y NAVEGACIÓN
+================================================================================
+Descripción de la sección:
+Evalúe los controles y la respuesta del tablero a sus acciones.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+I1. Los filtros actualizan los datos de forma correcta y visible.
+I2. Los tooltips aportan información útil.
+I3. La interacción del mapa (zoom, clic y selección) es comprensible.
+
+================================================================================
+SECCIÓN 9 · IMPACTO Y UTILIDAD
+================================================================================
+Descripción de la sección:
+Evalúe el valor del tablero para entender el fenómeno y decidir.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem:
+G1. El tablero aporta información útil sobre la movilidad de Nueva York.
+G2. Me permitiría argumentar una decisión o una recomendación.
+G3. La información es confiable y está bien documentada.
+G4. Recomendaría el tablero a alguien interesado en movilidad urbana.
+
+================================================================================
+SECCIÓN 10 · ESCALA SUS
+================================================================================
+Descripción de la sección:
+Las siguientes afirmaciones provienen de la escala SUS, un instrumento estándar
+de usabilidad. Responda pensando en su experiencia completa con el tablero.
+1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Escala lineal 1 a 5, una pregunta por ítem (no cambiar el orden):
+SUS1. Creo que me gustaría usar este tablero con frecuencia.
+SUS2. Encontré el tablero innecesariamente complejo.
+SUS3. Pensé que el tablero era fácil de usar.
+SUS4. Creo que necesitaría apoyo técnico para poder usar este tablero.
+SUS5. Encontré las distintas partes del tablero bien integradas.
+SUS6. Pensé que había demasiada inconsistencia en el tablero.
+SUS7. Imagino que la mayoría de la gente aprendería a usar el tablero muy rápido.
+SUS8. Encontré el tablero muy difícil de usar.
+SUS9. Me sentí muy seguro al usar el tablero.
+SUS10. Necesité aprender muchas cosas antes de poder usar el tablero.
+
+================================================================================
+SECCIÓN 11 · PREGUNTAS ABIERTAS
+================================================================================
+Descripción de la sección:
+Responda con sus palabras. No hay extensión mínima ni máxima.
+
+· ¿Qué fue lo primero que miró al abrir el tablero y por qué?          (opcional)
+· ¿Qué parte le resultó confusa o difícil de entender?                (obligatoria)
+· ¿Qué KPI o gráfico le resultó más útil y por qué?                   (opcional)
+· ¿Qué cambiaría del diseño, de los gráficos o de la navegación?      (opcional)
+· ¿Qué información le faltó para tomar una decisión?                  (opcional)
+· Comentarios adicionales.                                            (opcional)
+
+Tipo de todas: párrafo.
+
+================================================================================
+SECCIÓN 12 · CIERRE
+================================================================================
+Descripción de la sección:
+Gracias por su tiempo. Sus respuestas son anónimas y se usarán únicamente para
+evaluar el dashboard NYC Mobility Pulse en el marco del Proyecto 4.
+
+Si desea volver a explorar el tablero:
+https://srmeme64.github.io/nyc-mobility-pulse/
+
+================================================================================
+FIN · NYC Mobility Pulse · Fase 4
+================================================================================

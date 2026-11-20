@@ -1,0 +1,682 @@
+================================================================================
+CUESTIONARIO DE EVALUACIÓN DEL DASHBOARD · NYC MOBILITY PULSE
+Fase 4 — Evaluación y validación
+================================================================================
+
+Proyecto 4 · La movilidad urbana y el tráfico inteligente
+Equipo: Mobility Pulse
+  Javier Rodríguez Rodríguez
+  Diego Alonso López Ballesta
+Docente: Jessica Carmin Mendiola Fuentes
+Versión: 1.0 · Noviembre de 2026
+
+Dashboard evaluado: https://srmeme64.github.io/nyc-mobility-pulse/
+Duración estimada: 12 a 15 minutos
+Público: consultores anónimos (estudiantes, docentes y profesionales de datos)
+Anonimato: no se solicita nombre, correo electrónico ni ningún dato identificable.
+
+--------------------------------------------------------------------------------
+1. PROPÓSITO DEL INSTRUMENTO
+--------------------------------------------------------------------------------
+
+Este cuestionario recoge la evaluación de un consultor anónimo sobre el dashboard
+NYC Mobility Pulse. No busca calificar a la persona ni recoger su identidad: busca
+medir si el tablero es claro, usable, pertinente y útil para responder a la pregunta
+analítica del proyecto:
+
+    ¿Cuándo, dónde y a qué costo se mueve la ciudad de Nueva York?
+
+El instrumento combina cinco técnicas sugeridas en la Fase 4:
+
+  a) Perfil del consultor, para cruzar los resultados con el nivel de experiencia.
+  b) Tareas de uso, para medir desempeño real y no solo percepción.
+  c) Escalas Likert de 1 a 5, para usabilidad, comprensión, KPIs, estética,
+     interactividad e impacto.
+  d) Escala SUS (System Usability Scale), para obtener un índice estandarizado.
+  e) Preguntas abiertas, para recoger comentarios y propuestas.
+
+El cuestionario NO incluye resultados: se aplica primero y se analiza después.
+
+--------------------------------------------------------------------------------
+2. MAPA DEL INSTRUMENTO
+--------------------------------------------------------------------------------
+
+  Sección  Qué mide                                  Ítems  Tipo
+  ---------------------------------------------------------------------------
+  S0       Consentimiento informado                 1      Sí / No
+  S1       Perfil del consultor (anónimo)           13     Opción múltiple
+  S2       Tareas de uso guiadas                    6      Respuesta corta + escala
+  S3       Usabilidad percibida                     5      Escala 1–5
+  S4       Comprensión de la información            5      Escala 1–5
+  S5       Pertinencia de los KPIs                  4      Escala 1–5
+  S6       Estética y coherencia visual             4      Escala 1–5
+  S7       Interactividad y navegación              3      Escala 1–5
+  S8       Impacto y utilidad                       4      Escala 1–5
+  S9       Escala SUS                               10     Escala 1–5
+  S10      Preguntas abiertas                       6      Párrafo
+  S11      Cierre                                   —      Solo texto
+
+  Total: 61 preguntas en el formulario (54 cerradas + 6 abiertas + 1 de
+  consentimiento). Cada ítem de escala es una pregunta independiente: así el
+  sitio puede prellenar el formulario y la hoja de respuestas queda lista para
+  analizar, sin cuadrículas.
+
+--------------------------------------------------------------------------------
+3. CONFIGURACIÓN EN GOOGLE FORMS (PASO A PASO)
+--------------------------------------------------------------------------------
+
+3.1 Crear el formulario
+  - Ir a forms.google.com → "En blanco".
+  - Título: Evaluación del dashboard NYC Mobility Pulse — Fase 4
+  - Descripción: copiar el bloque "TEXTO DE PORTADA" de la sección 4.1.
+
+3.2 Configuración (ícono de engranaje)
+  - "Recopilar correos electrónicos": NO.
+  - "Limitar a 1 respuesta": NO (exigiría iniciar sesión y rompería el anonimato).
+  - "Mezclar orden de preguntas": NO (las escalas deben conservar su orden).
+  - "Mostrar barra de progreso": SÍ.
+  - "Modo cuestionario": NO (no hay respuestas correctas que calificar en vivo).
+
+3.3 Secciones
+  - Crear una sección por cada bloque S0 a S11, con el nombre exacto del archivo.
+  - En cada sección, agregar la descripción corta que se indica.
+
+3.4 Tipos de pregunta
+  - "Opción múltiple" para el perfil (una sola respuesta).
+  - "Respuesta corta" para las tareas T1 a T4.
+  - "Escala lineal" (1 a 5) para cada ítem de S3 a S9 y para T05. No usar
+    cuadrículas: Google Forms no permite prellenarlas y complican la exportación.
+  - "Opción múltiple" para T06 (tiempo dedicado a las tareas).
+  - "Párrafo" para las preguntas abiertas.
+
+3.5 Lógica de la sección S0
+  - Pregunta Q00 "¿Acepta participar?" → Opción múltiple: "Sí, acepto" / "No acepto".
+  - Menú de tres puntos → "Ir a la sección según la respuesta".
+  - "No acepto" → sección S11 (Cierre).
+  - "Sí, acepto" → sección S1 (Perfil).
+
+3.6 Obligatoriedad
+  - S0, S1, S2 (T1 a T4, T05 y T06) y S3 a S9: obligatorias.
+  - S10 (abiertas): opcionales, salvo O2, que conviene marcar como obligatoria.
+  - No marcar como obligatoria la pregunta de comentarios finales.
+
+3.7 Antes de publicar
+  - Abrir el formulario en el teléfono y en la computadora.
+  - Verificar que el enlace del dashboard abre en una pestaña nueva.
+  - Enviar una respuesta de prueba y borrarla (Respuestas → menú → Borrar todo).
+
+3.8 Modo prellenado desde el sitio (opcional)
+  El dashboard incluye una encuesta asistida que se abre con el parámetro
+  ?evaluar=1 y, al terminar, abre este formulario con las respuestas ya
+  cargadas. Para conectarlo:
+
+    a) Crear el formulario con este documento y publicarlo.
+    b) Completar las secciones que falten con docs/fase4/completar_formulario.gs
+       (Apps Script) y volver a publicar.
+    c) En el proyecto del dashboard, ejecutar "npm run form:entries": el script
+       lee el formulario publicado y escribe src/lib/form-entries.json con el ID
+       y los entry de cada pregunta. No hay que copiarlos a mano.
+    d) Abrir https://srmeme64.github.io/nyc-mobility-pulse/?evaluar=1 y probar
+       una respuesta completa.
+
+  Requisitos para que el prellenado funcione:
+    - Una pregunta por ítem (escala lineal), nunca cuadrículas.
+    - Las opciones deben escribirse exactamente como aquí: el prellenado
+      compara el texto de la opción.
+    - La pregunta P13 recibe el detalle de las opciones "Otra" elegidas en el
+      sitio (género, formación u ocupación).
+
+3.9 Orden de las preguntas en el formulario
+  S0: Q00
+  S1: P01, P02, P03, P04, P05, P06, P07, P08, P09, P10, P11, P12, P13
+  S2: T1, T2, T3, T4, T05, T06
+  S3: U1 … U5        S4: C1 … C5        S5: K1 … K4
+  S6: E1 … E4        S7: I1 … I3        S8: G1 … G4
+  S9: SUS1 … SUS10   S10: O1 … O6
+
+--------------------------------------------------------------------------------
+4. CUESTIONARIO
+================================================================================
+
+4.1 SECCIÓN S0 · PORTADA Y CONSENTIMIENTO
+--------------------------------------------------------------------------------
+
+TEXTO DE PORTADA (va en la descripción del formulario):
+
+  Este cuestionario evalúa el dashboard NYC Mobility Pulse, un tablero sobre la
+  movilidad de Nueva York construido con datos públicos de taxis amarillos (TLC).
+
+  Usted participa como consultor anónimo. No se le pedirá su nombre, su correo ni
+  ningún dato que permita identificarle. Responda con sinceridad: no hay respuestas
+  correctas ni incorrectas, y su mirada crítica es el insumo de la evaluación.
+
+  Antes de comenzar:
+    1. Abra el dashboard en otra pestaña: https://srmeme64.github.io/nyc-mobility-pulse/
+    2. Explore el tablero durante 3 a 5 minutos, sin ayuda de nadie.
+    3. Vuelva a este formulario y responda. Tiempo total estimado: 12 a 15 minutos.
+
+  Al continuar, usted acepta participar de forma voluntaria y confirma que puede
+  abandonar el cuestionario en cualquier momento.
+
+Q00 · ¿Acepta participar en esta evaluación?
+  Tipo: Opción múltiple (una respuesta)
+  Obligatoria: Sí
+  Opciones:
+    - Sí, acepto
+    - No acepto
+
+  (Lógica: "No acepto" → ir a la sección S11 · Cierre.)
+
+--------------------------------------------------------------------------------
+4.2 SECCIÓN S1 · PERFIL DEL CONSULTOR (ANÓNIMO)
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Estos datos describen su perfil, no su identidad. Se usan para comparar los
+  resultados entre perfiles con distinta experiencia y formación.
+
+P01 · ¿Cuál es su rango de edad?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - 18 a 24 años
+    - 25 a 34 años
+    - 35 a 44 años
+    - 45 a 54 años
+    - 55 años o más
+
+P02 · ¿Con qué género se identifica?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Femenino
+    - Masculino
+    - No binario
+    - Prefiero no responder
+    - Otra
+
+P03 · ¿Cuál es su nivel académico máximo?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Bachillerato o equivalente
+    - Técnico superior
+    - Licenciatura en curso
+    - Licenciatura concluida
+    - Maestría
+    - Doctorado
+
+P04 · ¿Cuál es su área de formación principal?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Ingeniería en Datos
+    - Ingeniería en Sistemas o Computación
+    - Estadística o Matemáticas
+    - Economía o Finanzas
+    - Ciencias Sociales o Urbanismo
+    - Diseño o Comunicación
+    - Otra
+
+P05 · ¿Cuál es su ocupación actual?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Estudiante
+    - Docente
+    - Analista de datos o de inteligencia de negocio
+    - Ingeniero o ingeniera de datos
+    - Investigador o investigadora
+    - Consultor o consultora
+    - Otra
+
+P06 · Si es estudiante, ¿en qué momento de su trayectoria está?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - 1.º a 3.º semestre
+    - 4.º a 6.º semestre
+    - 7.º a 9.º semestre
+    - 10.º semestre o más
+    - Egresado o egresada
+    - No aplica
+
+P07 · ¿Qué experiencia tiene usando dashboards (Power BI, Tableau, Looker, etc.)?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Ninguna
+    - Baja (los he visto, pero no los he usado)
+    - Media (los uso de vez en cuando)
+    - Alta (los uso con frecuencia o los construyo)
+
+P08 · ¿Con qué frecuencia usa herramientas de visualización de datos?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Nunca
+    - Algunas veces al año
+    - Mensualmente
+    - Semanalmente
+    - A diario
+
+P09 · ¿Qué conocimiento previo tiene de los datos TLC de Nueva York?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Ninguno
+    - He oído hablar del dataset
+    - Conozco el dataset y sus variables
+    - He trabajado con él
+
+P10 · ¿Qué tan familiarizado está con la ciudad de Nueva York?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - No la conozco
+    - La conozco por mapas o referencias
+    - La he visitado
+    - He vivido allí
+
+P11 · ¿En qué dispositivo respondió principalmente?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Laptop o computadora de escritorio
+    - Tableta
+    - Teléfono móvil
+
+P12 · ¿Había evaluado antes un dashboard o un producto de datos?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Sí
+    - No
+
+P13 · Si eligió "Otra" en género, formación u ocupación, especifique.
+  Tipo: Respuesta corta
+  Obligatoria: No
+  Texto de ayuda: Puede dejarla vacía si no eligió "Otra". El sitio la rellena
+  automáticamente con las tres respuestas.
+
+--------------------------------------------------------------------------------
+4.3 SECCIÓN S2 · TAREAS DE USO GUIADAS
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Con el dashboard abierto en otra pestaña, resuelva las cuatro tareas. No hay
+  tiempo límite. Si no encuentra la respuesta, escriba NO ENCONTRADA y continúe.
+
+T1 · En la serie histórica (filtro "Todos"), ¿en qué año y mes se registra el punto
+     más bajo de viajes? Escriba año y mes.
+  Tipo: Respuesta corta
+  Obligatoria: Sí
+  Texto de ayuda: Escriba año y mes (por ejemplo: 2019, julio). Si no la encontró:
+  NO ENCONTRADA.
+
+T2 · Con el filtro en 2025, ¿cuál es el mes con más viajes? Escriba el mes.
+  Tipo: Respuesta corta
+  Obligatoria: Sí
+  Texto de ayuda: Si no la encontró: NO ENCONTRADA.
+
+T3 · Con el filtro en 2025, ¿cuál es la zona con más recogidas? Escriba el nombre
+     de la zona.
+  Tipo: Respuesta corta
+  Obligatoria: Sí
+  Texto de ayuda: Puede consultarlo en el mapa o en el ranking. Si no la encontró:
+  NO ENCONTRADA.
+
+T4 · Con el filtro en 2025, en el heatmap de día y hora, ¿cuál es el día y la hora
+     de mayor demanda? Escriba día y hora.
+  Tipo: Respuesta corta
+  Obligatoria: Sí
+  Texto de ayuda: Ejemplo de formato: "lunes, 8:00". Si no la encontró: NO ENCONTRADA.
+
+T05 · ¿Qué tan difícil le resultó completar las cuatro tareas?
+  Tipo: Escala lineal
+  Obligatoria: Sí
+  Escala: 1 a 5
+  Etiqueta izquierda (1): Muy difícil
+  Etiqueta derecha (5): Muy fácil
+
+T06 · ¿Cuánto tiempo dedicó al conjunto de las cuatro tareas?
+  Tipo: Opción múltiple
+  Obligatoria: Sí
+  Opciones:
+    - Menos de 2 minutos
+    - De 2 a 5 minutos
+    - De 5 a 10 minutos
+    - Más de 10 minutos
+
+--------------------------------------------------------------------------------
+4.4 SECCIÓN S3 · USABILIDAD PERCIBIDA
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Indique su grado de acuerdo con cada afirmación.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  U1. Encontré rápidamente la información que buscaba.
+  U2. Los filtros y botones son intuitivos.
+  U3. El recorrido de la página va de lo general a lo particular.
+  U4. No necesité ayuda externa para moverme por el tablero.
+  U5. En general, el tablero es fácil de usar.
+
+--------------------------------------------------------------------------------
+4.5 SECCIÓN S4 · COMPRENSIÓN DE LA INFORMACIÓN
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Evalúe si el tablero comunica lo que muestra, sin necesidad de explicaciones.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  C1. Los títulos de las secciones anuncian con claridad su contenido.
+  C2. Los ejes, leyendas y unidades se entienden sin explicación adicional.
+  C3. Entendí qué mide cada KPI sin consultar la metodología.
+  C4. El mapa y su escala de color se explican por sí mismos.
+  C5. Pude formular al menos una conclusión propia sobre la movilidad de Nueva York.
+
+--------------------------------------------------------------------------------
+4.6 SECCIÓN S5 · PERTINENCIA DE LOS KPIs
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Evalúe si los indicadores responden a la pregunta del proyecto.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  K1. Los KPIs responden a la pregunta "cuándo, dónde y a qué costo se mueve la ciudad".
+  K2. Identifiqué con facilidad el KPI más importante.
+  K3. Los indicadores son suficientes para describir el fenómeno.
+  K4. Los indicadores son distintos entre sí, sin redundancias evidentes.
+
+--------------------------------------------------------------------------------
+4.7 SECCIÓN S6 · ESTÉTICA Y COHERENCIA VISUAL
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Evalúe la forma, no el contenido: color, jerarquía, tipografía y proporciones.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  E1. Los colores ayudan a interpretar los datos.
+  E2. La jerarquía visual indica qué mirar primero.
+  E3. La tipografía es legible en pantalla.
+  E4. Los tamaños y proporciones de los gráficos son adecuados.
+
+--------------------------------------------------------------------------------
+4.8 SECCIÓN S7 · INTERACTIVIDAD Y NAVEGACIÓN
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Evalúe los controles y la respuesta del tablero a sus acciones.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  I1. Los filtros actualizan los datos de forma correcta y visible.
+  I2. Los tooltips aportan información útil.
+  I3. La interacción del mapa (zoom, clic y selección) es comprensible.
+
+--------------------------------------------------------------------------------
+4.9 SECCIÓN S8 · IMPACTO Y UTILIDAD
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Evalúe el valor del tablero para entender el fenómeno y decidir.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+
+Ítems (crear una pregunta por cada uno):
+  G1. El tablero aporta información útil sobre la movilidad de Nueva York.
+  G2. Me permitiría argumentar una decisión o una recomendación.
+  G3. La información es confiable y está bien documentada.
+  G4. Recomendaría el tablero a alguien interesado en movilidad urbana.
+
+--------------------------------------------------------------------------------
+4.10 SECCIÓN S9 · ESCALA SUS (SYSTEM USABILITY SCALE)
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Las siguientes afirmaciones provienen de la escala SUS, un instrumento estándar
+  de usabilidad. Responda pensando en su experiencia completa con el tablero.
+  Escala: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo.
+
+Tipo: escala lineal (1 a 5), una pregunta por ítem
+Etiquetas: 1 = Totalmente en desacuerdo · 5 = Totalmente de acuerdo
+Obligatoria: Sí
+IMPORTANTE: no cambiar el orden ni el sentido de las afirmaciones.
+
+Ítems (crear una pregunta por cada uno):
+  SUS1.  Creo que me gustaría usar este tablero con frecuencia.
+  SUS2.  Encontré el tablero innecesariamente complejo.
+  SUS3.  Pensé que el tablero era fácil de usar.
+  SUS4.  Creo que necesitaría apoyo técnico para poder usar este tablero.
+  SUS5.  Encontré las distintas partes del tablero bien integradas.
+  SUS6.  Pensé que había demasiada inconsistencia en el tablero.
+  SUS7.  Imagino que la mayoría de la gente aprendería a usar el tablero muy rápido.
+  SUS8.  Encontré el tablero muy difícil de usar.
+  SUS9.  Me sentí muy seguro al usar el tablero.
+  SUS10. Necesité aprender muchas cosas antes de poder usar el tablero.
+
+Nota para el análisis (no mostrar al encuestado):
+  Ítems positivos: SUS1, SUS3, SUS5, SUS7, SUS9  → puntaje = respuesta − 1
+  Ítems negativos: SUS2, SUS4, SUS6, SUS8, SUS10 → puntaje = 5 − respuesta
+  SUS = (suma de los 10 puntajes) × 2.5   → escala de 0 a 100
+
+--------------------------------------------------------------------------------
+4.11 SECCIÓN S10 · PREGUNTAS ABIERTAS
+--------------------------------------------------------------------------------
+
+DESCRIPCIÓN DE LA SECCIÓN:
+  Responda con sus palabras. No hay extensión mínima ni máxima.
+
+O1 · ¿Qué fue lo primero que miró al abrir el tablero y por qué?
+  Tipo: Párrafo
+  Obligatoria: No
+
+O2 · ¿Qué parte le resultó confusa o difícil de entender?
+  Tipo: Párrafo
+  Obligatoria: Sí
+
+O3 · ¿Qué KPI o gráfico le resultó más útil y por qué?
+  Tipo: Párrafo
+  Obligatoria: No
+
+O4 · ¿Qué cambiaría del diseño, de los gráficos o de la navegación?
+  Tipo: Párrafo
+  Obligatoria: No
+
+O5 · ¿Qué información le faltó para tomar una decisión?
+  Tipo: Párrafo
+  Obligatoria: No
+
+O6 · Comentarios adicionales.
+  Tipo: Párrafo
+  Obligatoria: No
+
+--------------------------------------------------------------------------------
+4.12 SECCIÓN S11 · CIERRE
+--------------------------------------------------------------------------------
+
+TEXTO (sin preguntas):
+
+  Gracias por su tiempo. Sus respuestas son anónimas y se usarán únicamente para
+  evaluar el dashboard NYC Mobility Pulse en el marco del Proyecto 4.
+
+  Si desea volver a explorar el tablero:
+  https://srmeme64.github.io/nyc-mobility-pulse/
+
+--------------------------------------------------------------------------------
+5. GUION DE APLICACIÓN (PARA EL EQUIPO)
+--------------------------------------------------------------------------------
+
+5.1 Antes de la sesión
+  - Abrir el dashboard en el dispositivo del consultor y comprobar que carga.
+  - Tener el enlace del formulario a mano (QR o URL corta).
+  - No explicar secciones, gráficos ni hallazgos: solo el propósito general.
+
+5.2 Invitación (texto sugerido)
+  "Le pedimos evaluar un tablero sobre movilidad en Nueva York. No hay respuestas
+   correctas: nos interesa su experiencia real. Primero explore el tablero durante
+   unos minutos, sin ayuda; después responderá un cuestionario de 12 a 15 minutos.
+   Todo es anónimo."
+
+5.3 Durante la sesión
+  - Permitir la exploración libre de 3 a 5 minutos.
+  - No señalar dónde están los filtros ni qué significan los gráficos.
+  - Si el consultor se bloquea más de 2 minutos en una tarea, pedirle que escriba
+    NO ENCONTRADA y continuar. Anotar el bloqueo en la bitácora.
+  - Registrar comentarios espontáneos en una bitácora con el código del consultor
+    (C01, C02, …), nunca con su nombre.
+  - Aplicar el cuestionario inmediatamente después de la interacción.
+
+5.4 Después de la sesión
+  - Exportar las respuestas a Google Sheets.
+  - Asignar un código a cada respuesta (C01, C02, …) y eliminar cualquier dato
+    que pudiera identificar a la persona.
+  - Guardar la bitácora de observación junto con la base de respuestas.
+
+5.5 Tamaño de la muestra
+  - Mínimo exigido: 3 consultores diferentes.
+  - Recomendado para el informe: 8 a 12, con perfiles variados (experiencia alta
+    y baja, formación en datos y fuera de datos, computadora y teléfono).
+
+--------------------------------------------------------------------------------
+6. PLAN DE ANÁLISIS (PARA DESPUÉS DE APLICAR)
+--------------------------------------------------------------------------------
+
+6.1 Preparación de la base
+  - Exportar a CSV o Google Sheets.
+  - Renombrar las columnas con los códigos del instrumento:
+    P01_edad, P02_genero, …, T1_texto, T05_dificultad, U1, …, SUS10, O1, ….
+    Si la evaluación se aplicó en el sitio, el JSON ya trae esas claves y el
+    detalle de las tareas (veredicto y puntaje).
+  - Codificar las escalas como números enteros de 1 a 5.
+  - Codificar las tareas como: 1 = correcta, 0.5 = parcial, 0 = incorrecta o
+    NO ENCONTRADA.
+
+6.2 Respuestas de referencia para las tareas (verificadas en el dashboard)
+  - T1: abril de 2020 (4,702 viajes en la muestra; es el punto más bajo de la serie).
+  - T2: octubre de 2025 (46,007 viajes).
+  - T3: Upper East Side South (22,392 recogidas en 2025).
+  - T4: miércoles a las 18:00 (5,261 viajes en 2025).
+  - Aceptar variantes razonables ("abril 2020", "oct", "Upper East Side S.",
+    "miércoles 6 pm"). Si la respuesta es un año correcto pero sin mes, contar 0.5.
+
+6.3 Estadística descriptiva
+  - Por ítem: n, media, mediana, desviación estándar y porcentaje de acuerdo
+    (respuestas 4 y 5).
+  - Por dimensión: índice = media de sus ítems.
+      Usabilidad      = media(U1..U5)
+      Comprensión     = media(C1..C5)
+      KPIs            = media(K1..K4)
+      Estética        = media(E1..E4)
+      Interactividad  = media(I1..I3)
+      Impacto         = media(G1..G4)
+  - SUS: aplicar la fórmula de la sección 4.10 y reportar el puntaje 0–100.
+
+6.4 Criterios de lectura (declararlos en el informe)
+  - Media ≥ 4.0  → fortaleza.
+  - Media 3.0–3.9 → aceptable con mejoras.
+  - Media < 3.0  → debilidad.
+  - SUS ≥ 68 → usabilidad por encima del promedio de la industria.
+  - SUS 51–67 → usabilidad media, con margen de mejora.
+  - SUS < 51 → usabilidad baja.
+  - Tarea correcta ≥ 75% → tarea resuelta; < 50% → problema de diseño o de
+    rotulado.
+
+6.5 Cruces sugeridos (descriptivos)
+  - Experiencia con dashboards (P07): alta vs. baja.
+  - Área de formación (P04): datos vs. otras áreas.
+  - Familiaridad con Nueva York (P10): conoce vs. no conoce.
+  - Dispositivo (P11): computadora vs. teléfono.
+  - Con n pequeño, reportar conteos y medias por grupo; no aplicar pruebas de
+    significancia ni generalizar a poblaciones.
+
+6.6 Preguntas abiertas
+  - Codificar por temas: claridad, utilidad, estética, navegación, contenido
+    faltante y mejoras.
+  - Contar menciones por tema y conservar dos o tres citas textuales anónimas
+    por categoría.
+
+6.7 Triangulación
+  - Comparar la usabilidad percibida (U) con el desempeño en tareas (T1–T4).
+  - Comparar el SUS con el índice de usabilidad propio.
+  - Si la percepción es alta pero el desempeño es bajo, el problema es de
+    rotulado o de descubrimiento, no de gusto.
+
+6.8 Estructura del informe de resultados
+  1. Aspectos que funcionan bien (con evidencia cuantitativa y citas).
+  2. Problemas detectados (por dimensión y por tarea).
+  3. Recomendaciones de mejora (viables y priorizadas).
+  4. Límites del estudio (muestra pequeña, autoselección, una sola sesión,
+     sin grupo de control).
+
+6.9 Limitaciones que deben declararse
+  - La muestra es intencional y pequeña; no es representativa de la población.
+  - La evaluación ocurre en una sola sesión y con el dashboard ya conocido por
+    el equipo, lo que puede introducir sesgo de cortesía.
+  - El cuestionario mide percepción; las tareas miden desempeño, pero no capturan
+    el proceso completo de navegación.
+  - El anonimato impide seguimiento individual, a cambio de reducir el sesgo
+    de deseabilidad social.
+
+--------------------------------------------------------------------------------
+7. CHECKLIST ANTES DE PUBLICAR EL FORMULARIO
+--------------------------------------------------------------------------------
+
+  [ ] Título y descripción de portada copiados.
+  [ ] "Recopilar correos electrónicos" desactivado.
+  [ ] "Limitar a 1 respuesta" desactivado.
+  [ ] Barra de progreso activada; orden de preguntas fijo.
+  [ ] 12 secciones creadas (S0 a S11) con sus descripciones.
+  [ ] Q00 con lógica "No acepto" → Cierre.
+  [ ] 13 preguntas de perfil (P01–P13).
+  [ ] 4 tareas de respuesta corta + T05 + T06.
+  [ ] 35 preguntas de escala lineal: 25 Likert (S3–S8) + 10 SUS.
+  [ ] SUS con los 10 ítems en el orden correcto.
+  [ ] Opciones escritas exactamente como en este documento.
+  [ ] (Opcional) ID y entry del formulario pegados en src/lib/prefill.ts.
+  [ ] 6 preguntas abiertas (O1–O6).
+  [ ] Enlace del dashboard probado en el formulario.
+  [ ] Prueba en teléfono y computadora.
+  [ ] Respuesta de prueba eliminada.
+
+--------------------------------------------------------------------------------
+8. NOTA SOBRE EL ANONIMATO
+--------------------------------------------------------------------------------
+
+  - No se solicita nombre, correo, teléfono ni institución.
+  - No se activa la recopilación de correos de Google.
+  - Los códigos C01, C02, … los asigna el equipo, no el consultor.
+  - Las citas del informe se publican sin ningún dato identificable.
+  - La base de respuestas se guarda sin metadatos personales.
+
+================================================================================
+FIN DEL INSTRUMENTO · Fase 4 · NYC Mobility Pulse
+================================================================================

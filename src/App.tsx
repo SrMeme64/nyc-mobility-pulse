@@ -17,6 +17,7 @@ import { Footer } from './components/Footer'
 import { Card } from './components/ui'
 import { Reveal } from './components/Reveal'
 import { ReadingGuide } from './components/ReadingGuide'
+import { Evaluation } from './components/Evaluation'
 
 function SectionHead({
   kicker,
@@ -60,6 +61,12 @@ export default function App() {
   const yearLabel = useMemo(
     () => (year === 'all' ? 'todos los años' : String(year)),
     [year],
+  )
+
+  // La evaluación solo se muestra cuando se comparte el enlace con ?evaluar=1.
+  const evaluation = useMemo(
+    () => new URLSearchParams(window.location.search).get('evaluar') === '1',
+    [],
   )
 
   if (error) {
@@ -148,6 +155,7 @@ export default function App() {
 
           <Reveal delay={80}>
             <Card
+              id="ritmo"
               title="Ritmo semanal"
               subtitle="Viajes por día de la semana y hora del día"
               action={<span className="card-badge">168 franjas</span>}
@@ -237,6 +245,8 @@ export default function App() {
       </main>
 
       <Footer />
+
+      <Evaluation enabled={evaluation} />
     </div>
   )
 }

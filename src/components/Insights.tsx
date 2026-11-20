@@ -32,6 +32,13 @@ export function Insights({ kpi, previous, monthly, hourly, zones, year }: Props)
 
   const hours = hourlyFor(hourly, year)
   const peak = [...hours].sort((a, b) => b.trips - a.trips)[0]
+  const peakShare = kpi.trips
+    ? (hours
+        .filter((r) => r.hour >= 17 && r.hour <= 19)
+        .reduce((a, r) => a + r.trips, 0) /
+        kpi.trips) *
+      100
+    : 0
 
   const zs = zonesFor(zones, year).sort((a, b) => b.pickups - a.pickups)
   const top = zs[0]
@@ -63,7 +70,9 @@ export function Insights({ kpi, previous, monthly, hourly, zones, year }: Props)
                   {' '}(<Delta value={yoy} /> vs. {previous?.year})
                 </>
               )}
-              . El mes más activo fue <strong>{MONTHS_LONG[(busiestMonth?.month ?? 1) - 1]}</strong>.
+              . El mes más activo fue{' '}
+              <strong>{MONTHS_LONG[(busiestMonth?.month ?? 1) - 1]}</strong>
+              {busiestMonth ? `, con ${fmtInt(busiestMonth.trips)} viajes` : ''}.
             </>
           )}
         </p>
@@ -77,7 +86,7 @@ export function Insights({ kpi, previous, monthly, hourly, zones, year }: Props)
             <strong>
               {peak ? `${DAYS[peak.dow]} · ${peak.hour}:00` : '—'}
             </strong>
-            <small>{peak ? `${fmtInt(peak.trips)} viajes en esa franja` : ''}</small>
+            <small>{peak ? `${fmtInt(peak.trips)} viajes en esa franja · ${fmtPct(peakShare)} en 17–19 h` : ''}</small>
           </div>
         </li>
         <li>

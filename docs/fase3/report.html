@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>NYC Mobility Pulse · Fase 3 · Implementación en React</title>
+<style>
+  @page{size:A4;margin:16mm 15mm 17mm}
+  :root{
+    --ink:#0B1424; --body:#243244; --muted:#5B6B80; --rule:#DCE3EE; --soft:#F6F8FB;
+    --navy:#0D1B2E; --panel:#0D1526; --yellow:#FFD23F; --amber:#8A6A00; --teal:#0F7A6C;
+    --teal-soft:#DDF4EF; --yellow-soft:#FFF6D8; --n3-soft:#E9EEF6; --code:#0B1424;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{margin:0;background:#fff;color:var(--body);
+    font-family:"Inter","Segoe UI",Arial,sans-serif;font-size:9.8pt;line-height:1.55}
+  h1,h2,h3,h4{font-family:"Space Grotesk","Segoe UI",Arial,sans-serif;color:var(--ink);margin:0}
+  p{margin:0 0 6.5pt;text-align:justify}
+  strong{color:var(--ink)}
+  em{font-style:normal;color:var(--amber);font-weight:600}
+  a{color:var(--teal);text-decoration:none}
+  ul,ol{margin:0 0 7pt;padding-left:14pt}
+  li{margin-bottom:2.5pt}
+
+  /* ---------- cover ---------- */
+  .cover{margin:-16mm -15mm -17mm;width:210mm;height:297mm;padding:30mm 22mm 20mm;
+    background:radial-gradient(120% 90% at 88% 0%,#182A4A 0%,#070B14 55%),#070B14;
+    color:#E8EEF8;position:relative;overflow:hidden;break-after:page}
+  .cover .glow{position:absolute;right:-40mm;top:-30mm;width:130mm;height:130mm;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,210,63,.18),transparent 62%)}
+  .cover .grid{position:absolute;inset:0;opacity:.16;
+    background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+    background-size:12mm 12mm}
+  .cover>*{position:relative;z-index:2}
+  .cov-top{display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:6mm}
+  .cov-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:12pt;letter-spacing:.04em}
+  .cov-mark{width:34px;height:34px;border-radius:9px;background:var(--yellow);color:#0B0B10;
+    display:grid;place-items:center;font-size:10pt;font-weight:900}
+  .cov-kicker{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#8FA0B8;text-align:right}
+  .cov-kicker b{color:var(--yellow)}
+  .cov-main{margin-top:30mm;max-width:160mm}
+  .cov-eyebrow{font-size:8.5pt;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+  .cov-main h1{font-size:38pt;line-height:1.03;letter-spacing:-.04em;color:#fff;margin:6mm 0 5mm;font-weight:800}
+  .cov-main h1 span{color:var(--yellow)}
+  .cov-sub{font-size:12.2pt;line-height:1.45;color:#B9C7DA;max-width:138mm}
+  .cov-meta{margin-top:22mm;display:grid;grid-template-columns:1.25fr 1fr;gap:10mm;
+    border-top:1px solid rgba(255,255,255,.14);padding-top:6mm}
+  .cover strong{color:#fff}
+  .cov-meta .lbl{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:#64748B;margin-bottom:1.5mm}
+  .cov-meta .val{font-size:10pt;color:#E8EEF8;line-height:1.5}
+  .cov-foot{position:absolute;left:22mm;right:22mm;bottom:14mm;display:flex;justify-content:space-between;
+    align-items:center;font-size:7.5pt;color:#64748B;border-top:1px solid rgba(255,255,255,.1);padding-top:4mm}
+  .cov-ticket{display:inline-flex;align-items:center;gap:7px;font-size:7.5pt;color:#8FA0B8;
+    border:1px solid rgba(255,210,63,.4);border-radius:999px;padding:2mm 3.5mm}
+  .cov-ticket b{color:var(--yellow);font-size:10pt}
+
+  /* ---------- chapters ---------- */
+  main{padding:0}
+  .chapter{break-before:page}
+  .chapter:first-child{break-before:auto}
+  .chap-head{display:flex;align-items:flex-start;gap:9px;border-bottom:2px solid var(--ink);
+    padding-bottom:3mm;margin-bottom:4.2mm}
+  .chap-num{flex:0 0 auto;width:24px;height:24px;border-radius:5px;background:var(--yellow);
+    color:#0B0B10;font-weight:800;font-size:10pt;display:grid;place-items:center;
+    font-family:"Space Grotesk","Segoe UI",sans-serif}
+  .chap-head h1{font-size:17pt;line-height:1.15;letter-spacing:-.02em}
+  .chap-head .kicker{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:1mm;font-weight:700}
+  .chap-head .lead{font-size:8.8pt;color:var(--muted);margin-top:1.2mm}
+
+  h2{font-size:11.2pt;margin:4.2mm 0 1.8mm;letter-spacing:-.01em;break-after:avoid}
+  h3{font-size:9.6pt;margin:3.5mm 0 1.5mm;break-after:avoid}
+  .small{font-size:8.4pt;line-height:1.5;color:var(--muted)}
+  .tiny{font-size:7.4pt;line-height:1.45;color:var(--muted)}
+
+  .callout{background:var(--yellow-soft);border-left:3px solid var(--yellow);padding:3mm 4mm;
+    margin:3mm 0;font-size:9pt;line-height:1.5}
+  .callout.dark{background:var(--navy);border-left:3px solid var(--yellow);color:#DCE6F5}
+  .callout.dark strong{color:#fff}
+  .callout.dark em{color:var(--yellow)}
+  .callout .tagline{font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    font-weight:800;display:block;margin-bottom:1mm}
+  .callout.dark .tagline{color:var(--yellow)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+
+  /* KPI cards */
+  .kpi-row{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr 1fr;gap:2.5mm;margin:4mm 0}
+  .kpi{border:1px solid var(--rule);border-radius:3mm;padding:3mm 3.2mm;background:var(--soft);position:relative}
+  .kpi .lbl{font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800;line-height:1.3}
+  .kpi .val{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:19pt;font-weight:800;
+    letter-spacing:-.03em;color:var(--ink);margin-top:1.2mm;line-height:1}
+  .kpi .val small{font-size:8pt;color:var(--muted);font-weight:600;letter-spacing:0}
+  .kpi .sub{font-size:7.4pt;color:var(--muted);margin-top:1.4mm;line-height:1.35}
+  .kpi.main{background:var(--navy);border-color:var(--navy)}
+  .kpi.main .lbl{color:var(--yellow)}
+  .kpi.main .val{color:var(--yellow);font-size:27pt}
+  .kpi.main .val small{color:#C7D4E6}
+  .kpi.main .sub{color:#AFC0D6}
+  .kpi .badge{position:absolute;top:2mm;right:2mm;font-size:6pt;font-weight:800;letter-spacing:.06em;
+    padding:.4mm 1.4mm;border-radius:1mm;background:var(--yellow);color:#0B0B10}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;font-size:8.1pt;line-height:1.4;margin:2.5mm 0 3mm}
+  .tbl th{text-align:left;font-size:6.8pt;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+    border-bottom:1.2px solid var(--ink);padding:1.8mm 1.6mm;font-weight:800}
+  .tbl td{padding:1.5mm 1.6mm;border-bottom:.6px solid var(--rule);vertical-align:top}
+  .tbl tr:nth-child(even) td{background:#FAFBFD}
+  .tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl .tot td{border-top:1.2px solid var(--ink);border-bottom:none;font-weight:700;background:#fff!important;color:var(--ink)}
+  .tbl.compact td,.tbl.compact th{padding:1.15mm 1.4mm}
+  .tbl caption{caption-side:top;text-align:left;font-size:7.4pt;color:var(--muted);padding-bottom:1.2mm}
+
+  /* badges */
+  .n1,.n2,.n3{display:inline-block;font-size:6.4pt;font-weight:800;letter-spacing:.05em;
+    padding:.5mm 1.5mm;border-radius:1mm;vertical-align:1px}
+  .n1{background:var(--yellow);color:#0B0B10}
+  .n2{background:var(--teal-soft);color:#0F5F55}
+  .n3{background:var(--n3-soft);color:#41536B}
+
+  /* figures */
+  figure{margin:3mm 0 4mm;break-inside:avoid}
+  figure img{width:100%;display:block;border:1px solid var(--rule);border-radius:2mm}
+  figcaption{font-size:7.4pt;line-height:1.45;color:var(--muted);margin-top:1.5mm}
+  figcaption b{color:var(--ink)}
+  .fig-frame{border:1px solid var(--rule);border-radius:2mm;overflow:hidden}
+
+  /* comparison */
+  .cmp{margin:2.5mm 0 4mm;break-inside:avoid}
+  .cmp .band{display:flex;align-items:center;gap:6px;margin:2.5mm 0 1.2mm;
+    font-size:6.6pt;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+  .cmp .band .dot{width:7px;height:7px;border-radius:2px;background:var(--muted)}
+  .cmp .band.dash .dot{background:var(--yellow)}
+  .cmp img{width:100%;display:block;border:1px solid var(--rule);border-radius:2mm}
+  .cmp .cap{font-size:7.3pt;line-height:1.45;color:var(--muted);margin-top:1.4mm}
+  .cmp .cap b{color:var(--ink)}
+
+  /* mobile pair */
+  .phones2{display:grid;grid-template-columns:57mm 57mm;justify-content:center;gap:8mm;align-items:start;margin:3mm 0}
+  .phones2 .ph{margin:0}
+  .phones2 .band{font-size:6.4pt;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--muted);margin-bottom:1.2mm}
+  .phones2 img{width:100%;border:1px solid var(--rule);border-radius:3mm;display:block}
+  .phones2 .cap{font-size:6.8pt;line-height:1.4;color:var(--muted);margin-top:1.2mm}
+
+  /* palette */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:3mm 0}
+  .sw{border:1px solid var(--rule);border-radius:2mm;overflow:hidden;background:#fff}
+  .sw .chip{height:15mm}
+  .sw .info{padding:2mm 2.4mm}
+  .sw .name{font-size:7.6pt;font-weight:800;color:var(--ink);line-height:1.2}
+  .sw .hex{font-size:7pt;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:.4mm}
+  .sw .role{font-size:6.6pt;color:var(--muted);line-height:1.35;margin-top:1mm}
+  .sw .cr{font-size:6.4pt;color:var(--teal);font-weight:700;margin-top:.8mm}
+  .sw .cr.bad{color:#A33B3B}
+
+  .spec{border:1px solid var(--rule);border-radius:2mm;padding:4mm 4.5mm;background:var(--soft)}
+  .spec .display{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:30pt;font-weight:800;
+    letter-spacing:-.04em;line-height:1;color:var(--ink)}
+  .spec .body{font-size:10pt;color:var(--body);margin-top:2mm}
+  .spec .meta{font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    border-top:1px solid var(--rule);padding-top:2mm;margin-top:3mm}
+  .spec-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:7mm;align-items:start}
+  .spec-grid .display{font-size:22pt}
+  .spec-grid .body{font-size:8.8pt;margin-top:1.5mm;line-height:1.5}
+  .spec-grid .meta{margin-top:2.5mm;padding-top:1.5mm}
+
+  /* code */
+  .code{background:var(--code);color:#DCE6F5;border:1px solid #1B2A44;border-radius:2mm;
+    padding:3mm 3.5mm;margin:2.5mm 0;font-family:"Cascadia Mono",Consolas,"Courier New",monospace;
+    font-size:6.75pt;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;break-inside:avoid}
+  .code .c{color:#7F93AE}
+  .code .k{color:#FFD23F}
+  .code .s{color:#8FE3D4}
+  .code .fn{color:#9DB7FF}
+  .code-cap{font-size:6.8pt;color:var(--muted);margin:-1mm 0 2.5mm}
+
+  /* tree */
+  .tree{background:var(--soft);border:1px solid var(--rule);border-radius:2mm;padding:3.5mm 4mm;
+    font-family:"Cascadia Mono",Consolas,monospace;font-size:7.1pt;line-height:1.55;color:var(--ink);
+    white-space:pre;margin:2.5mm 0 3mm}
+  .tree b{color:var(--amber)}
+  .tree .dim{color:var(--muted)}
+
+  /* flow */
+  .flow{display:grid;grid-template-columns:1fr 22px 1fr 22px 1fr 22px 1fr;align-items:stretch;gap:0;margin:3mm 0}
+  .flow .box{border:1px solid var(--rule);border-radius:2mm;padding:2.6mm 3mm;background:var(--soft)}
+  .flow .box b{display:block;font-size:8pt;color:var(--ink);margin-bottom:.8mm}
+  .flow .box span{font-size:6.8pt;line-height:1.35;color:var(--muted);display:block}
+  .flow .arrow{display:grid;place-items:center;color:var(--muted);font-size:11pt}
+
+  .refs{font-size:8.2pt;line-height:1.5}
+  .refs li{margin-bottom:1.6mm}
+  .avoid{break-inside:avoid}
+  .pagebreak{break-before:page}
+  .toc td{padding:1.05mm 1.2mm;border-bottom:.6px solid var(--rule);font-size:8.4pt}
+  .toc td.p{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<section class="cover">
+  <div class="glow"></div>
+  <div class="grid"></div>
+  <div class="cov-top">
+    <div class="cov-brand"><span class="cov-mark">NYC</span> MOBILITY PULSE</div>
+    <div class="cov-kicker">Visualización de datos<br><b>Fase 3 · Implementación en React</b></div>
+  </div>
+
+  <div class="cov-main">
+    <div class="cov-eyebrow">Proyecto 4 · La movilidad urbana y el tráfico inteligente</div>
+    <h1>Del wireframe al <span>dashboard</span></h1>
+    <p class="cov-sub">Cómo el diseño de la Fase 2 se convirtió en una aplicación React:
+      17 componentes, 6 KPIs, 11 visualizaciones y un mapa de 263 zonas TLC.</p>
+  </div>
+
+  <div class="cov-meta">
+    <div>
+      <div class="lbl">Equipo</div>
+      <div class="val"><strong>Mobility Pulse</strong><br>Javier Rodríguez Rodríguez<br>Diego Alonso López Ballesta</div>
+    </div>
+    <div>
+      <div class="lbl">Docente</div>
+      <div class="val">Jessica Carmin Mendiola Fuentes</div>
+      <div class="lbl" style="margin-top:4mm">Fecha</div>
+      <div class="val">Noviembre de 2026</div>
+    </div>
+  </div>
+
+  <div class="cov-foot">
+    <span>NYC TLC · Yellow Taxi Trip Record Data · dominio público</span>
+    <span class="cov-ticket">Muestra <b>4,000,000</b> viajes · 263 zonas</span>
+  </div>
+</section>
+
+<main>
+
+<!-- ================= RESUMEN ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">0</div>
+    <div>
+      <div class="kicker">Síntesis</div>
+      <h1>Resumen ejecutivo</h1>
+      <div class="lead">Qué se implementó, con qué piezas y cómo se comprueba que el wireframe se cumplió.</div>
+    </div>
+  </div>
+
+  <p>Este documento cierra la Fase 3 de <strong>NYC Mobility Pulse</strong>. La Fase 2 dejó un wireframe de alta
+  fidelidad —escritorio de 1440 px y móvil de 390 px— con una promesa concreta: que el tablero podía explicar
+  <em>cuándo, dónde y a qué costo</em> se mueve Nueva York sin sacrificar la jerarquía visual. La Fase 3 convierte
+  ese plano en código: una aplicación <strong>React 19 + TypeScript + Vite 6</strong> que consume agregados
+  precalculados con DuckDB y los renderiza con Recharts y Leaflet.</p>
+
+  <p>El punto de partida no fue una hoja en blanco. El repositorio ya tenía una versión funcional del tablero; el
+  trabajo de esta fase consistió en <strong>auditar esa base contra el wireframe</strong>, cerrar las brechas y
+  documentar cada decisión. Se reorganizó la banda de KPIs, se hicieron explícitos los cinco indicadores de la
+  Fase 2 —incluidos el <strong>87.1%</strong> de concentración en Manhattan y el <strong>19.4%</strong> de viajes
+  en hora pico— y se verificó que cada bloque del diseño tuviera un componente, una fuente de datos y una regla
+  de lectura.</p>
+
+  <div class="callout dark">
+    <span class="tagline">La prueba de la correspondencia</span>
+    Con el filtro en <strong>2025</strong>, las cinco cifras del wireframe aparecen textualmente en el tablero:
+    <strong>46,007</strong> viajes en octubre, tarifa media <strong>$20.39</strong>, <strong>87.1%</strong> de las
+    recogidas en Manhattan, <strong>19.4%</strong> de los viajes entre 17 y 19 h y velocidad media
+    <strong>11.1 mph</strong>. No son cifras copiadas: salen de los mismos agregados que alimentan los gráficos.
+  </div>
+
+  <h2>Ficha técnica del entregable</h2>
+  <table class="tbl compact">
+    <tr><th style="width:24%">Elemento</th><th>Definición</th></tr>
+    <tr><td>Proyecto</td><td>4 — La movilidad urbana y el tráfico inteligente</td></tr>
+    <tr><td>Dataset</td><td>NYC TLC Yellow Taxi Trip Records · 8 archivos anuales (2015, 2017–2022, 2025)</td></tr>
+    <tr><td>Volumen fuente</td><td>599,475,232 registros · 86.9 GB · 585,599,682 válidos (97.7%)</td></tr>
+    <tr><td>Muestra</td><td>500,000 viajes por año · 4,000,000 en total · reservoir sampling con semilla 42</td></tr>
+    <tr><td>Unidad espacial</td><td>263 zonas TLC y 5 boroughs; 260 zonas activas en la muestra completa</td></tr>
+    <tr><td>Stack</td><td>React 19 · TypeScript 5.7 · Vite 6 · Recharts 2.15 · Leaflet 1.9 · CSS con variables</td></tr>
+    <tr><td>Datos del navegador</td><td><code>dashboard.json</code> (741 KB) + <code>taxi_zones.geojson</code> (400 KB)</td></tr>
+    <tr><td>Compilación</td><td>2,263 módulos · JS 899.6 KB (257.2 KB gzip) · CSS 53.3 KB (14.4 KB gzip) · 6.5 s</td></tr>
+  </table>
+
+  <h2>Contenido</h2>
+  <table class="tbl compact toc">
+    <tr><td style="width:8%">1</td><td>Introducción: qué se implementó y cómo se lee este informe</td><td class="p">3</td></tr>
+    <tr><td>2</td><td>Estructura del proyecto: árbol, componentes y flujo de datos</td><td class="p">4</td></tr>
+    <tr><td>3</td><td>Justificación técnica: por qué React, Recharts, Leaflet y CSS plano</td><td class="p">6</td></tr>
+    <tr><td>4</td><td>Correspondencia diseño → implementación, bloque por bloque</td><td class="p">8</td></tr>
+    <tr><td>4b</td><td>Correspondencia móvil: la misma historia en 390 px</td><td class="p">17</td></tr>
+    <tr><td>5</td><td>Implementación de KPIs: fórmulas, formato y render</td><td class="p">19</td></tr>
+    <tr><td>6</td><td>Implementación de gráficos: once visualizaciones y su porqué</td><td class="p">21</td></tr>
+    <tr><td>7</td><td>Implementación del mapa: GeoJSON, coropleta e interacción</td><td class="p">24</td></tr>
+    <tr><td>8</td><td>Paleta visual y estilos: tokens, tipografía y accesibilidad</td><td class="p">26</td></tr>
+    <tr><td>9</td><td>Problemas encontrados y soluciones</td><td class="p">28</td></tr>
+    <tr><td>10</td><td>Reflexión técnica</td><td class="p">30</td></tr>
+    <tr><td>11</td><td>Conclusión y autoevaluación</td><td class="p">31</td></tr>
+    <tr><td>A</td><td>Anexo: comandos, trazabilidad de figuras y referencias</td><td class="p">32</td></tr>
+  </table>
+
+  <p class="tiny">Cada capítulo empieza en página nueva para que la lectura y la evaluación puedan hacerse por bloques.</p>
+</section>
+
+<!-- ================= 1 INTRODUCCION ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">1</div>
+    <div>
+      <div class="kicker">Punto de partida</div>
+      <h1>Introducción</h1>
+      <div class="lead">El objetivo no era que el tablero se viera bien, sino que el diseño se pudiera defender línea por línea.</div>
+    </div>
+  </div>
+
+  <p>Un dashboard puede verse bien y, aun así, no ser un buen dashboard. La diferencia está en si cada elemento
+  tiene una razón: un KPI que responde a una pregunta, un gráfico que hace visible un patrón, un color que
+  distingue una categoría, un filtro que cambia el significado de lo que se lee. La consigna de la Fase 3 lo dice
+  sin rodeos: <em>la prioridad no es “que se vea bonito”, sino que el desarrollo respete las decisiones de diseño
+  y sea plenamente documentado</em>. Este informe se toma esa frase al pie de la letra.</p>
+
+  <p>El objetivo del dashboard es táctico: permitir que alguien decida <strong>dónde, cuándo y cómo</strong> se
+  mueve la ciudad. La pregunta central de la Fase 2 sigue vigente: <em>¿cuándo, dónde y a qué costo se mueve Nueva
+  York?</em> Para responderla, el tablero combina una serie temporal, un mapa de 263 zonas TLC, tres histogramas
+  económicos, un boxplot de duración, una dispersión distancia–tarifa y una tabla de rutas origen–destino. Todo se
+  lee a través de un único filtro de año que recalcula KPIs, gráficos y mapa al instante.</p>
+
+  <h2>Qué significa “implementar” en esta fase</h2>
+  <p>Implementar no fue dibujar el wireframe con HTML. Fue traducir cada bloque a un componente con
+  responsabilidades claras, conectarlo a una fuente de datos real y resolver los estados que el wireframe no
+  muestra: carga, error, año sin comparación, móvil, teclado y movimiento reducido. El wireframe es un contrato
+  visual; el código es el contrato ejecutable. La correspondencia se demuestra con tres cosas:</p>
+  <ol>
+    <li><strong>Estructura:</strong> el orden y la proporción de los bloques se conservan (hero 2 columnas,
+    demanda 2/3 + 1/3, mapa 1.7/0.8, economía en tres tarjetas).</li>
+    <li><strong>Datos:</strong> las cifras del wireframe se pueden reproducir seleccionando 2025 y provienen de
+    los mismos agregados que el resto del tablero.</li>
+    <li><strong>Lenguaje visual:</strong> la paleta, la tipografía y la jerarquía N1/N2/N3 se aplican con tokens,
+    no con decisiones improvisadas por componente.</li>
+  </ol>
+
+  <div class="callout">
+    <span class="tagline">Cómo leer este informe</span>
+    Los capítulos 2 y 3 explican la estructura y las decisiones técnicas. El capítulo 4 es el corazón de la
+    entrega: empareja el wireframe con capturas reales del dashboard y justifica cada parecido y cada desviación.
+    Los capítulos 5, 6 y 7 descienden al código de KPIs, gráficos y mapa. El 8 documenta la paleta; el 9 recoge
+    los problemas reales; el 10 y el 11 cierran con reflexión y autoevaluación.
+  </div>
+
+  <h2>Alcance y límites</h2>
+  <p>El tablero es estático: no hay backend ni consultas SQL en el navegador. Los agregados se construyen una vez
+  con DuckDB y se publican como JSON; el navegador solo hace <code>fetch</code>, formatea y dibuja. Esa decisión
+  reduce el costo de infraestructura y hace que el tablero funcione en GitHub Pages, pero también impone límites:
+  no se puede explorar el dataset completo desde la interfaz ni cruzar filtros que no estén precalculados. El
+  informe los declara en la sección de problemas y en la metodología del propio tablero.</p>
+
+  <p>La muestra es de 500,000 viajes por año, no del universo. Sirve para comparar formas, proporciones y
+  tendencias; no para afirmar el volumen absoluto de la ciudad. Los totales de la fuente y los de la muestra se
+  muestran siempre por separado. Esta distinción es una decisión editorial de la Fase 2 que la implementación
+  conserva: el hero habla de <strong>599.5 M</strong> registros procesados y el KPI de <strong>4,000,000</strong>
+  viajes analizados.</p>
+
+  <p>Finalmente, el estado inicial del tablero es <strong>“Todos”</strong>, no 2025. El wireframe se dibujó con
+  2025 porque necesitaba cifras comparables con la Fase 2; el producto abre en la vista histórica porque su
+  promesa es mostrar ocho años de una vez. Las dos vistas están documentadas con capturas y la diferencia se
+  explica en el capítulo 4: no es una inconsistencia, es una decisión de producto con una ruta de reproducción
+  explícita.</p>
+</section>
+
+<!-- ================= 2 ESTRUCTURA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">2</div>
+    <div>
+      <div class="kicker">Mapa del código</div>
+      <h1>Estructura del proyecto</h1>
+      <div class="lead">Una carpeta por responsabilidad: datos, dominio, componentes y estilos. El árbol refleja el orden de lectura del wireframe.</div>
+    </div>
+  </div>
+
+  <p>La organización del repositorio no es accidental. En la raíz conviven tres mundos que deben poder auditarse por
+  separado: el <strong>pipeline de datos</strong> (<code>etl/</code>, <code>data/</code>), la
+  <strong>aplicación</strong> (<code>src/</code>, <code>public/</code>) y la <strong>documentación</strong>
+  (<code>docs/</code>). Dentro de <code>src/</code>, la separación es la clásica de React: componentes que dibujan,
+  hooks que encapsulan comportamiento y un módulo <code>lib/</code> que concentra tipos, carga de datos, formatos y
+  movimiento. Ningún componente hace SQL ni conoce DuckDB; ninguno formatea una cifra a mano si existe una función
+  en <code>lib/format.ts</code>.</p>
+
+  <div class="tree">nyc-mobility-pulse/
+├─ <b>src/</b>
+│  ├─ App.tsx            <span class="dim">composición de secciones y estado del filtro de año</span>
+│  ├─ main.tsx           <span class="dim">punto de entrada y StrictMode</span>
+│  ├─ styles.css         <span class="dim">tokens, retícula, componentes visuales y breakpoints</span>
+│  ├─ <b>components/</b>      <span class="dim">17 componentes de interfaz</span>
+│  ├─ <b>hooks/</b>           <span class="dim">useCountUp: interpola cifras al cambiar de año</span>
+│  └─ <b>lib/</b>             <span class="dim">types.ts · data.ts · format.ts · motion.ts</span>
+├─ <b>public/</b>
+│  ├─ data/dashboard.json      <span class="dim">agregados que consume el navegador (741 KB)</span>
+│  ├─ data/taxi_zones.geojson  <span class="dim">263 polígonos TLC (400 KB)</span>
+│  └─ favicon.svg
+├─ <b>etl/</b>
+│  ├─ 01_extract_sample.py     <span class="dim">lectura de CSV con DuckDB y muestreo reproducible</span>
+│  ├─ 02_build_geojson.py      <span class="dim">conversión del shapefile de zonas a GeoJSON</span>
+│  ├─ 03_map_zones_2015.py     <span class="dim">verificación del catálogo de zonas</span>
+│  └─ 04_build_aggregates.py   <span class="dim">KPIs, series, histogramas, boxplot, rutas y JSON final</span>
+├─ <b>data/</b>                 <span class="dim">muestras Parquet, zones.csv, quality_report.json, DuckDB</span>
+├─ <b>docs/</b>                 <span class="dim">informes de Fase 1, Fase 2 y Fase 3 + figuras</span>
+├─ <b>dist/</b>                 <span class="dim">build de producción (GitHub Pages)</span>
+├─ index.html
+├─ vite.config.ts
+├─ package.json
+└─ README.md</div>
+
+  <table class="tbl compact">
+    <tr><th style="width:22%">Carpeta / archivo</th><th>Responsabilidad</th><th style="width:26%">Por qué está separada</th></tr>
+    <tr><td><code>src/components/</code></td><td>Un componente por bloque visual: Header, Hero, KpiGrid, MonthlyChart, Heatmap, ZonesSection, EconomySection, EfficiencySection, RoutesSection, Methodology, Footer y piezas reutilizables (ui, Reveal, ChartHelp, BoxPlot).</td><td>Permite cambiar un bloque sin tocar los demás y hace que el wireframe se lea como una lista de componentes.</td></tr>
+    <tr><td><code>src/lib/data.ts</code></td><td>Carga el JSON, filtra por año y agrega series cuando el filtro es “Todos” (<code>hourlyFor</code>, <code>zonesFor</code>, <code>monthlyFor</code>).</td><td>La lógica de datos no vive dentro del JSX; se puede probar y reutilizar.</td></tr>
+    <tr><td><code>src/lib/format.ts</code></td><td>Formatos es-MX, meses, días, colores de calor, correlación de Pearson y cambios porcentuales.</td><td>Una sola fuente para que “$20.39” se escriba igual en toda la aplicación.</td></tr>
+    <tr><td><code>src/lib/types.ts</code></td><td>Contratos de <code>Kpi</code>, <code>MonthlyRow</code>, <code>ZoneRow</code>, <code>DashboardData</code>, etc.</td><td>TypeScript detecta si un componente espera un campo que el JSON no trae.</td></tr>
+    <tr><td><code>src/styles.css</code></td><td>Variables de color y tipografía, retícula, tarjetas, mapa, heatmap, breakpoints y estados de foco.</td><td>La paleta se define una vez; el resto del código consume tokens.</td></tr>
+    <tr><td><code>etl/</code></td><td>Pipeline reproducible: extrae, limpia, muestrea, agrega y exporta.</td><td>El navegador nunca procesa 86.9 GB; recibe resultados pequeños y verificables.</td></tr>
+    <tr><td><code>public/data/</code></td><td>Únicos datos que viajan al cliente: agregados y geometría.</td><td>Son activos estáticos, cacheables y versionables; no requieren servidor.</td></tr>
+  </table>
+
+  <h2>Los 17 componentes y su función</h2>
+  <table class="tbl compact">
+    <tr><th style="width:20%">Componente</th><th>Qué renderiza</th><th style="width:24%">Dato que consume</th></tr>
+    <tr><td><code>Header</code></td><td>Marca, navegación por anclas, tira de años en escritorio y menú compacto en móvil; barra de progreso de lectura.</td><td><code>meta.years</code>, <code>year</code></td></tr>
+    <tr><td><code>Hero</code></td><td>Titular, descripción, chips de fuente y ticket de datos (registros, años, zonas, viajes por año).</td><td><code>meta</code>, <code>kpi</code></td></tr>
+    <tr><td><code>KpiGrid</code></td><td>Seis tarjetas con valor animado, delta contra el año previo y una línea de contexto.</td><td><code>kpi</code>, <code>previous</code></td></tr>
+    <tr><td><code>ReadingGuide</code></td><td>Cuatro gestos de lectura y la leyenda de colores del tablero.</td><td>Estático</td></tr>
+    <tr><td><code>MonthlyChart</code></td><td>Área histórica cuando el año es “Todos”; barras del año + línea punteada del año previo cuando hay año.</td><td><code>monthly</code></td></tr>
+    <tr><td><code>Insights</code></td><td>Lectura rápida del periodo: mes pico, hora pico, zona líder, propina y velocidad.</td><td><code>kpi</code>, <code>monthly</code>, <code>hourly</code>, <code>zones</code></td></tr>
+    <tr><td><code>Heatmap</code></td><td>Matriz 7 × 24 (día × hora) construida con CSS Grid; tooltip por celda y pico semanal.</td><td><code>hourly</code></td></tr>
+    <tr><td><code>ZonesSection</code></td><td>Mapa Leaflet, filtros por borough y métrica, detalle de zona y ranking top 10.</td><td><code>zones</code>, GeoJSON</td></tr>
+    <tr><td><code>EconomySection</code></td><td>Histograma de tarifa, histograma de distancia y dona de método de pago.</td><td><code>histFare</code>, <code>histDistance</code>, <code>payment</code></td></tr>
+    <tr><td><code>EfficiencySection</code></td><td>Boxplot de duración por franja y dispersión distancia–tarifa con correlación.</td><td><code>boxplot</code>, <code>scatter</code></td></tr>
+    <tr><td><code>RoutesSection</code></td><td>Tabla de las diez rutas origen–destino más frecuentes.</td><td><code>routes</code></td></tr>
+    <tr><td><code>Methodology</code></td><td>Pipeline en cuatro pasos, reglas de limpieza y tabla de calidad por año.</td><td><code>meta</code>, <code>quality</code></td></tr>
+    <tr><td><code>Footer</code></td><td>Equipo, docente, fuente, stack y enlace al documento de la fase anterior.</td><td>Estático</td></tr>
+    <tr><td><code>ui</code></td><td><code>Card</code>, <code>Segmented</code>, <code>Delta</code>, <code>ChartTooltip</code>: piezas compartidas.</td><td>Props</td></tr>
+    <tr><td><code>Reveal</code></td><td>Aparición progresiva al entrar en viewport; se desactiva con movimiento reducido.</td><td>IntersectionObserver</td></tr>
+    <tr><td><code>ChartHelp</code></td><td>Explicación desplegable “¿Cómo leer esta gráfica?” para cada visualización.</td><td>Texto</td></tr>
+    <tr><td><code>BoxPlot</code></td><td>SVG propio para la distribución de duración por franja horaria.</td><td><code>boxplot</code></td></tr>
+  </table>
+
+  <h2>Flujo de datos: del CSV al píxel</h2>
+  <p>La arquitectura se entiende en una línea: <strong>el dato pesado se queda en el ETL y al navegador solo llega
+  el agregado</strong>. Ese corte es la decisión más importante del proyecto porque explica por qué un tablero de
+  86.9 GB puede abrir en unos segundos desde GitHub Pages.</p>
+
+  <div class="flow">
+    <div class="box"><b>CSV de la TLC</b><span>8 archivos anuales · 599.5 M filas · 86.9 GB</span></div>
+    <div class="arrow">→</div>
+    <div class="box"><b>DuckDB + Parquet</b><span>lectura columnar, limpieza y muestra de 500 K por año</span></div>
+    <div class="arrow">→</div>
+    <div class="box"><b>dashboard.json</b><span>KPIs, series, histogramas, cajas, rutas y calidad · 741 KB</span></div>
+    <div class="arrow">→</div>
+    <div class="box"><b>React</b><span>fetch → estado → Recharts / Leaflet / CSS Grid</span></div>
+  </div>
+
+  <p>El JSON tiene 13 claves: <code>meta</code>, <code>kpis</code>, <code>monthly</code>, <code>hourly</code>,
+  <code>zones</code>, <code>boroughs</code>, <code>payment</code>, <code>histFare</code>,
+  <code>histDistance</code>, <code>boxplot</code>, <code>scatter</code>, <code>routes</code> y
+  <code>quality</code>. Cada una corresponde a una sección del tablero; no hay datos “por si acaso”. El navegador
+  no ejecuta SQL ni conoce el esquema original: recibe filas ya agregadas y solo decide cómo mostrarlas.</p>
+
+  <h2>Compilación y entrega</h2>
+  <table class="tbl compact">
+    <tr><th style="width:30%">Métrica</th><th>Valor</th><th>Lectura</th></tr>
+    <tr><td>Módulos transformados</td><td class="num">2,263</td><td>Vite resuelve React, Recharts, Leaflet y los 17 componentes.</td></tr>
+    <tr><td>JavaScript de producción</td><td class="num">899.6 KB · 257.2 KB gzip</td><td>Incluye Recharts y Leaflet; es el costo de tener gráficos y mapa sin backend.</td></tr>
+    <tr><td>CSS de producción</td><td class="num">53.3 KB · 14.4 KB gzip</td><td>Un solo archivo con tokens y todos los breakpoints.</td></tr>
+    <tr><td>Tiempo de build</td><td class="num">6.5 s</td><td><code>tsc --noEmit</code> + <code>vite build</code> sin errores.</td></tr>
+    <tr><td>Salida</td><td class="num">dist/</td><td>Rutas relativas (<code>base: './'</code>) para funcionar en GitHub Pages sin configuración extra.</td></tr>
+  </table>
+
+  <p class="small">La compilación se verificó con <code>npm run build</code> antes de capturar las figuras de este
+  informe. El comando incluye el chequeo de tipos: si un componente recibe un dato con la forma equivocada, el build
+  falla antes de publicar. Esa es la primera red de seguridad de la fase.</p>
+</section>
+
+<!-- ================= 3 JUSTIFICACION ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">3</div>
+    <div>
+      <div class="kicker">Decisiones de stack</div>
+      <h1>Justificación técnica</h1>
+      <div class="lead">Cada librería entró porque resolvía un problema del wireframe; ninguna está por moda.</div>
+    </div>
+  </div>
+
+  <p>La consigna sugería un stack, no imponía uno. La elección se hizo comparando tres criterios: <strong>qué
+  necesitaba el diseño</strong> (series, mapa, tooltips, responsive), <strong>qué se podía mantener</strong> con el
+  tiempo del equipo y <strong>qué cabía</strong> en un sitio estático. El resultado es deliberadamente conservador:
+  React para la composición, Recharts para los gráficos SVG, Leaflet para el mapa y CSS plano con variables para el
+  sistema visual. No hay router, no hay estado global, no hay backend.</p>
+
+  <table class="tbl">
+    <tr><th style="width:15%">Necesidad</th><th style="width:19%">Elección</th><th style="width:19%">Alternativa descartada</th><th>Por qué</th></tr>
+    <tr><td>Componer bloques visuales</td><td><strong>React 19 + TypeScript</strong></td><td>HTML + JS imperativo; Vue</td><td>El wireframe ya está escrito como una lista de bloques. React permite que cada bloque sea un componente con props tipadas; TypeScript convierte el JSON en un contrato verificable.</td></tr>
+    <tr><td>Build y despliegue</td><td><strong>Vite 6</strong></td><td>Create React App; Webpack a mano</td><td>Arranque y HMR rápidos, salida estática y <code>base: './'</code> para GitHub Pages. CRA está en desuso y Webpack añade configuración sin beneficio para este tamaño.</td></tr>
+    <tr><td>Gráficos</td><td><strong>Recharts 2.15</strong></td><td>Chart.js; Plotly; D3 puro</td><td>Recharts es declarativo y SVG: los colores, ejes y tooltips se controlan con props, igual que el resto de la interfaz. Chart.js dibuja en canvas (más difícil de estilar y de hacer accesible); Plotly pesa más y su estética choca con la paleta; D3 daría control total a cambio de mucho más código.</td></tr>
+    <tr><td>Mapa</td><td><strong>Leaflet 1.9 + React-Leaflet 5</strong></td><td>Mapbox GL; D3 geo; Google Maps</td><td>Leaflet consume GeoJSON de forma nativa, no requiere token ni tarjeta y permite un mapa coroplético con tooltips en pocas líneas. Mapbox y Google añaden dependencia de servicio; D3 geo exigiría implementar zoom, pan y proyecciones.</td></tr>
+    <tr><td>Carga de datos</td><td><strong>fetch + JSON</strong></td><td>Axios; API REST; SQL en el navegador</td><td>El dato ya está agregado y es estático. <code>fetch</code> es nativo y suficiente; Axios no aporta nada aquí. Ejecutar SQL en el cliente exigiría descargar el dataset o un motor WASM innecesario.</td></tr>
+    <tr><td>Estilos</td><td><strong>CSS plano + variables</strong></td><td>Tailwind; CSS Modules; styled-components</td><td>La paleta de la Fase 2 se traduce a tokens en <code>:root</code> y se lee en un solo archivo. Tailwind escondería los hex en clases; CSS-in-JS añadiría runtime. Para un equipo pequeño y una entrega evaluable, un CSS legible es una ventaja.</td></tr>
+    <tr><td>Iconos</td><td><strong>lucide-react</strong></td><td>Font Awesome; SVG a mano</td><td>Iconos SVG tree-shakeables, con el mismo grosor de trazo en toda la interfaz. Se importan solo los que se usan.</td></tr>
+    <tr><td>Navegación</td><td><strong>Anclas HTML</strong></td><td>React Router</td><td>El tablero es una sola página con cinco secciones. Un router añadiría peso y estados de URL sin rutas reales. Las anclas conservan el desplazamiento suave y el foco.</td></tr>
+    <tr><td>Estado</td><td><strong>useState + useMemo</strong></td><td>Redux; Zustand; Context global</td><td>Solo hay un filtro compartido (el año) y datos derivados. Levantar un store global sería sobreingeniería; el estado vive en <code>App</code> y baja por props.</td></tr>
+  </table>
+
+  <h2>El contrato de datos</h2>
+  <p>El archivo <code>src/lib/types.ts</code> es la frontera entre el ETL y la interfaz. Si el JSON cambia de forma,
+  TypeScript lo detecta en el build. El tipo <code>Year</code> merece atención porque atraviesa toda la aplicación:
+  es un número o la cadena <code>'all'</code>, y esa distinción obliga a tratar la vista histórica como un caso
+  propio, no como “el año cero”.</p>
+
+  <div class="code"><span class="c">// src/lib/types.ts</span>
+<span class="k">export type</span> <span class="fn">Year</span> = <span class="k">number</span> | <span class="s">'all'</span>
+
+<span class="k">export interface</span> <span class="fn">Kpi</span> {
+  year: Year
+  trips: <span class="k">number</span>
+  avg_fare: <span class="k">number</span>
+  fare_per_mile: <span class="k">number</span>
+  tip_pct: <span class="k">number</span>
+  revenue: <span class="k">number</span>
+  avg_speed: <span class="k">number</span>
+  active_zones: <span class="k">number</span>
+  source_trips?: <span class="k">number</span> | <span class="k">null</span>
+}</div>
+  <p class="code-cap">El tipo <code>Year</code> y el contrato de un KPI. El resto de los tipos sigue el mismo patrón: una interfaz por tabla del JSON.</p>
+
+  <p>La carga también es deliberadamente simple. No hay capa de repositorio ni caché manual: un <code>fetch</code>
+  relativo a <code>document.baseURI</code> para que funcione igual en local y en GitHub Pages, y un error explícito
+  si el JSON no está. Esa simplicidad es una decisión de mantenimiento: cualquiera que abra el proyecto puede
+  seguir el dato desde el archivo hasta el gráfico sin saltar entre capas.</p>
+
+  <div class="code"><span class="c">// src/lib/data.ts</span>
+<span class="k">export async function</span> <span class="fn">loadDashboard</span>(): Promise&lt;DashboardData&gt; {
+  <span class="k">const</span> url = <span class="k">new</span> <span class="fn">URL</span>(<span class="s">'data/dashboard.json'</span>, document.baseURI)
+  <span class="k">const</span> res = <span class="k">await</span> <span class="fn">fetch</span>(url)
+  <span class="k">if</span> (!res.ok) <span class="k">throw new</span> <span class="fn">Error</span>(<span class="s">`No se pudo cargar (${res.status})`</span>)
+  <span class="k">return</span> (<span class="k">await</span> res.<span class="fn">json</span>()) <span class="k">as</span> DashboardData
+}</div>
+  <p class="code-cap">Una sola función de carga. El estado de error de <code>App</code> muestra un mensaje accionable si el archivo falta.</p>
+
+  <div class="callout dark">
+    <span class="tagline">La decisión que más pesó</span>
+    <strong>Precalcular en DuckDB y no consultar en el navegador.</strong> El dataset completo no cabe en una
+    petición web ni debería viajar al cliente. Al mover el costo al ETL, el tablero puede ser estático, rápido y
+    barato; el precio es que la interfaz solo puede explorar los cortes que el ETL dejó preparados. Para un
+    dashboard táctico de ocho años, ese intercambio es correcto.
+  </div>
+
+  <p class="small">La alternativa de cargar los Parquet con DuckDB-WASM habría permitido más libertad de consulta,
+  pero habría multiplicado el peso de la página y el tiempo de arranque. Se descartó por costo/beneficio, no por
+  desconocimiento: la sección 9 documenta esa decisión como un límite consciente.</p>
+</section>
+
+<!-- ================= 4 CORRESPONDENCIA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">4</div>
+    <div>
+      <div class="kicker">El contrato visual, cumplido</div>
+      <h1>Correspondencia diseño → implementación</h1>
+      <div class="lead">Siete pares de capturas: arriba el wireframe de la Fase 2, abajo el dashboard real. Qué se conservó, qué se movió y por qué.</div>
+    </div>
+  </div>
+
+  <p>La comparación se hace con el filtro en <strong>2025</strong> porque el wireframe de la Fase 2 se dibujó con ese
+  año: era la única forma de que las cifras del plano y las del producto fueran comparables. El tablero abre en
+  <strong>“Todos”</strong>; seleccionar 2025 es un clic. Las capturas se tomaron a 1440 px, con movimiento reducido
+  para que las animaciones no alteraran la imagen, y se recortaron por bloques para que el detalle sea legible en
+  A4. El wireframe no se rehízo: se usan las figuras originales de la Fase 2.</p>
+
+  <div class="callout">
+    <span class="tagline">Criterio de lectura</span>
+    No se busca una igualdad píxel a píxel —el wireframe es una maqueta y el dashboard es una aplicación con datos
+    reales—, sino una igualdad <strong>estructural</strong>: mismo orden, misma proporción, mismo lenguaje visual y
+    mismas preguntas. Las diferencias se explican al final del capítulo.
+  </div>
+
+  <h2>Cómo se obtuvieron las capturas</h2>
+  <p>La comparación solo vale si las dos imágenes son reproducibles. Por eso cada captura declara su viewport, su
+  estado y la herramienta que la produjo. El dashboard se sirvió desde el build de producción
+  (<code>dist/</code>) y se fotografió con Edge headless; el wireframe se tomó de las figuras originales de la
+  Fase 2, sin retoques ni reconstrucciones. Ninguna imagen se compuso a mano: todas salen de un comando que puede
+  volver a ejecutarse.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:26%">Parámetro</th><th>Valor</th><th style="width:30%">Por qué</th></tr>
+    <tr><td>Viewport</td><td>1440 × 10000 px (escritorio) y 390 × 16000 px (móvil)</td><td>Coincide con los dos anchos del wireframe y evita el scroll horizontal.</td></tr>
+    <tr><td>Escala</td><td><code>--force-device-scale-factor=1</code></td><td>Las medidas del recorte corresponden a píxeles CSS reales.</td></tr>
+    <tr><td>Movimiento</td><td><code>--force-prefers-reduced-motion</code></td><td>Congela el conteo de KPIs y las animaciones de Recharts en su valor final.</td></tr>
+    <tr><td>Estado</td><td><strong>2025</strong> para la comparación; “Todos” como estado inicial documentado</td><td>Es el año con el que se dibujó el wireframe y el que permite verificar sus cifras.</td></tr>
+    <tr><td>Recorte</td><td>Un bloque por figura, sin reescalado del texto</td><td>Mantiene la legibilidad en A4 y deja ver el detalle de cada sección.</td></tr>
+  </table>
+
+  <p class="small">El estado 2025 se fijó con una página auxiliar del mismo origen que carga la aplicación en un
+  iframe y pulsa el botón del año; así no se modificó el código del tablero para “posar” la captura. El script
+  <code>docs/fase3/make_figures.py</code> reproduce todo el proceso, y la página auxiliar se elimina al terminar.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · Fase 2 · 1440 px · estado 2025</div>
+    <img src="w_top.png" alt="Wireframe de la cabecera y la banda de KPIs" />
+    <div class="band dash"><span class="dot"></span> Dashboard · React · 1440 px · estado 2025</div>
+    <img src="d_top.png" alt="Cabecera y banda de KPIs del dashboard real" />
+    <p class="cap"><b>Fig. 4.1. Identidad, hero y banda de KPIs.</b> Se conservan la retícula de dos columnas
+    (1.45 / 0.85), el titular en tres líneas con “movilidad” en amarillo, los chips de fuente y el ticket de datos
+    con años, zonas y viajes por año. El dashboard añade dos KPIs (ingreso y tarifa por milla) y convierte la
+    tarjeta principal en una banda de seis tarjetas equivalentes; las cinco cifras de la Fase 2 siguen visibles en
+    el estado 2025.</p>
+  </div>
+
+  <p>La primera diferencia salta a la vista: el wireframe concentraba la jerarquía en una tarjeta
+  <span class="n1">N1</span> —46,007 viajes en octubre— y cuatro tarjetas <span class="n2">N2</span>. El dashboard
+  usa seis tarjetas del mismo tamaño. La razón es funcional: el filtro de año cambia el significado de “viajes en
+  octubre”; con “Todos” ese número sería la suma de ocho octubres y perdería la lectura de mes pico. En la
+  implementación, la demanda se expresa en la serie mensual y en las lecturas rápidas, donde octubre conserva su
+  cifra exacta. Las otras cuatro tarjetas del wireframe se mantienen: tarifa (<strong>$20.39</strong>), velocidad
+  (<strong>11.1 mph</strong>), concentración (<strong>87.1%</strong>, en el subtítulo del mapa) y hora pico
+  (<strong>19.4%</strong>, en las lecturas rápidas).</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · sección 01 y ritmo semanal</div>
+    <img src="w_demand.png" alt="Wireframe de la serie mensual y el heatmap" />
+    <div class="band dash"><span class="dot"></span> Dashboard · sección 01 y ritmo semanal</div>
+    <img src="d_demand_heat.png" alt="Serie mensual y heatmap del dashboard real" />
+    <p class="cap"><b>Fig. 4.2. Demanda: serie mensual, lecturas y heatmap.</b> La estructura 2/3 + 1/3 se conserva,
+    igual que el heatmap a ancho completo. El dashboard añade la lectura “octubre, con 46,007 viajes” y la
+    participación de 19.4% en 17–19 h, dos cifras que el wireframe mostraba en la banda KPI y que aquí viven en el
+    bloque que las explica.</p>
+  </div>
+
+  <p>En el estado “Todos” el gráfico mensual es un <strong>área</strong> que recorre 2015–2025 y marca el desplome
+  de 2020; en el estado 2025 es un <strong>gráfico de barras con línea punteada</strong> del año previo. Es el mismo
+  componente con dos ramas de render, no dos gráficos distintos. El wireframe dibujó la versión 2025 porque era la
+  que permitía comparar con la Fase 2; la implementación conserva ambas porque la vista histórica es la que
+  justifica el proyecto. El heatmap es idéntico en concepto: 7 días × 24 horas, 168 celdas y una escala secuencial
+  de azul a amarillo.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · mapa coroplético y ranking</div>
+    <img src="w_geo.png" alt="Wireframe del mapa de zonas y el top 10" />
+    <div class="band dash"><span class="dot"></span> Dashboard · mapa Leaflet y ranking</div>
+    <img src="d_geo.png" alt="Mapa coroplético y ranking del dashboard real" />
+    <p class="cap"><b>Fig. 4.3. Territorio: coropleta, filtros y top 10.</b> La proporción 1.7 / 0.8, los chips de
+    borough, la leyenda “Menos → Más”, el 87.1% de concentración y la lista con barras se conservan. El dashboard
+    añade el selector Origen / Destino / Tarifa, el zoom y un panel de detalle por zona; el wireframe resolvía el
+    detalle con una nota al pie.</p>
+  </div>
+
+  <p>El mapa es el bloque donde más se nota el paso de maqueta a aplicación. El wireframe usaba un SVG estático
+  con la silueta de la ciudad; el dashboard usa <strong>Leaflet</strong> con las 263 geometrías TLC, un mapa base
+  oscuro de Esri y una coropleta que se recolorea al cambiar de métrica o de borough. La sustancia visual no cambió:
+  Manhattan sigue siendo la mancha amarilla dominante y los aeropuertos siguen apareciendo como polos aislados. El
+  ranking confirma la misma historia: Upper East Side South (22,392), Midtown Center (22,216) y JFK (20,771) en los
+  tres primeros puestos.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · economía del viaje</div>
+    <img src="w_eco.png" alt="Wireframe del histograma de tarifa y la dona de pagos" />
+    <div class="band dash"><span class="dot"></span> Dashboard · economía del viaje</div>
+    <img src="d_eco.png" alt="Histogramas y dona de pagos del dashboard real" />
+    <p class="cap"><b>Fig. 4.4. Economía: tarifa, distancia y método de pago.</b> Se conservan el histograma con la
+    línea de la media, la dona con la leyenda y los colores categóricos. El dashboard añade el histograma de
+    distancias, que el wireframe mencionaba en la narrativa pero no le daba tarjeta, y muestra la propina declarada
+    por método de pago.</p>
+  </div>
+
+  <p>La tarifa media de 2025 (<strong>$20.39</strong>) aparece como línea vertical en el histograma y como cifra en
+  la tarjeta KPI: el mismo dato, dos lecturas. La distribución tiene la cola derecha típica de los viajes largos y
+  un pico secundario cerca de $70, asociado a trayectos al aeropuerto. La dona resume una ciudad que ya paga
+  mayoritariamente con tarjeta (<strong>85.7%</strong>), con efectivo en segundo lugar (12.3%) y una porción
+  marginal de disputas y sin cargo. El wireframe ya había identificado ese patrón; la implementación lo confirma con
+  los datos de 2025.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · eficiencia del viaje</div>
+    <img src="w_eff.png" alt="Wireframe del boxplot y la dispersión" />
+    <div class="band dash"><span class="dot"></span> Dashboard · eficiencia del viaje</div>
+    <img src="d_eff.png" alt="Boxplot y dispersión del dashboard real" />
+    <p class="cap"><b>Fig. 4.5. Eficiencia: duración por franja y distancia vs. tarifa.</b> Se conservan el boxplot
+    con medianas etiquetadas, la dispersión coloreada por método de pago y la anotación de correlación. El
+    dashboard reordena los grupos (hora pico, valle, fin de semana, madrugada) para que la comparación empiece por
+    el contraste que importa; las cifras son las que salen de los datos, no las de la maqueta.</p>
+  </div>
+
+  <p>El wireframe dibujó medianas redondas (12, 14.4, 15, 13.9 min) para mostrar la idea; el dashboard calcula las
+  reales de 2025: <strong>13.4</strong> min en hora pico, <strong>13.9</strong> en valle, <strong>13.2</strong> en
+  fin de semana y <strong>13.1</strong> en madrugada. La lección se mantiene: la hora pico alarga la cola superior
+  —el p95 llega a 47.3 min— aunque la mediana no sea la más alta. La dispersión confirma una correlación fuerte
+  entre millas y tarifa (<strong>r = 0.91</strong>), con los viajes en efectivo ligeramente por debajo de la nube
+  para la misma distancia.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · rutas más frecuentes</div>
+    <img src="w_routes.png" alt="Wireframe de la tabla de rutas" />
+    <div class="band dash"><span class="dot"></span> Dashboard · rutas más frecuentes</div>
+    <img src="d_routes.png" alt="Tabla de rutas del dashboard real" />
+    <p class="cap"><b>Fig. 4.6. Rutas: la tabla de corredores.</b> Se conservan el orden descendente, el par
+    origen → destino, la barra bajo el nombre y las columnas de viajes y tarifa. El dashboard añade la duración
+    media, un dato que el wireframe no mostraba y que ayuda a distinguir un viaje corto de un cuello de botella.</p>
+  </div>
+
+  <p>La tabla es el bloque más “de datos” del tablero y, por eso, el más fácil de comparar. Las diez rutas de 2025
+  son casi todas internas de Manhattan, con ida y vuelta entre Upper East Side South y North en los dos primeros
+  puestos (3,312 y 2,827 viajes). La implementación no inventa categorías: muestra el par, los viajes, la tarifa
+  media y la duración, y deja que el lector vea el patrón. La barra bajo el nombre es una ayuda de lectura, no un
+  gráfico aparte: compara cada ruta con la primera.</p>
+
+  <div class="cmp">
+    <div class="band"><span class="dot"></span> Wireframe · metodología y límites</div>
+    <img src="w_method.png" alt="Wireframe de la metodología" />
+    <div class="band dash"><span class="dot"></span> Dashboard · metodología y límites</div>
+    <img src="d_method.png" alt="Metodología del dashboard real" />
+    <p class="cap"><b>Fig. 4.7. Metodología: pipeline, reglas y calidad.</b> Se conservan los cuatro pasos, las
+    reglas de limpieza y la tabla de calidad por año. El dashboard titula el bloque “Cómo se construyó este
+    dashboard” y lo etiqueta como Fase 1 porque documenta el pipeline que alimenta la aplicación; los límites
+    siguen escritos al pie.</p>
+  </div>
+
+  <p>La metodología no es un adorno: es la defensa de las cifras. El bloque explica que se leyeron ocho archivos
+  anuales, que se descartaron duraciones fuera de 1 min–6 h, distancias fuera de 0.1–100 millas y tarifas
+  negativas, y que se conservó una muestra reproducible de 500,000 viajes por año. También declara lo que no se
+  puede concluir: la propina en efectivo no se registra y el tablero describe viajes, no personas. Esa honestidad
+  es parte del diseño y se mantiene en la implementación.</p>
+
+  <h2>Balance de correspondencia</h2>
+  <table class="tbl compact">
+    <tr><th style="width:19%">Bloque</th><th style="width:27%">Wireframe Fase 2</th><th style="width:27%">Implementación React</th><th>Veredicto</th></tr>
+    <tr><td>Identidad y filtros</td><td>Header con marca, nav y tira de años; 2025 activo</td><td>Header sticky, nav por anclas, tira de años y menú compacto en móvil</td><td>Se conserva y se amplía</td></tr>
+    <tr><td>Hero + ticket</td><td>Dos columnas; ticket oscuro con 599.5 M</td><td>Dos columnas; ticket amarillo con 48 M en 2025 / 599.5 M en Todos</td><td>Se conserva; cambia el color</td></tr>
+    <tr><td>Banda KPI</td><td>1 principal + 4 secundarias</td><td>6 tarjetas equivalentes</td><td>Se reorganiza; los 5 KPIs siguen</td></tr>
+    <tr><td>01 Demanda</td><td>Serie mensual 2/3 + lecturas 1/3; heatmap</td><td>Área o barras+línea 2/3 + lecturas 1/3; heatmap 7×24</td><td>Se conserva y se amplía</td></tr>
+    <tr><td>02 Territorio</td><td>Mapa SVG + top 10; 87.1%</td><td>Leaflet + top 10 + detalle; 87.1% en el subtítulo</td><td>Se conserva y se amplía</td></tr>
+    <tr><td>03 Economía</td><td>Histograma de tarifa + dona</td><td>Histograma de tarifa + distancia + dona</td><td>Se conserva y se añade distancia</td></tr>
+    <tr><td>04 Eficiencia</td><td>Boxplot + dispersión</td><td>Boxplot SVG + ScatterChart con r</td><td>Se conserva; cifras reales</td></tr>
+    <tr><td>05 Rutas</td><td>Tabla top 10 (viajes, tarifa)</td><td>Tabla top 10 (viajes, tarifa, duración)</td><td>Se conserva y se añade duración</td></tr>
+    <tr><td>Metodología</td><td>Pipeline, reglas y límites</td><td>Pipeline, reglas, calidad y límites</td><td>Se conserva y se amplía</td></tr>
+    <tr><td>Footer</td><td>Equipo, fuente, stack</td><td>Equipo, docente, fuente, stack y enlace a Fase 2</td><td>Se conserva y se amplía</td></tr>
+  </table>
+
+  <h2>Las cuatro desviaciones deliberadas</h2>
+  <p>Una correspondencia honesta no oculta las diferencias; las explica. Estas son las únicas cuatro que afectan la
+  lectura visual, y ninguna elimina un bloque o un KPI de la Fase 2.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:4%">#</th><th style="width:23%">Desviación</th><th>Por qué se tomó</th></tr>
+    <tr><td>1</td><td>Banda de 6 tarjetas en lugar de 1 + 4</td><td>El filtro de año hace que “viajes en octubre” no sea comparable en la vista histórica. La demanda se trasladó a la serie mensual y a las lecturas rápidas; las otras cuatro tarjetas se conservaron y se añadieron ingreso, tarifa por milla y propina. Todos los indicadores reaccionan al filtro.</td></tr>
+    <tr><td>2</td><td>Ticket amarillo en lugar de oscuro</td><td>Al liberar la tarjeta N1, el ticket quedó como el único bloque de color pleno del hero. El amarillo #FFD23F tiene 13.63:1 de contraste sobre el fondo y es el color del objeto de estudio; usarlo como ancla visual es coherente con la paleta de la Fase 2.</td></tr>
+    <tr><td>3</td><td>Etiquetas de navegación: Zonas, Tarifas, Metodología</td><td>El wireframe usaba Territorio, Economía y Rutas. En 1440 px, cinco anclas cortas caben sin desplazar la tira de años; “Rutas” se alcanza con scroll y la sección conserva su número 05. Las etiquetas nuevas coinciden con el título visible de cada sección.</td></tr>
+    <tr><td>4</td><td>Estado inicial “Todos” en lugar de 2025</td><td>La promesa del producto es mostrar ocho años; abrir en la vista histórica la cumple de inmediato. El estado 2025 sigue a un clic y es el que se usa en este capítulo para comparar con el wireframe. La diferencia está documentada, no escondida.</td></tr>
+  </table>
+
+  <div class="callout dark">
+    <span class="tagline">Lo que no cambió</span>
+    La <strong>jerarquía</strong> (un mensaje, los gráficos que lo explican y el contexto que se lee después), la
+    <strong>paleta</strong>, la <strong>tipografía</strong>, el <strong>orden de las secciones</strong> y las
+    <strong>preguntas</strong> del tablero son las mismas. La implementación cambió piezas, no el argumento.
+  </div>
+</section>
+
+<!-- ================= 4B MOVIL ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">4b</div>
+    <div>
+      <div class="kicker">La misma historia en 390 px</div>
+      <h1>Correspondencia móvil</h1>
+      <div class="lead">En móvil no se encoge el escritorio: se reordena. La columna única conserva el orden de lectura y la paleta.</div>
+    </div>
+  </div>
+
+  <p>El wireframe móvil de la Fase 2 no era una miniatura del escritorio. Reordenaba: hero, ticket, KPIs en dos
+  columnas, serie mensual, heatmap, mapa y detalles. La implementación sigue esa lógica con los breakpoints de
+  <code>styles.css</code> (1180, 860, 640, 420 y 360 px). A 390 px, la navegación horizontal desaparece, la tira de
+  años se convierte en un selector compacto y las tarjetas se apilan. El resultado se capturó con el mismo estado
+  2025 para que las cifras coincidan.</p>
+
+  <div class="phones2">
+    <figure class="ph">
+      <div class="band">Wireframe · 390 px</div>
+      <img src="../fase2/report-mobile-1.png" alt="Primera pantalla del wireframe móvil" />
+      <p class="cap">Hero, ticket, KPI principal y cuatro secundarios; la serie mensual empieza al final de la pantalla.</p>
+    </figure>
+    <figure class="ph">
+      <div class="band">Dashboard · 390 px</div>
+      <img src="m_top.png" alt="Primera pantalla del dashboard móvil" />
+      <p class="cap">Hero, ticket, seis KPIs en dos columnas y guía de lectura. La serie mensual queda un poco más abajo.</p>
+    </figure>
+  </div>
+  <p class="cap" style="text-align:center"><b>Fig. 4.8.</b> Primera pantalla en móvil. Se conservan el orden, el
+  titular, el ticket y la retícula de dos columnas para los KPIs; cambian el número de tarjetas y el selector de año,
+  que pasa a un menú compacto para no desbordar la barra.</p>
+
+  <div class="phones2">
+    <figure class="ph">
+      <div class="band">Wireframe · demanda en móvil</div>
+      <img src="../fase2/report-mobile-2.png" alt="Segunda pantalla del wireframe móvil" />
+      <p class="cap">Serie mensual con barras y línea del año previo, leyenda y notas al pie.</p>
+    </figure>
+    <figure class="ph">
+      <div class="band">Dashboard · demanda en móvil</div>
+      <img src="m_demand.png" alt="Sección de demanda del dashboard móvil" />
+      <p class="cap">Misma serie, mismo orden y misma lectura; el eje X abrevia los meses para caber en 390 px.</p>
+    </figure>
+  </div>
+  <p class="cap" style="text-align:center"><b>Fig. 4.9.</b> Sección 01 en móvil. El gráfico mantiene la proporción,
+  la línea punteada del año previo y la nota de lectura; la ayuda “¿Cómo leer esta gráfica?” se conserva como
+  acordeón para no robar altura.</p>
+
+  <p>La decisión de diseño más importante en móvil fue <strong>no reducir el texto</strong>. El cuerpo sigue en
+  15 px y los controles táctiles apuntan a 44 × 44 px; lo que se reduce es la densidad, no la legibilidad. El
+  selector de año es el ejemplo claro: en escritorio es una tira de botones; en móvil, un botón que abre un menú
+  con “Todos los años” y la rejilla de años. Es el mismo estado, con otra affordance.</p>
+</section>
+
+<!-- ================= 5 KPIS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">5</div>
+    <div>
+      <div class="kicker">Los números que responden</div>
+      <h1>Implementación de KPIs</h1>
+      <div class="lead">Seis tarjetas, seis fórmulas y una sola regla: ninguna cifra se escribe a mano.</div>
+    </div>
+  </div>
+
+  <p>Un KPI no es un número grande: es una respuesta a una pregunta. La banda del tablero responde seis preguntas
+  distintas y lo hace siempre con el mismo formato: etiqueta, valor, delta contra el periodo anterior y una línea de
+  contexto. El valor sale de <code>data.kpis[String(year)]</code>; el delta, de comparar con el año previo
+  disponible; el contexto, de la fuente y del tamaño de la muestra. Nada se calcula en el JSX salvo el formato.</p>
+
+  <table class="tbl">
+    <tr><th style="width:18%">Tarjeta</th><th style="width:27%">Cálculo</th><th style="width:15%">Campo</th><th class="num">2025</th><th class="num">Todos</th></tr>
+    <tr><td><strong>Viajes analizados</strong></td><td><code>count(*)</code> de la muestra del periodo</td><td><code>trips</code></td><td class="num">500,000</td><td class="num">4,000,000</td></tr>
+    <tr><td><strong>Ingreso (muestra)</strong></td><td><code>sum(total_amount)</code> de los viajes válidos</td><td><code>revenue</code></td><td class="num">$14.7 M</td><td class="num">$78.2 M</td></tr>
+    <tr><td><strong>Tarifa promedio</strong></td><td><code>avg(fare_amount)</code> por viaje</td><td><code>avg_fare</code></td><td class="num">$20.39</td><td class="num">$14.11</td></tr>
+    <tr><td><strong>Tarifa por milla</strong></td><td><code>sum(fare_amount) / sum(distancia)</code></td><td><code>fare_per_mile</code></td><td class="num">$5.93</td><td class="num">$4.50</td></tr>
+    <tr><td><strong>Propina promedio</strong></td><td><code>sum(tip_amount) / sum(fare_amount)</code> en pagos electrónicos</td><td><code>tip_pct</code></td><td class="num">14.8%</td><td class="num">15.8%</td></tr>
+    <tr><td><strong>Velocidad promedio</strong></td><td>millas / (minutos / 60), sobre viajes válidos</td><td><code>avg_speed</code></td><td class="num">11.1 mph</td><td class="num">11.7 mph</td></tr>
+  </table>
+
+  <p>Las tres primeras tarjetas describen el volumen y el dinero; las tres siguientes describen la calidad del
+  viaje. Esa progresión no es casual: primero se muestra <em>cuánto</em> hay, después <em>cuánto cuesta</em> y
+  finalmente <em>qué tan eficiente</em> es. El orden coincide con las preguntas del hero y con las secciones que
+  vienen después: demanda, economía y eficiencia.</p>
+
+  <div class="code"><span class="c">// src/components/KpiGrid.tsx (extracto)</span>
+<span class="k">const</span> cards = [
+  { label: <span class="s">'Viajes analizados'</span>, raw: kpi.trips,
+    format: fmtInt, sub: year === <span class="s">'all'</span>
+      ? <span class="s">'muestra histórica completa'</span>
+      : <span class="s">`de ${fmtCompact(kpi.source_trips)} registros fuente`</span> },
+  { label: <span class="s">'Ingreso (muestra)'</span>, raw: kpi.revenue, format: fmtMoneyCompact },
+  { label: <span class="s">'Tarifa promedio'</span>, raw: kpi.avg_fare, format: fmtMoney2 },
+  { label: <span class="s">'Tarifa por milla'</span>, raw: kpi.fare_per_mile, format: fmtMoney2 },
+  { label: <span class="s">'Propina promedio'</span>, raw: kpi.tip_pct, format: fmtPct },
+  { label: <span class="s">'Velocidad promedio'</span>, raw: kpi.avg_speed, format: fmtSpeed },
+]</div>
+  <p class="code-cap">Cada tarjeta declara su etiqueta, su valor crudo y su formateador. El componente no sabe de dónde viene el dato; solo lo presenta.</p>
+
+  <h2>Del valor crudo al número legible</h2>
+  <p>La animación de las cifras es una decisión de lectura, no un adorno. Al cambiar de año, los valores se
+  interpolan con <code>useCountUp</code> durante 700 ms para que el ojo siga la transición en lugar de enfrentarse a
+  un salto. Si el sistema pide movimiento reducido, el hook devuelve el valor final sin animar. El componente se
+  vuelve a montar con <code>key={String(year)}</code>, de modo que la animación empieza desde el valor anterior y no
+  desde cero.</p>
+
+  <p>Los formatos viven en <code>lib/format.ts</code> y usan <code>Intl.NumberFormat('es-MX')</code>. Eso resuelve
+  tres problemas de una vez: separador de miles, moneda y porcentaje con el mismo criterio en toda la aplicación.
+  La velocidad se muestra con un decimal y la tarifa con dos; el ingreso se compacta a millones para que la tarjeta
+  no se desborde. La precisión completa queda en el tooltip y en el JSON, no se pierde: solo se redondea la
+  presentación.</p>
+
+  <h2>Los cinco KPIs de la Fase 2, uno por uno</h2>
+  <p>La consigna pide que cada KPI corresponda al listado y justificado en la Fase 2. La implementación no solo los
+  conserva: los hace verificables. Esta tabla es la prueba de que ninguna cifra del wireframe se perdió al pasar a
+  React.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:24%">KPI de Fase 2</th><th style="width:14%">Valor 2025</th><th style="width:34%">Dónde se renderiza</th><th>Cómo se comprueba</th></tr>
+    <tr><td><strong>Viajes en octubre</strong> (demanda)</td><td class="num">46,007</td><td>Serie mensual + lectura rápida “El mes más activo fue octubre, con 46,007 viajes”.</td><td>Fig. 4.2; pico visible en la barra de octubre.</td></tr>
+    <tr><td><strong>Tarifa promedio</strong></td><td class="num">$20.39</td><td>Tarjeta KPI “Tarifa promedio” y línea de media en el histograma.</td><td>Fig. 4.1 y Fig. 4.4.</td></tr>
+    <tr><td><strong>Concentración en Manhattan</strong></td><td class="num">87.1%</td><td>Subtítulo del mapa: “500,000 viajes con zona de origen · 254 zonas activas · 87.1% en Manhattan”.</td><td>Fig. 4.3.</td></tr>
+    <tr><td><strong>Participación de hora pico</strong> (17–19 h)</td><td class="num">19.4%</td><td>Lectura rápida “Hora pico”: “5,261 viajes en esa franja · 19.4% en 17–19 h”.</td><td>Fig. 4.2; heatmap con el pico del miércoles 18:00.</td></tr>
+    <tr><td><strong>Velocidad promedio</strong></td><td class="num">11.1 mph</td><td>Tarjeta KPI “Velocidad promedio” (el dato completo es 11.09 mph).</td><td>Fig. 4.1.</td></tr>
+  </table>
+
+  <p>Las cifras se recalcularon con los agregados de 2025 para comprobar que coinciden con las del wireframe. La
+  única diferencia es de formato: el wireframe escribía <strong>11.09 mph</strong> y la tarjeta muestra
+  <strong>11.1 mph</strong> por el redondeo a un decimal. El valor completo sigue en el JSON
+  (<code>avg_speed: 11.09</code>) y se puede ver en el tooltip del heatmap. Es una diferencia de presentación, no de
+  dato.</p>
+
+  <h2>Cálculo reproducible en el ETL</h2>
+  <p>Los KPIs no se promedian en el navegador. El script <code>etl/04_build_aggregates.py</code> los calcula con
+  SQL sobre la muestra y los exporta. La regla es evitar el promedio de promedios: cuando se combinan años o zonas,
+  se usan sumas y denominadores comunes, no la media de las medias. Esa es la razón por la que el KPI de “Todos” no
+  es el promedio aritmético de los ocho años, sino el resultado de agregar los 4 millones de viajes.</p>
+
+  <div class="code"><span class="c">-- etl/04_build_aggregates.py (idea del cálculo)</span>
+<span class="k">SELECT</span>
+  <span class="fn">count</span>(*) <span class="k">AS</span> trips,
+  <span class="fn">avg</span>(fare_amount) <span class="k">AS</span> avg_fare,
+  <span class="fn">sum</span>(total_amount) <span class="k">AS</span> revenue,
+  <span class="fn">sum</span>(fare_amount) / <span class="fn">nullif</span>(<span class="fn">sum</span>(trip_distance), 0) <span class="k">AS</span> fare_per_mile,
+  <span class="fn">sum</span>(tip_amount) / <span class="fn">nullif</span>(<span class="fn">sum</span>(fare_amount), 0) * 100 <span class="k">AS</span> tip_pct,
+  <span class="fn">avg</span>(trip_distance / (duration_min / 60.0)) <span class="k">AS</span> avg_speed
+<span class="k">FROM</span> sample
+<span class="k">WHERE</span> valid</div>
+  <p class="code-cap">El ETL materializa la muestra y calcula los agregados; el navegador solo lee el resultado. La condición <code>valid</code> aplica las reglas de limpieza documentadas.</p>
+
+  <div class="callout">
+    <span class="tagline">Un KPI no es una tarjeta</span>
+    La concentración y la hora pico no viven en la banda porque no son cifras que se entiendan aisladas: necesitan
+    un mapa y un heatmap. La implementación las colocó donde se explican, no donde se ven más grandes. Esa es una
+    decisión de jerarquía, no una omisión.
+  </div>
+</section>
+
+<!-- ================= 6 GRAFICOS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">6</div>
+    <div>
+      <div class="kicker">Once formas de mirar</div>
+      <h1>Implementación de gráficos</h1>
+      <div class="lead">Cada gráfico responde a una pregunta distinta. La forma se eligió por el dato, no por el catálogo de la librería.</div>
+    </div>
+  </div>
+
+  <p>El tablero usa once visualizaciones, contando el mapa y la tabla. Ocho se dibujan con Recharts, una con SVG
+  propio (el boxplot), una con CSS Grid (el heatmap) y una con Leaflet (el mapa). La variedad no es decorativa:
+  una serie temporal se lee mejor como área o barras; una distribución, como histograma; una comparación de
+  grupos, como boxplot; una relación entre dos variables, como dispersión. Cambiar la forma cambia lo que el
+  lector puede concluir.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:18%">Sección</th><th style="width:24%">Visualización</th><th style="width:17%">Componente</th><th style="width:15%">Técnica</th><th>Por qué esa forma</th></tr>
+    <tr><td>01 Demanda</td><td>Viajes por mes (Todos)</td><td><code>MonthlyChart</code></td><td>AreaChart</td><td>La continuidad importa: se busca la forma de la serie y el desplome de 2020, no comparar meses sueltos.</td></tr>
+    <tr><td>01 Demanda</td><td>Viajes por mes (año)</td><td><code>MonthlyChart</code></td><td>Bar + Line</td><td>Barras para el año elegido y línea punteada para el anterior: comparación mes a mes sin ambigüedad.</td></tr>
+    <tr><td>01 Demanda</td><td>Ritmo semanal</td><td><code>Heatmap</code></td><td>CSS Grid 7×24</td><td>Dos dimensiones categóricas (día y hora) y una intensidad: la matriz es más legible que 168 barras.</td></tr>
+    <tr><td>02 Territorio</td><td>Coropleta de zonas</td><td><code>ZonesSection</code></td><td>Leaflet + GeoJSON</td><td>El dato es geográfico; el mapa preserva la forma de la ciudad y permite comparar zonas vecinas.</td></tr>
+    <tr><td>02 Territorio</td><td>Top 10 zonas</td><td><code>ZonesSection</code></td><td>Lista + barras</td><td>El mapa muestra el patrón; la lista da la cifra exacta y el ranking que el mapa no puede ordenar.</td></tr>
+    <tr><td>03 Economía</td><td>Distribución de tarifa</td><td><code>EconomySection</code></td><td>BarChart</td><td>Una distribución sesgada se entiende por la forma del histograma y la línea de la media.</td></tr>
+    <tr><td>03 Economía</td><td>Distancias recorridas</td><td><code>EconomySection</code></td><td>BarChart</td><td>Misma lógica que la tarifa; permite ver que la mayoría de los viajes son cortos.</td></tr>
+    <tr><td>03 Economía</td><td>Método de pago</td><td><code>EconomySection</code></td><td>PieChart (dona)</td><td>Cuatro categorías y una proporción dominante: la dona comunica el 85.7% de un vistazo.</td></tr>
+    <tr><td>04 Eficiencia</td><td>Duración por franja</td><td><code>BoxPlot</code></td><td>SVG propio</td><td>Compara medianas, dispersión y colas entre grupos; una barra de promedios ocultaría la variabilidad.</td></tr>
+    <tr><td>04 Eficiencia</td><td>Distancia vs. tarifa</td><td><code>EfficiencySection</code></td><td>ScatterChart</td><td>Dos variables continuas y una correlación: cada punto es un viaje y el color añade el método de pago.</td></tr>
+    <tr><td>05 Rutas</td><td>Top rutas</td><td><code>RoutesSection</code></td><td>Tabla HTML</td><td>Diez pares con tres métricas: la tabla permite comparar cifras exactas mejor que cualquier gráfico.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">La forma manda, no la librería</span>
+    Primero se decide qué comparación debe hacer el lector y después se busca la forma; la librería es lo último.
+    Por eso el heatmap se dibuja con CSS Grid y el boxplot con SVG propio: Recharts resuelve ocho gráficos, pero
+    ninguno de esos dos habría quedado igual de claro con la herramienta equivocada.
+  </div>
+
+  <h2>Una serie, dos estados</h2>
+  <p>El gráfico mensual es el ejemplo más claro de que la implementación no copió una imagen: escribió una regla.
+  Cuando el filtro es “Todos”, el componente genera los 12 meses de cada año del rango —incluidos los años
+  ausentes— y dibuja un área con un gradiente amarillo. Cuando hay un año, dibuja barras y una línea punteada con
+  el año previo disponible. El mismo dato, dos lecturas.</p>
+
+  <div class="code"><span class="c">// src/components/MonthlyChart.tsx (extracto)</span>
+<span class="k">if</span> (year === <span class="s">'all'</span>) {
+  <span class="c">// 12 meses por año; los años ausentes quedan como null, no como cero</span>
+  <span class="k">return</span> &lt;AreaChart data={data}&gt; … &lt;/AreaChart&gt;
+}
+<span class="k">const</span> prev = years[years.indexOf(year) - 1]
+<span class="k">return</span> (
+  &lt;ComposedChart data={data}&gt;
+    &lt;Bar dataKey=<span class="s">"current"</span> fill=<span class="s">"#ffd23f"</span> /&gt;
+    {prev &amp;&amp; &lt;Line dataKey=<span class="s">"previous"</span> stroke=<span class="s">"#5b8cff"</span> strokeDasharray=<span class="s">"5 4"</span> /&gt;}
+  &lt;/ComposedChart&gt;
+)</div>
+  <p class="code-cap">La rama histórica y la rama anual comparten el mismo archivo y los mismos datos. La línea punteada solo aparece si existe un año previo en el conjunto.</p>
+
+  <figure>
+    <img src="d_charts.png" alt="Histogramas, dona, boxplot y dispersión del dashboard" />
+    <figcaption><b>Fig. 6.1.</b> Las tres familias de gráficos del dashboard: distribuciones (tarifa y distancia),
+    composición (método de pago) y comparación/relación (boxplot y dispersión). Todas usan la misma paleta y el
+    mismo tratamiento de ejes: sin líneas verticales, etiquetas en gris y tooltip oscuro.</figcaption>
+  </figure>
+
+  <p>Los años 2016, 2023 y 2024 no están en el dataset entregado. El componente genera sus meses con
+  <code>null</code> para que la serie muestre un <strong>hueco real</strong> y no una caída a cero. Es una decisión
+  de honestidad visual: un cero significaría “no hubo viajes”, y lo que ocurre es “no hay datos”. La nota al pie del
+  gráfico y la sección de metodología lo explican. Lo mismo vale para marzo de 2018, que aparece inflado por una
+  duplicación del archivo original de la TLC: se conserva y se documenta, no se imputa.</p>
+
+  <h2>El heatmap: 168 celdas sin 168 componentes</h2>
+  <p>El ritmo semanal se dibuja con CSS Grid, no con un gráfico de Recharts. Cada celda es un <code>button</code>
+  con un color calculado por <code>heatColor()</code>; el tooltip muestra viajes, tarifa y duración. La escala va de
+  azul oscuro a amarillo en seis paradas, la misma que usa el mapa. Al pasar el cursor o enfocar con Tab, la celda
+  se ilumina y el encabezado muestra el pico de la semana.</p>
+
+  <div class="code"><span class="c">// src/lib/format.ts · escala compartida por heatmap y mapa</span>
+<span class="k">const</span> stops = [<span class="s">'#101a2e'</span>, <span class="s">'#1f3a5f'</span>, <span class="s">'#2f6f8f'</span>, <span class="s">'#4fa58a'</span>, <span class="s">'#d8b93f'</span>, <span class="s">'#ffd23f'</span>]
+<span class="k">export function</span> <span class="fn">heatColor</span>(t: <span class="k">number</span>) {
+  <span class="k">const</span> x = <span class="fn">clamp</span>(t) * (stops.length - 1)
+  <span class="k">const</span> i = Math.<span class="fn">min</span>(stops.length - 2, Math.<span class="fn">floor</span>(x))
+  <span class="k">return</span> <span class="fn">mixColor</span>(stops[i], stops[i + 1], x - i)
+}</div>
+  <p class="code-cap">Una sola función de color para el heatmap y la coropleta. Si cambia la escala, cambia en los dos lugares a la vez.</p>
+
+  <h2>El boxplot: SVG propio cuando Recharts no alcanza</h2>
+  <p>Recharts no trae un boxplot nativo. En lugar de forzar un gráfico de barras con bigotes, se escribió un
+  componente SVG de ~100 líneas que dibuja la caja (p25–p75), la mediana, los bigotes (p05–p95) y las etiquetas.
+  Usa <code>ResizeObserver</code> para adaptar el ancho y abrevia “Fin de semana” como “Finde” en pantallas
+  estrechas. El resultado es más legible que cualquier adaptación de barras y no añade una dependencia.</p>
+
+  <div class="code"><span class="c">// src/components/BoxPlot.tsx (extracto)</span>
+<span class="k">const</span> y = (v: <span class="k">number</span>) =&gt; top + (1 - (v - min) / (max - min)) * height
+&lt;rect x={cx - 16} y={y(row.p75)} width={32} height={y(row.p25) - y(row.p75)} /&gt;
+&lt;line x1={cx - 16} x2={cx + 16} y1={y(row.median)} y2={y(row.median)} /&gt;
+&lt;line x1={cx} x2={cx} y1={y(row.p95)} y2={y(row.p05)} /&gt;</div>
+  <p class="code-cap">La caja es el rango intercuartílico; la línea central, la mediana; los bigotes, p05–p95. El detalle de cada grupo está en el tooltip y en la tabla de datos.</p>
+
+  <h2>Interacción y lectura</h2>
+  <p>Todos los gráficos comparten el mismo tooltip oscuro, la misma leyenda y el mismo acordeón “¿Cómo leer esta
+  gráfica?”. El acordeón no es un adorno pedagógico: resuelve el problema de un tablero que se mira sin contexto.
+  Explica qué hay en cada eje, qué mirar y qué cuidar (por ejemplo, que la muestra es de 500,000 viajes y no del
+  universo). Las animaciones se desactivan con <code>prefers-reduced-motion</code> y con el flag
+  <code>--force-prefers-reduced-motion</code> que se usó para las capturas.</p>
+
+  <p>La tabla de rutas y el ranking de zonas no usan Recharts a propósito. Cuando el lector necesita cifras exactas
+  y ordenadas, una tabla es más eficiente que un gráfico; cuando necesita ver una distribución o una tendencia, el
+  gráfico es superior. La mezcla de ambas es una decisión de lectura, no una inconsistencia.</p>
+</section>
+
+<!-- ================= 7 MAPA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">7</div>
+    <div>
+      <div class="kicker">La ciudad como dato</div>
+      <h1>Implementación del mapa</h1>
+      <div class="lead">263 polígonos TLC, una coropleta que se recolorea y un panel que convierte una zona en una ficha.</div>
+    </div>
+  </div>
+
+  <p>El mapa no es un adorno geográfico: es la respuesta a “¿dónde?”. Se eligió Leaflet porque consume GeoJSON de
+  forma nativa, no requiere token y permite superponer 263 polígonos con tooltips sin escribir un motor de mapas.
+  La geometría viene de <code>public/data/taxi_zones.geojson</code> (400 KB, 263 features), generada por
+  <code>etl/02_build_geojson.py</code> a partir del catálogo de zonas de la TLC. Cada feature trae
+  <code>zoneId</code>, <code>zone</code>, <code>borough</code> y <code>serviceZone</code>; los valores de viajes,
+  tarifa y propina se cruzan por <code>zoneId</code> con los agregados de <code>dashboard.json</code>.</p>
+
+  <figure>
+    <img src="d_geo.png" alt="Mapa coroplético de las 263 zonas TLC" />
+    <figcaption><b>Fig. 7.1.</b> Coropleta de recogidas por zona en 2025. Manhattan concentra la mancha amarilla;
+    JFK y LaGuardia aparecen como polos aislados. La leyenda “Menos → Más” y el subtítulo con 87.1% en Manhattan
+    conectan el patrón con la cifra.</figcaption>
+  </figure>
+
+  <h2>Cómo se construye la coropleta</h2>
+  <p>El componente mantiene tres estados: la métrica (<code>pickups</code>, <code>dropoffs</code> o
+  <code>avg_fare</code>), el borough seleccionado y la zona seleccionada. Con esos estados calcula el mínimo y el
+  máximo de las zonas visibles y asigna un color con <code>heatColor()</code>. Para los conteos usa
+  <code>sqrt</code> —una zona con el doble de viajes no debe verse el doble de saturada— y para la tarifa usa una
+  escala lineal. El resultado se pasa a la función <code>style</code> de <code>GeoJSON</code>, que se reevalúa
+  cuando cambia la clave del componente.</p>
+
+  <div class="code"><span class="c">// src/components/ZonesSection.tsx (extracto)</span>
+&lt;GeoJSON
+  key={<span class="s">`${year}-${metric}-${borough}`</span>}
+  data={geoData}
+  style={(feature) =&gt; {
+    <span class="k">const</span> z = byId.<span class="fn">get</span>(feature.properties.zoneId)
+    <span class="k">return</span> {
+      fillColor: <span class="fn">colorFor</span>(z),
+      fillOpacity: selected != <span class="k">null</span> &amp;&amp; z?.zone_id !== selected ? <span class="s">0.42</span> : <span class="s">0.82</span>,
+      color: selected === z?.zone_id ? <span class="s">'#ffffff'</span> : <span class="s">'#070b14'</span>,
+      weight: selected === z?.zone_id ? <span class="s">2.2</span> : <span class="s">0.6</span>,
+    }
+  }}
+  onEachFeature={(feature, layer) =&gt; {
+    layer.<span class="fn">bindTooltip</span>(…)
+    layer.<span class="fn">on</span>(<span class="s">'click'</span>, () =&gt; <span class="fn">setSelected</span>(feature.properties.zoneId))
+  }}
+/&gt;</div>
+  <p class="code-cap">La clave fuerza el remontaje cuando cambia el año, la métrica o el borough; así el estilo y los tooltips se recalculan sin volver a descargar la geometría.</p>
+
+  <p>La geometría se descarga una sola vez en un <code>useEffect</code> y se guarda en estado. Al cambiar de año o
+  de métrica no se vuelve a pedir el GeoJSON: solo se recalculan los colores. Esa separación —geometría estática,
+  datos dinámicos— es la que mantiene fluido el filtro. El mapa base es una capa de tiles oscuros de Esri; la
+  atribución se conserva y el zoom con rueda está desactivado para no secuestrar el scroll de la página.</p>
+
+  <h2>Interacción: del polígono a la ficha</h2>
+  <p>Al pasar el cursor, cada zona muestra un tooltip con nombre, borough, recogidas, entregas, tarifa media y
+  propina. Al hacer clic, se abre un panel de detalle con cinco métricas y la zona se resalta con un borde blanco
+  mientras las demás se atenúan. El mismo panel se puede abrir desde el ranking top 10: mapa y lista comparten el
+  estado <code>selected</code>, de modo que el lector no tiene que buscar la zona dos veces.</p>
+
+  <p>El filtro por borough no solo colorea: recorta las features visibles y recalcula el máximo de la escala. Si se
+  elige Queens, la leyenda se ajusta a Queens y el ranking muestra las zonas de Queens. Ese detalle evita el error
+  clásico de comparar una zona de Queens contra el máximo de Manhattan y concluir que “no hay demanda”. La escala
+  siempre es relativa a lo visible, y la leyenda lo declara.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:26%">Decisión</th><th>Implementación</th><th style="width:30%">Efecto</th></tr>
+    <tr><td>Mapa base</td><td>Esri World Dark Gray, atribución visible</td><td>La ciudad se lee sin competir con la coropleta.</td></tr>
+    <tr><td>Escala de conteos</td><td><code>sqrt(trips / max)</code></td><td>Las zonas medianas no desaparecen frente a Manhattan.</td></tr>
+    <tr><td>Escala de tarifa</td><td>Lineal entre mínimo y máximo visibles</td><td>La tarifa se lee como un continuo, no como un volumen.</td></tr>
+    <tr><td>Filtro de borough</td><td>Recorta features y recalcula escala</td><td>Comparaciones justas dentro del territorio elegido.</td></tr>
+    <tr><td>Selección</td><td>Estado compartido mapa ↔ ranking</td><td>Una sola ficha para las dos vistas.</td></tr>
+    <tr><td>Rendimiento</td><td>GeoJSON una vez; remount por clave</td><td>El filtro de año no vuelve a descargar 400 KB.</td></tr>
+  </table>
+
+  <div class="callout dark">
+    <span class="tagline">Lo que el mapa no dice</span>
+    Una zona gris no significa “sin viajes” en términos absolutos: significa que no tiene viajes en la muestra de ese
+    año. En 2025 hay <strong>254 zonas activas de 263</strong>. El mapa describe la muestra, no el universo, y la
+    metodología lo recuerda. Esa es la diferencia entre un mapa honesto y un mapa que impresiona.
+  </div>
+</section>
+
+<!-- ================= 8 PALETA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">8</div>
+    <div>
+      <div class="kicker">El sistema visual</div>
+      <h1>Paleta visual y estilos</h1>
+      <div class="lead">Doce tokens, dos tipografías y una regla: el color se define una vez y se consume en todas partes.</div>
+    </div>
+  </div>
+
+  <p>La paleta de la Fase 2 no se reinterpretó: se tradujo a variables CSS. El fondo es un azul noche casi negro
+  (<strong>#070b14</strong>), las tarjetas viven en dos niveles de panel (<strong>#0d1526</strong> y
+  <strong>#111c30</strong>) y el texto se organiza en tres intensidades. El amarillo taxi
+  (<strong>#ffd23f</strong>) es el acento principal y el color de la demanda; el resto de la paleta es categórica:
+  naranja para tarifa, turquesa para eficiencia, azul para comparación, rosa para alerta y verde para positivo.</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#ffd23f"></div><div class="info"><div class="name">Amarillo taxi</div><div class="hex">#FFD23F</div><div class="role">Demanda, acento, foco</div><div class="cr">13.63:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#ff9f43"></div><div class="info"><div class="name">Naranja</div><div class="hex">#FF9F43</div><div class="role">Tarifa, propina</div><div class="cr">9.65:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#34d3c0"></div><div class="info"><div class="name">Turquesa</div><div class="hex">#34D3C0</div><div class="role">Eficiencia, distancia</div><div class="cr">10.52:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#5b8cff"></div><div class="info"><div class="name">Azul</div><div class="hex">#5B8CFF</div><div class="role">Comparación, año previo</div><div class="cr">6.22:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#ff5c8a"></div><div class="info"><div class="name">Rosa</div><div class="hex">#FF5C8A</div><div class="role">Alerta, COVID-19</div><div class="cr">6.70:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#47d18c"></div><div class="info"><div class="name">Verde</div><div class="hex">#47D18C</div><div class="role">Positivo, validación</div><div class="cr">10.09:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#e8eef8"></div><div class="info"><div class="name">Texto</div><div class="hex">#E8EEF8</div><div class="role">Texto principal</div><div class="cr">16.89:1 sobre fondo</div></div></div>
+    <div class="sw"><div class="chip" style="background:#8fa0b8"></div><div class="info"><div class="name">Texto secundario</div><div class="hex">#8FA0B8</div><div class="role">Ejes, notas, leyendas</div><div class="cr">7.39:1 sobre fondo</div></div></div>
+  </div>
+
+  <table class="tbl compact">
+    <tr><th style="width:22%">Token</th><th style="width:14%">Hex</th><th>Uso en la interfaz</th><th style="width:18%">Contraste</th></tr>
+    <tr><td><code>--bg</code></td><td>#070B14</td><td>Fondo de la página y del área de gráficos.</td><td>—</td></tr>
+    <tr><td><code>--panel</code></td><td>#0D1526</td><td>Tarjetas y contenedores principales.</td><td>—</td></tr>
+    <tr><td><code>--panel-2</code></td><td>#111C30</td><td>Tarjetas elevadas, tooltips, celdas.</td><td>—</td></tr>
+    <tr><td><code>--text</code></td><td>#E8EEF8</td><td>Títulos, valores, texto principal.</td><td>16.89:1</td></tr>
+    <tr><td><code>--muted</code></td><td>#8FA0B8</td><td>Subtítulos, ejes, leyendas, notas.</td><td>7.39:1</td></tr>
+    <tr><td><code>--muted-2</code></td><td>#64748B</td><td>Metadatos de 10–11 px y marcas de agua.</td><td>4.14:1</td></tr>
+    <tr><td><code>--yellow</code></td><td>#FFD23F</td><td>Demanda, CTA, foco, acento de marca.</td><td>13.63:1</td></tr>
+    <tr><td><code>--orange</code></td><td>#FF9F43</td><td>Tarifa y propina.</td><td>9.65:1</td></tr>
+    <tr><td><code>--teal</code></td><td>#34D3C0</td><td>Eficiencia y distancia.</td><td>10.52:1</td></tr>
+    <tr><td><code>--blue</code></td><td>#5B8CFF</td><td>Comparación y año previo.</td><td>6.22:1</td></tr>
+    <tr><td><code>--pink</code></td><td>#FF5C8A</td><td>Alertas y referencia de la pandemia.</td><td>6.70:1</td></tr>
+    <tr><td><code>--green</code></td><td>#47D18C</td><td>Indicadores positivos y validación.</td><td>10.09:1</td></tr>
+  </table>
+
+  <p class="small">Contraste calculado con la fórmula WCAG 2.1 sobre <code>--bg</code>. El texto secundario y los
+  acentos superan 4.5:1; <code>--muted-2</code> queda en 4.14:1 y se reserva para metadatos que no son esenciales
+  para la lectura. Es una deuda declarada en la sección 9.</p>
+
+  <h2>Tipografía: dos voces, una jerarquía</h2>
+  <div class="spec">
+    <div class="spec-grid">
+      <div>
+        <div class="display">El pulso de la ciudad</div>
+        <div class="body">Space Grotesk en titulares, cifras KPI y encabezados: un aire geométrico que dialoga con
+        el taxi y con la retícula, y números tabulares que no “bailan” al cambiar de año.</div>
+        <div class="meta">Display · Space Grotesk 500–700</div>
+      </div>
+      <div>
+        <div class="body" style="margin-top:0">Inter en el cuerpo, las etiquetas, los ejes y las notas. Su altura de
+        x y sus formas abiertas hacen legibles los textos de 10–12 px sobre fondo oscuro, la condición más exigente
+        del tablero. Cifras tabulares: 4,000,000 · $20.39 · 87.1% · 11.1 mph.</div>
+        <div class="meta">Cuerpo · Inter 400–700</div>
+      </div>
+    </div>
+  </div>
+  <p>Las dos fuentes se cargan desde Google Fonts en <code>index.html</code> con <code>display=swap</code> y
+  <code>preconnect</code>. El cuerpo base es de 15 px con 1.55 de interlineado; los títulos usan
+  <code>clamp()</code> para no romper en móvil. El tablero no usa más de dos familias: la variedad viene del tamaño,
+  el peso y el color, no de acumular fuentes.</p>
+
+  <h2>Cómo se aplica en React</h2>
+  <p>Las variables viven en <code>:root</code> y se consumen con <code>var(--yellow)</code> en todo el CSS. Los
+  gráficos, en cambio, reciben hex literales en props de Recharts (<code>stroke="#ffd23f"</code>), porque SVG no
+  hereda variables CSS de la misma forma y se buscó que cada gráfico fuera explícito. Esa duplicación es una deuda
+  menor: si la paleta cambia, hay que tocar los dos lugares. La alternativa —leer las variables con
+  <code>getComputedStyle</code>— añadiría complejidad y un salto de render; para este tamaño, la duplicación
+  controlada es aceptable y está documentada.</p>
+
+  <div class="code"><span class="c">/* src/styles.css (extracto) */</span>
+:root {
+  --bg: <span class="s">#070b14</span>;      --panel: <span class="s">#0d1526</span>;
+  --text: <span class="s">#e8eef8</span>;    --muted: <span class="s">#8fa0b8</span>;
+  --yellow: <span class="s">#ffd23f</span>;  --teal: <span class="s">#34d3c0</span>;
+  --blue: <span class="s">#5b8cff</span>;    --pink: <span class="s">#ff5c8a</span>;
+  --font: <span class="s">'Inter'</span>, system-ui, sans-serif;
+  --display: <span class="s">'Space Grotesk'</span>, <span class="s">'Inter'</span>, sans-serif;
+  --radius: 20px;
+}</div>
+  <p class="code-cap">Doce tokens gobiernan color, tipografía y radio. Cambiar el tema es cambiar este bloque, no perseguir hex por 17 componentes.</p>
+
+  <h2>Retícula, ritmo y responsive</h2>
+  <p>El contenido se limita a <strong>1328 px</strong> y se organiza en una retícula de 12 columnas con gutter de
+  20 px. Las bandas principales usan proporciones estables: hero 1.45 / 0.85, demanda 1.62 / 0.9, mapa 1.7 / 0.8,
+  economía en tres columnas iguales. Esa repetición crea un ritmo reconocible: el lector aprende dónde mirar. Los
+  breakpoints son 1180, 860, 640, 420 y 360 px; en 1180 la banda KPI pasa a 3 columnas y la demanda a una; en 860
+  desaparece la nav y el header se reorganiza; en 640 el hero y las tarjetas se apilan.</p>
+
+  <p>La jerarquía N1/N2/N3 de la Fase 2 se mantiene con las insignias de las tarjetas y con el peso tipográfico:
+  <span class="n1">N1</span> el mensaje que ordena la sección, <span class="n2">N2</span> los gráficos que lo
+  explican y <span class="n3">N3</span> el contexto que se lee después. El color no se usa para decorar: cada
+  categoría tiene un tono estable en todos los gráficos (amarillo = tarjeta/demanda, turquesa = efectivo/distancia,
+  azul = comparación, rosa = alerta).</p>
+
+  <h2>Accesibilidad</h2>
+  <ul>
+    <li><strong>Contraste:</strong> texto principal 16.89:1, secundario 7.39:1, amarillo 13.63:1. El único token por
+    debajo de 4.5:1 es <code>--muted-2</code> (4.14:1), usado solo en metadatos.</li>
+    <li><strong>Teclado:</strong> los botones de año, los chips de borough, las celdas del heatmap y las rutas son
+    <code>button</code> reales; el foco se dibuja con <code>:focus-visible</code> y no se elimina.</li>
+    <li><strong>Estado:</strong> los filtros usan <code>aria-pressed</code>; el menú de año usa
+    <code>aria-expanded</code> y <code>aria-controls</code>; el mapa tiene atribución y textos alternativos.</li>
+    <li><strong>Movimiento:</strong> <code>prefers-reduced-motion</code> desactiva animaciones de entrada, conteo y
+    gráficos. Las capturas de este informe se tomaron con esa preferencia activa.</li>
+    <li><strong>Táctil:</strong> los controles móviles apuntan a 44 × 44 px; el zoom del mapa se desactiva con la
+    rueda para no bloquear el scroll.</li>
+  </ul>
+</section>
+
+<!-- ================= 9 PROBLEMAS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">9</div>
+    <div>
+      <div class="kicker">Lo que no salió a la primera</div>
+      <h1>Problemas encontrados y soluciones</h1>
+      <div class="lead">Nueve fricciones reales, su causa y la decisión que las resolvió. Ninguna se ocultó en el camino.</div>
+    </div>
+  </div>
+
+  <p>Documentar solo el resultado da una falsa impresión de linealidad. El tablero se construyó con iteraciones,
+  errores de datos y ajustes de responsive. Esta sección recoge los problemas que cambiaron el código o el diseño, y
+  la evidencia de que quedaron resueltos. Los tres primeros son de datos; los siguientes, de interfaz y rendimiento.</p>
+
+  <table class="tbl">
+    <tr><th style="width:4%">#</th><th style="width:20%">Problema</th><th style="width:22%">Causa</th><th style="width:30%">Solución</th><th>Evidencia</th></tr>
+    <tr><td>1</td><td>86.9 GB no caben en una petición web</td><td>El dataset completo tiene 599.5 M filas; descargarlo o consultarlo en el navegador es inviable.</td><td>DuckDB lee los CSV, limpia y muestrea 500,000 viajes por año (semilla 42). El ETL exporta agregados a un JSON de 741 KB.</td><td>El tablero abre sin backend; <code>dashboard.json</code> es el único dato de viajes que viaja al cliente.</td></tr>
+    <tr><td>2</td><td>Años ausentes que parecían ceros</td><td>Faltan 2016, 2023 y 2024 en el conjunto entregado. Un <code>0</code> en la serie sugeriría “no hubo viajes”.</td><td>La serie genera los 12 meses del rango y deja <code>null</code> en los años ausentes; la nota al pie y la metodología lo explican.</td><td>El área histórica muestra huecos, no caídas; el texto “Faltan 2016, 2023 y 2024” es visible.</td></tr>
+    <tr><td>3</td><td>Marzo de 2018 inflado</td><td>Una duplicación en el archivo original de la TLC eleva el conteo de ese mes.</td><td>Se conserva sin imputar y se documenta en la nota del gráfico y en metodología. Imputar habría ocultado un problema de la fuente.</td><td>La nota de 2018 aparece solo cuando se selecciona ese año.</td></tr>
+    <tr><td>4</td><td>Promedio de promedios al cambiar de año</td><td>Agregar meses o zonas promediando sus medias produce cifras sesgadas.</td><td>El ETL usa sumas y denominadores comunes; <code>hourlyFor</code> y <code>zonesFor</code> reagregan con pesos de viajes, no con medias simples.</td><td>El KPI “Todos” (4 M viajes) no es la media de los ocho años.</td></tr>
+    <tr><td>5</td><td>La tira de años desbordaba en móvil</td><td>Ocho años + “Todos” no caben en 390 px sin scroll horizontal incómodo.</td><td>Se añadió un selector compacto con menú (Todos + rejilla de años) y se conservó la tira solo en escritorio.</td><td>Captura móvil de la Fig. 4.8; el header no se desborda.</td></tr>
+    <tr><td>6</td><td>Etiquetas del boxplot solapadas</td><td>“Fin de semana” choca con la etiqueta vecina en pantallas estrechas.</td><td><code>ResizeObserver</code> ajusta el ancho y la etiqueta se abrevia a “Finde” por debajo del umbral.</td><td>El boxplot se lee completo en 390 px y en 1440 px.</td></tr>
+    <tr><td>7</td><td>Animaciones que arruinaban las capturas</td><td>Recharts y el conteo de KPIs se dibujan de forma asíncrona; una captura a mitad de animación muestra cifras incompletas.</td><td><code>ANIMATE</code> respeta <code>prefers-reduced-motion</code>; las capturas usan <code>--force-prefers-reduced-motion</code> y un presupuesto de tiempo virtual.</td><td>Las figuras muestran valores finales, no intermedios.</td></tr>
+    <tr><td>8</td><td>263 polígonos y un mapa base externo</td><td>Recargar la geometría en cada filtro o recrear la capa completa cuesta tiempo y provoca parpadeos.</td><td>El GeoJSON se descarga una vez; el estilo se recalcula con una función y el componente se remonta con una clave por año/métrica/borough.</td><td>El cambio de año es inmediato; no se repite la petición de 400 KB.</td></tr>
+    <tr><td>9</td><td>El wireframe fijaba 2025 y el producto abre en “Todos”</td><td>El wireframe necesitaba cifras comparables con la Fase 2; el producto quiere mostrar la serie histórica.</td><td>Se documentan las dos vistas y se captura el estado 2025 para la comparación. Además se hicieron explícitos el 87.1%, el 19.4% y el 46,007 en el mapa y las lecturas.</td><td>Figs. 4.1–4.3; el estado inicial “Todos” se declara en la introducción.</td></tr>
+  </table>
+
+  <h2>Los tres problemas que más enseñaron</h2>
+  <h3>1. El dato pesado no pertenece al cliente</h3>
+  <p>La primera tentación fue cargar los Parquet con DuckDB-WASM para permitir consultas libres. Se descartó tras
+  medir el costo: el dataset completo no cabe en una sesión de navegador y el arranque se vuelve lento. La solución
+  —precalcular— obliga a decidir de antemano qué cortes ofrece el tablero, pero hace que la aplicación sea rápida,
+  estática y fácil de publicar. Es un intercambio de flexibilidad por viabilidad, y para este proyecto es el
+  correcto.</p>
+
+  <h3>2. Un filtro cambia el significado, no solo el número</h3>
+  <p>“Viajes en octubre” es una cifra clara cuando hay un año seleccionado y una cifra ambigua cuando se suman ocho.
+  El mismo problema aparece con la concentración y la hora pico: son proporciones que dependen del denominador. La
+  implementación resolvió mover esos indicadores al bloque que los explica (serie, mapa, heatmap) y dejar en la
+  banda solo los que se comparan de forma directa. Esa decisión es la principal desviación respecto del wireframe y
+  la que más mejoró la lectura.</p>
+
+  <h3>3. La accesibilidad también es diseño</h3>
+  <p>El contraste, el foco visible, el movimiento reducido y los controles táctiles no fueron un “extra” al final:
+  cambiaron decisiones de implementación. El hook <code>useCountUp</code> devuelve el valor final si el sistema pide
+  menos movimiento; el heatmap usa <code>button</code> para que se pueda recorrer con Tab; el mapa desactiva el zoom
+  con rueda para no secuestrar el scroll. Ninguna de esas cosas se ve en una captura, pero se sienten al usar el
+  tablero.</p>
+
+  <h2>Los tres ajustes de esta fase</h2>
+  <p>La auditoría contra el wireframe encontró tres cifras que existían en los datos pero no aparecían en el texto
+  del tablero. Se hicieron explícitas con cambios mínimos, sin alterar el diseño ni los cálculos.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:20%">Archivo</th><th style="width:30%">Antes</th><th style="width:30%">Ahora</th><th>Efecto</th></tr>
+    <tr><td><code>Insights.tsx</code></td><td>“El mes más activo fue octubre.”</td><td>“El mes más activo fue octubre, con 46,007 viajes.”</td><td>Reproduce el KPI de demanda de la Fase 2.</td></tr>
+    <tr><td><code>Insights.tsx</code></td><td>“5,261 viajes en esa franja.”</td><td>“5,261 viajes en esa franja · 19.4% en 17–19 h.”</td><td>Hace visible la participación de la hora pico.</td></tr>
+    <tr><td><code>ZonesSection.tsx</code></td><td>“500,000 viajes con zona de origen · 254 zonas activas.”</td><td>“… · 87.1% en Manhattan.”</td><td>Expone la concentración territorial en el mapa.</td></tr>
+  </table>
+
+  <p class="small">Los tres valores se derivan de los mismos agregados que alimentan los gráficos: el mes pico de
+  <code>monthly</code>, la suma de 17–19 h de <code>hourly</code> y la proporción de recogidas de Manhattan en
+  <code>zones</code>. No se escribió ninguna cifra a mano; si el JSON cambia, el texto cambia con él.</p>
+
+  <h2>Verificación de la entrega</h2>
+  <p>Antes de cerrar el documento se ejecutó una lista de comprobaciones. No son declaraciones de intención: cada
+  una se hizo sobre el build de producción y dejó evidencia en las figuras o en la salida del comando.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:24%">Comprobación</th><th style="width:38%">Cómo se hizo</th><th>Resultado</th></tr>
+    <tr><td>Compilación</td><td><code>npm run build</code> (incluye <code>tsc --noEmit</code>)</td><td>2,263 módulos, 6.5 s, cero errores de tipos.</td></tr>
+    <tr><td>Cifras del wireframe</td><td>Filtro 2025 y lectura de KPI, mapa y lecturas rápidas</td><td>46,007 · $20.39 · 87.1% · 19.4% · 11.1 mph.</td></tr>
+    <tr><td>Estructura visual</td><td>Comparación bloque a bloque con la Fase 2</td><td>Siete pares de escritorio y dos de móvil; cuatro desviaciones justificadas.</td></tr>
+    <tr><td>Paleta</td><td>Revisión de tokens en <code>:root</code> y cálculo de contraste WCAG</td><td>Doce tokens; once superan 4.5:1.</td></tr>
+    <tr><td>Responsive</td><td>Capturas a 1440 y 390 px, más los breakpoints de 1180 y 860</td><td>Sin desbordes horizontales; menú de año compacto en móvil.</td></tr>
+    <tr><td>Movimiento reducido</td><td>Capturas con <code>--force-prefers-reduced-motion</code></td><td>Las cifras y los gráficos aparecen en su valor final.</td></tr>
+    <tr><td>Teclado</td><td>Recorrido con Tab por años, chips, heatmap y rutas</td><td>Foco visible, <code>aria-pressed</code> y <code>aria-expanded</code> correctos.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">Deuda declarada</span>
+    El bundle de 899.6 KB incluye Recharts y Leaflet en el arranque. Para un tablero académico estático es aceptable,
+    pero la siguiente mejora sería separar el mapa en un chunk cargado bajo demanda y revisar el contraste de
+    <code>--muted-2</code>. Ambas quedan anotadas, no escondidas.
+  </div>
+</section>
+
+<!-- ================= 10 REFLEXION ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">10</div>
+    <div>
+      <div class="kicker">Lo aprendido</div>
+      <h1>Reflexión técnica</h1>
+      <div class="lead">Cinco lecciones que no estaban en el wireframe y que solo aparecen cuando el diseño se ejecuta.</div>
+    </div>
+  </div>
+
+  <p><strong>1. El wireframe es un contrato, pero no un plano completo.</strong> Un plano muestra el estado feliz:
+  datos cargados, pantalla ancha, año seleccionado. La implementación obliga a resolver el resto: qué pasa mientras
+  carga, qué pasa si el JSON falla, qué pasa si no hay año previo, qué pasa en 390 px. Documentar esas decisiones es
+  tan importante como documentar el parecido visual.</p>
+
+  <p><strong>2. La forma del dato decide la arquitectura.</strong> El tablero es rápido porque el dato pesado se
+  queda en el ETL. Esa decisión no se tomó en React: se tomó al elegir DuckDB y exportar agregados. La interfaz es
+  la punta del iceberg; debajo hay un pipeline que limpia, muestrea y calcula. Un buen dashboard se diseña desde el
+  dato hacia arriba, no desde el píxel hacia abajo.</p>
+
+  <p><strong>3. Los componentes deben seguir bloques visuales, no tablas de la base.</strong> Hay un componente por
+  tarjeta, no por tabla. <code>ZonesSection</code> consume zonas y geometría; <code>EconomySection</code> consume
+  tres fuentes distintas. Esa frontera permite cambiar la presentación sin tocar el ETL y viceversa. La cohesión se
+  mide por la pregunta que responde el bloque, no por la cantidad de datos que carga.</p>
+
+  <p><strong>4. La paleta es un sistema, no una lista de colores.</strong> Definir tokens evita que el amarillo de
+  una tarjeta sea distinto del amarillo de un gráfico. La duplicación de hex en Recharts es una excepción controlada
+  y documentada; la regla general es que el color se decide una vez. Lo mismo vale para los formatos: una función de
+  moneda, una de porcentaje, una de velocidad.</p>
+
+  <p><strong>5. La honestidad visual es parte de la calidad.</strong> Un hueco no es un cero; una muestra no es el
+  universo; una propina en efectivo no registrada no es una propina de 0%. El tablero podría verse más “completo” si
+  imputara esos valores, pero sería menos confiable. La decisión de mostrar la falta —en la nota, en la metodología y
+  en el tipo de gráfico— es una decisión de diseño que la Fase 2 ya había tomado y que la implementación respetó.</p>
+
+  <h2>Qué cambiaría en una siguiente iteración</h2>
+  <ul>
+    <li><strong>Estado en la URL:</strong> que <code>?year=2025</code> abra directamente ese año. Mejoraría la
+    reproducibilidad de las capturas y permitiría compartir una vista concreta.</li>
+    <li><strong>División de chunks:</strong> cargar Leaflet y el GeoJSON solo cuando el mapa entra en viewport,
+    para reducir el arranque en móvil.</li>
+    <li><strong>Pruebas:</strong> unitarias para <code>heatColor</code>, <code>correlation</code> y los agregados; de
+    extremo a extremo para el cambio de año y la selección de zona.</li>
+    <li><strong>Tokens compartidos con los gráficos:</strong> exportar la paleta desde un módulo TypeScript para
+    eliminar los hex literales de Recharts.</li>
+    <li><strong>Prueba con usuarios:</strong> el wireframe se validó visualmente, pero no se midió si un lector
+    nuevo entiende el heatmap sin abrir la ayuda. Esa es la deuda de investigación.</li>
+  </ul>
+
+  <p>La reflexión más útil es incómoda: la banda de seis tarjetas iguales perdió la jerarquía N1 que el wireframe
+  tenía. Ganó comparabilidad y coherencia con el filtro, pero el primer golpe de vista es menos contundente. Una
+  siguiente versión podría recuperar una tarjeta destacada —por ejemplo, la demanda del mes pico— sin perder las
+  otras cinco. Reconocerlo es parte del ejercicio: el diseño no termina cuando compila.</p>
+
+  <h2>Balance: lo que funcionó y lo que ajustaría</h2>
+  <table class="tbl compact">
+    <tr><th style="width:26%">Decisión</th><th>Resultado observado</th><th style="width:27%">Siguiente paso</th></tr>
+    <tr><td>Precalcular con DuckDB</td><td>Arranque rápido y publicación estática; el límite son los cortes precalculados.</td><td>Parquet bajo demanda solo si un caso lo exige.</td></tr>
+    <tr><td>CSS con tokens</td><td>Paleta coherente y un único archivo de estilos que auditar.</td><td>Exportar los tokens a TypeScript.</td></tr>
+    <tr><td>Un componente por bloque</td><td>Cambios localizados; el wireframe se lee como lista de piezas.</td><td>Pruebas de render y de datos por sección.</td></tr>
+    <tr><td>Anclas en lugar de router</td><td>Navegación simple y accesible, sin peso extra.</td><td>Año en la URL con <code>replaceState</code>.</td></tr>
+  </table>
+</section>
+
+<!-- ================= 11 CONCLUSION ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">11</div>
+    <div>
+      <div class="kicker">Cierre</div>
+      <h1>Conclusión y autoevaluación</h1>
+      <div class="lead">El wireframe se convirtió en una aplicación que se construye, se sirve y se lee. La correspondencia se puede verificar.</div>
+    </div>
+  </div>
+
+  <p>La Fase 3 cumplió su objetivo: transformar el wireframe de la Fase 2 en un dashboard funcional en React sin
+  perder la estructura visual, los KPIs ni la coherencia estética. El resultado es una aplicación de una sola
+  página, con 17 componentes, seis KPIs, once visualizaciones, un mapa de 263 zonas y un pipeline reproducible que
+  convierte 86.9 GB de CSV en 741 KB de agregados. El build pasa sin errores y la publicación es estática.</p>
+
+  <p>La correspondencia no se afirma: se demuestra. Siete pares de capturas muestran el mismo orden, las mismas
+  proporciones y el mismo lenguaje visual. Las cinco cifras del wireframe aparecen en el dashboard al seleccionar
+  2025, y las cuatro desviaciones —banda KPI, color del ticket, etiquetas de navegación y estado inicial— están
+  explicadas con su razón de producto. Ningún bloque del diseño se eliminó; varios se ampliaron con datos que la
+  maqueta no mostraba, como la duración de las rutas o el histograma de distancias.</p>
+
+  <h2>Autoevaluación frente a la rúbrica</h2>
+  <table class="tbl">
+    <tr><th style="width:30%">Criterio</th><th style="width:8%">Pts</th><th>Cómo se cumple</th><th style="width:16%">Evidencia</th></tr>
+    <tr><td>Correspondencia wireframe / dashboard</td><td class="num">25</td><td>Siete pares de capturas, tabla de balance y cuatro desviaciones justificadas. La estructura, la paleta y la jerarquía se conservan; las cifras se reproducen con el filtro 2025.</td><td>Cap. 4; Figs. 4.1–4.9</td></tr>
+    <tr><td>Implementación de KPIs y gráficos</td><td class="num">25</td><td>Seis KPIs con fórmula, campo y formato; once visualizaciones con su porqué; los cinco KPIs de Fase 2 son localizables y verificables.</td><td>Caps. 5–7; Fig. 6.1</td></tr>
+    <tr><td>Uso de la paleta</td><td class="num">15</td><td>Doce tokens, ocho muestras con contraste, tipografía y reglas de aplicación; la paleta de Fase 2 se conserva.</td><td>Cap. 8</td></tr>
+    <tr><td>Estructura y legibilidad del código</td><td class="num">15</td><td>17 componentes con una responsabilidad, <code>lib/</code> separado, tipos estrictos y build sin errores.</td><td>Cap. 2; árbol y tablas</td></tr>
+    <tr><td>Documentación de la implementación</td><td class="num">20</td><td>Once secciones, capturas reales, fragmentos de código, problemas y soluciones, reflexión y anexo reproducible.</td><td>Todo el informe</td></tr>
+    <tr class="tot"><td>Total</td><td class="num">100</td><td>Entrega completa, con límites y deudas declaradas.</td><td>—</td></tr>
+  </table>
+
+  <div class="callout dark">
+    <span class="tagline">La frase que resume la fase</span>
+    Un dashboard no es un wireframe con datos: es un conjunto de decisiones sobre qué mostrar, cómo calcularlo y qué
+    dejar fuera. La Fase 3 hizo esas decisiones ejecutables y las dejó escritas para que puedan discutirse.
+  </div>
+
+  <h2>Siguientes pasos</h2>
+  <ol>
+    <li>Incorporar 2023 y 2024 cuando estén disponibles para cerrar la serie histórica.</li>
+    <li>Mover el estado del año a la URL y separar el mapa en un chunk bajo demanda.</li>
+    <li>Añadir pruebas unitarias de los agregados y de la escala de color.</li>
+    <li>Probar la lectura con cinco usuarios y ajustar la ayuda de los gráficos según lo observado.</li>
+    <li>Revisar el contraste de <code>--muted-2</code> y documentar el resultado en una auditoría WCAG.</li>
+  </ol>
+
+  <p class="small">El dashboard está publicado en <strong>https://srmeme64.github.io/nyc-mobility-pulse/</strong> y
+  el código vive en el repositorio del proyecto. Las figuras de este informe se generan con
+  <code>docs/fase3/make_figures.py</code> a partir de capturas reales; el PDF se construye con
+  <code>docs/fase3/build_fase3.py</code>.</p>
+</section>
+
+<!-- ================= ANEXO ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">A</div>
+    <div>
+      <div class="kicker">Trazabilidad</div>
+      <h1>Anexo: comandos, figuras y referencias</h1>
+      <div class="lead">Cómo se reproduce el tablero, cómo se generaron las capturas y de dónde salen los datos.</div>
+    </div>
+  </div>
+
+  <h2>Comandos del proyecto</h2>
+  <table class="tbl compact">
+    <tr><th style="width:34%">Comando</th><th>Qué hace</th></tr>
+    <tr><td><code>npm install</code></td><td>Instala React, Recharts, Leaflet, lucide-react y las herramientas de build.</td></tr>
+    <tr><td><code>npm run dev</code></td><td>Levanta Vite en modo desarrollo con HMR.</td></tr>
+    <tr><td><code>npm run build</code></td><td>Ejecuta <code>tsc --noEmit</code> y genera <code>dist/</code>.</td></tr>
+    <tr><td><code>npm run preview</code></td><td>Sirve el build de producción para revisarlo antes de publicar.</td></tr>
+    <tr><td><code>python etl/04_build_aggregates.py</code></td><td>Regenera <code>public/data/dashboard.json</code> desde las muestras Parquet y el catálogo de zonas.</td></tr>
+    <tr><td><code>python docs/fase3/make_figures.py</code></td><td>Captura el dashboard en 1440 px y 390 px (Todos y 2025) y recorta las figuras del informe.</td></tr>
+    <tr><td><code>python docs/fase3/build_fase3.py</code></td><td>Convierte <code>report.html</code> en el PDF, estampa pie de página y numeración.</td></tr>
+  </table>
+
+  <h2>Trazabilidad de las figuras</h2>
+  <p>Las capturas del dashboard se tomaron con Edge headless a 1440 × 10000 px y 390 × 16000 px, con
+  <code>--force-prefers-reduced-motion</code> y <code>--force-device-scale-factor=1</code>. El estado 2025 se fijó
+  con una página auxiliar del mismo origen que carga la app en un iframe y pulsa el botón del año; esa página no se
+  publica, solo se usa para documentar. Los recortes se hicieron por bloques para que el texto sea legible en A4 y
+  se guardaron en <code>docs/fase3/</code>. El wireframe proviene de <code>docs/fase2/report-desk-*.png</code> y
+  <code>report-mobile-*.png</code>, sin retoques.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:24%">Figura</th><th>Fuente</th><th style="width:28%">Estado</th></tr>
+    <tr><td>Figs. 4.1–4.7</td><td>Wireframe Fase 2 + captura 1440 px del dashboard</td><td>2025</td></tr>
+    <tr><td>Figs. 4.8–4.9</td><td>Wireframe móvil Fase 2 + captura 390 px</td><td>2025</td></tr>
+    <tr><td>Fig. 6.1</td><td>Recorte de economía + eficiencia</td><td>2025</td></tr>
+    <tr><td>Fig. 7.1</td><td>Recorte del mapa y el ranking</td><td>2025</td></tr>
+  </table>
+
+  <h2>Referencias</h2>
+  <ul class="refs">
+    <li>NYC Taxi &amp; Limousine Commission. <em>TLC Trip Record Data</em>. https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</li>
+    <li>React. <em>React 19 Documentation</em>. https://react.dev</li>
+    <li>Vite. <em>Vite 6 Documentation</em>. https://vite.dev</li>
+    <li>Recharts. <em>Recharts Documentation</em>. https://recharts.org</li>
+    <li>Leaflet. <em>Leaflet Documentation</em>. https://leafletjs.com</li>
+    <li>W3C. <em>Web Content Accessibility Guidelines (WCAG) 2.1</em>. https://www.w3.org/TR/WCAG21/</li>
+    <li>DuckDB. <em>DuckDB Documentation</em>. https://duckdb.org/docs/</li>
+  </ul>
+
+  <p class="tiny">Documento generado a partir de <code>docs/fase3/report.html</code>. Las cifras de 2025 y de la
+  muestra completa provienen de <code>public/data/dashboard.json</code>; las de calidad, de
+  <code>data/quality_report.json</code>. Si los datos cambian, deben cambiar las figuras y este texto: el informe no
+  es un adorno del producto, es su acta.</p>
+</section>
+
+</main>
+</body>
+</html>

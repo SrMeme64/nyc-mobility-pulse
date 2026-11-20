@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=390, initial-scale=1" />
+<title>Wireframe móvil · NYC Mobility Pulse</title>
+<style>
+  :root{
+    --ink:#070B14; --panel:#0D1526; --panel2:#111C30; --line:#1E2B44;
+    --text:#E8EEF8; --muted:#8FA0B8; --muted2:#64748B;
+    --yellow:#FFD23F; --teal:#34D3C0; --orange:#FF9F43; --blue:#5B8CFF; --pink:#FF5C8A; --green:#47D18C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--ink);color:var(--text);
+    font-family:"Inter","Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{width:390px;padding:0 14px 26px}
+  .card{background:linear-gradient(180deg,var(--panel),#0A1120);border:1px solid var(--line);
+    border-radius:14px;position:relative;overflow:hidden}
+  .kicker{font-size:8.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow)}
+  .muted{color:var(--muted)}
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:8.5px;font-weight:600;
+    border:1px solid var(--line);border-radius:999px;padding:3px 7px;color:var(--muted)}
+  .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+  .anno{position:absolute;top:9px;right:10px;font-size:7px;font-weight:800;letter-spacing:.07em;
+    color:var(--yellow);border:1px solid rgba(255,210,63,.45);border-radius:3px;padding:1px 4px;
+    background:rgba(255,210,63,.08);z-index:2}
+  .n2{color:var(--teal);border-color:rgba(52,211,192,.4);background:rgba(52,211,192,.07)}
+  .n3{color:var(--muted);border-color:rgba(143,160,184,.35);background:rgba(143,160,184,.06)}
+
+  /* header */
+  .top{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:8px;height:52px;
+    background:rgba(7,11,20,.94);border-bottom:1px solid var(--line);margin:0 -14px;padding:0 14px}
+  .brand{display:flex;align-items:center;gap:7px;font-weight:800;font-size:10.5px;letter-spacing:.02em}
+  .brandmark{width:24px;height:24px;border-radius:6px;background:var(--yellow);display:grid;place-items:center;
+    font-size:8.5px;font-weight:900;color:#0B0B10;box-shadow:0 0 16px rgba(255,210,63,.35)}
+  .top .chip{margin-left:auto;font-size:8.5px;font-weight:800;padding:4px 8px;border-radius:999px;
+    background:var(--yellow);color:#0B0B10}
+  .burger{width:26px;height:26px;border:1px solid var(--line);border-radius:7px;display:grid;place-items:center;gap:0}
+  .burger i{display:block;width:11px;height:1.4px;background:var(--muted);margin:1.6px 0}
+
+  /* hero */
+  .hero{padding:16px 0 0}
+  .hero h1{font-size:29px;line-height:1.05;letter-spacing:-.035em;margin:7px 0 8px;font-weight:800}
+  .hero h1 em{font-style:normal;color:var(--yellow)}
+  .nowrap{white-space:nowrap}
+  .hero p{font-size:11px;line-height:1.5;color:var(--muted)}
+  .hero-meta{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+
+  /* ticket */
+  .ticket{margin-top:12px;padding:11px 12px;border-color:rgba(255,210,63,.32);
+    background:linear-gradient(180deg,#141B2A,#0B1220)}
+  .ticket-head{display:flex;justify-content:space-between;font-size:7px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--muted2);border-bottom:1px dashed var(--line);padding-bottom:6px}
+  .ticket-main{display:flex;align-items:flex-end;justify-content:space-between;padding:7px 0 6px}
+  .ticket-main span{font-size:8px;color:var(--muted);display:block}
+  .ticket-main strong{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .ticket-main small{font-size:8px;color:var(--muted2);text-align:right;line-height:1.3}
+  .ticket-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-top:1px dashed var(--line);padding-top:7px}
+  .ticket-grid span{display:block;font-size:6.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2)}
+  .ticket-grid strong{font-size:13px;font-weight:800}
+
+  /* kpi */
+  .kpi-main{margin-top:12px;padding:14px 15px 11px;border-color:rgba(255,210,63,.55);
+    background:radial-gradient(120% 120% at 100% 0%,rgba(255,210,63,.16),transparent 58%),linear-gradient(180deg,#141B2A,#0B1220);
+    box-shadow:0 0 0 1px rgba(255,210,63,.1),0 16px 40px rgba(255,210,63,.07)}
+  .big{font-size:45px;font-weight:800;letter-spacing:-.045em;line-height:1;margin:7px 0 2px;
+    font-variant-numeric:tabular-nums}
+  .big small{font-size:10px;font-weight:600;letter-spacing:0;color:var(--muted)}
+  .delta{display:inline-flex;align-items:center;gap:4px;margin-top:5px;font-size:9px;font-weight:700;
+    color:#7BE3B4;background:rgba(71,209,140,.1);border:1px solid rgba(71,209,140,.28);padding:2px 7px;border-radius:999px}
+  .spark{height:40px;margin-top:8px}
+  .spark svg{width:100%;height:100%;display:block}
+  .axis-note{font-size:8px;color:var(--muted2);margin-top:6px;line-height:1.4}
+
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+  .kpi{padding:10px 11px;min-height:82px}
+  .kpi .lbl{font-size:7.5px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--muted2);line-height:1.25}
+  .kpi .val{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums}
+  .kpi .val small{font-size:9px;color:var(--muted);font-weight:600;letter-spacing:0}
+  .kpi .sub{font-size:8px;color:var(--muted);margin-top:2px;line-height:1.3}
+  .kpi .bar{height:2.5px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:7px;overflow:hidden}
+  .kpi .bar i{display:block;height:100%;background:var(--yellow)}
+  .kpi:nth-child(2) .bar i{background:var(--teal)}
+  .kpi:nth-child(3) .bar i{background:var(--orange)}
+  .kpi:nth-child(4) .bar i{background:var(--blue)}
+
+  /* sections */
+  .sec{margin-top:10px;padding:12px 12px 10px}
+  .shead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+  .shead h2{font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+  .shead h2 span{color:var(--yellow);font-weight:800;margin-right:5px;font-size:9.5px}
+  .shead .hint{font-size:7.5px;color:var(--muted2);margin-top:1px}
+  .legend{display:flex;gap:8px;font-size:8px;color:var(--muted);align-items:center;flex-wrap:wrap}
+  .legend i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:3px;vertical-align:-1px}
+  .legend .dash{width:12px;height:0;border-top:1.5px dashed var(--teal);margin-right:3px;vertical-align:2px;display:inline-block}
+
+  .chart{width:100%}
+  .chart svg{width:100%;height:auto;display:block}
+
+  /* heatmap */
+  .heat-grid{display:grid;grid-template-columns:22px repeat(24,1fr);gap:2px;margin-top:5px}
+  .heat-grid .hh{font-size:6.5px;color:var(--muted2);text-align:center;height:10px}
+  .heat-grid .hl{font-size:7px;color:var(--muted2);display:flex;align-items:center}
+  .hc{height:17px;border-radius:2px;background:#101B30}
+
+  /* map */
+  .map-wrap{position:relative;height:250px;margin-top:2px}
+  .map-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+  .map-callout{position:absolute;left:0;top:2px;background:rgba(7,11,20,.78);border:1px solid rgba(255,210,63,.35);
+    border-radius:8px;padding:6px 8px}
+  .map-callout b{display:block;font-size:18px;font-weight:800;color:var(--yellow);line-height:1}
+  .map-callout span{font-size:7px;color:var(--muted);line-height:1.3;display:block;margin-top:1px;max-width:13ch}
+  .map-legend{position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:5px;font-size:7px;color:var(--muted)}
+  .ramp{width:64px;height:6px;border-radius:3px;background:linear-gradient(90deg,#1E2E4A,#5A4A1C,#C99A00,#FFD23F)}
+
+  .zrow{display:grid;grid-template-columns:1fr 62px 40px;align-items:center;gap:6px;font-size:8px;color:var(--muted);margin-top:5px}
+  .zrow b{font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .track{height:5px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden}
+  .track i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#8A6A00,var(--yellow))}
+  .zrow em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .zrow:nth-child(-n+3) b{color:var(--yellow)}
+
+  /* donut */
+  .donut-wrap{display:flex;align-items:center;gap:12px;margin-top:4px}
+  .donut-wrap svg{width:118px;height:118px;flex:0 0 auto}
+  .pl{display:grid;grid-template-columns:8px 1fr auto;align-items:center;gap:5px;font-size:8px;color:var(--muted);margin-bottom:5px}
+  .pl i{width:7px;height:7px;border-radius:2px}
+  .pl b{font-weight:600;color:var(--text)}
+  .pl span{font-variant-numeric:tabular-nums}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:8px;margin-top:5px}
+  th{text-align:left;font-size:6.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);
+    border-bottom:1px solid var(--line);padding:4px 3px}
+  td{padding:5px 3px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted)}
+  td:first-child{color:var(--text);font-weight:600}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+  .findings ul{list-style:none;margin-top:5px;display:flex;flex-direction:column;gap:6px}
+  .findings li{font-size:8.5px;line-height:1.45;color:var(--muted);padding-left:11px;position:relative}
+  .findings li::before{content:"";position:absolute;left:0;top:4px;width:5px;height:5px;border-radius:50%;background:var(--yellow)}
+  .findings li b{color:var(--text)}
+
+  .method p{font-size:8px;line-height:1.5;color:var(--muted);margin-top:4px}
+  .method b{color:var(--text)}
+  .foot{margin-top:12px;border-top:1px solid var(--line);padding-top:8px;font-size:7.5px;color:var(--muted2);line-height:1.5}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="brandmark">NYC</span> MOBILITY PULSE</div>
+  <span class="chip">2025 ▾</span>
+  <span class="burger" aria-label="Filtros"><span><i></i><i></i><i></i></span></span>
+</header>
+
+<section class="hero">
+  <div class="kicker">Proyecto 4 · Visualización de datos</div>
+  <h1>El pulso de la <em>movilidad</em> en <span class="nowrap">Nueva York</span></h1>
+  <p>Ocho años de viajes en taxi amarillo para leer la ciudad a través de su demanda, sus tarifas y sus zonas más activas.</p>
+  <div class="hero-meta">
+    <span class="tag"><span class="dot" style="background:var(--yellow)"></span> NYC TLC</span>
+    <span class="tag">599.5 M registros</span>
+    <span class="tag">263 zonas</span>
+  </div>
+</section>
+
+<section class="card ticket">
+  <div class="ticket-head"><span>NYC TLC · YELLOW TAXI</span><span>NYC-2025</span></div>
+  <div class="ticket-main">
+    <div><span>Registros fuente</span><strong>599.5 M</strong></div>
+    <small>4,000,000 viajes<br>en la muestra</small>
+  </div>
+  <div class="ticket-grid">
+    <div><span>Años</span><strong>8</strong></div>
+    <div><span>Zonas</span><strong>263</strong></div>
+    <div><span>Viajes/año</span><strong>500 K</strong></div>
+  </div>
+</section>
+
+<section class="card kpi-main">
+  <span class="anno">N1</span>
+  <div class="kicker">KPI principal · Demanda</div>
+  <div class="big">46,007 <small>viajes en octubre</small></div>
+  <div class="delta">▲ 5.7% vs. septiembre</div>
+  <div class="spark" id="spark"></div>
+  <div class="axis-note">Mes pico de 2025 · la serie completa vive en la sección 01</div>
+</section>
+
+<div class="kpi-grid">
+  <div class="card kpi">
+    <span class="anno n2">N2</span>
+    <div class="lbl">Tarifa promedio</div>
+    <div class="val">$20.39</div>
+    <div class="sub">+58.1% vs. 2015</div>
+    <div class="bar"><i style="width:100%"></i></div>
+  </div>
+  <div class="card kpi">
+    <div class="lbl">Concentración</div>
+    <div class="val">87.1<small>%</small></div>
+    <div class="sub">recogidas en Manhattan</div>
+    <div class="bar"><i style="width:87%"></i></div>
+  </div>
+  <div class="card kpi">
+    <div class="lbl">Hora pico 17–19 h</div>
+    <div class="val">19.4<small>%</small></div>
+    <div class="sub">pico mié. 18 h</div>
+    <div class="bar"><i style="width:65%"></i></div>
+  </div>
+  <div class="card kpi">
+    <div class="lbl">Velocidad promedio</div>
+    <div class="val">11.09 <small>mph</small></div>
+    <div class="sub">−1.9% vs. 2019</div>
+    <div class="bar"><i style="width:56%"></i></div>
+  </div>
+</div>
+
+<section class="card sec">
+  <span class="anno n2">N2</span>
+  <div class="shead">
+    <div><h2><span>01</span>Viajes por mes</h2><div class="hint">2025 vs. 2022 · muestra de 500 K por año</div></div>
+  </div>
+  <div class="legend" style="margin-bottom:4px">
+    <span><i style="background:var(--yellow)"></i>2025</span>
+    <span><span class="dash"></span>2022</span>
+  </div>
+  <div class="chart" id="monthly"></div>
+  <div class="axis-note">Eje Y truncado en 30,000. Octubre es el pico; enero, el valle (1.25× de amplitud).</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n2">N2</span>
+  <div class="shead">
+    <div><h2><span>02</span>Ritmo semanal</h2><div class="hint">Viajes por día y hora · 168 franjas</div></div>
+  </div>
+  <div class="legend" style="margin-bottom:2px"><span>Menos</span><span class="ramp" style="width:64px"></span><span>Más</span></div>
+  <div id="heat"></div>
+  <div class="axis-note">El pico es miércoles a las 18 h; la madrugada (3–5 h), el valle.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n2">N2</span>
+  <div class="shead">
+    <div><h2><span>03</span>Recogidas por zona</h2><div class="hint">Mapa coroplético · 263 zonas TLC</div></div>
+  </div>
+  <div class="map-wrap">
+    <img src="nyc-zones-map.svg" alt="Mapa coroplético de recogidas por zona TLC en 2025" />
+    <div class="map-callout"><b>87.1%</b><span>de las recogidas son en Manhattan</span></div>
+    <div class="map-legend"><span>Menos</span><span class="ramp"></span><span>Más</span></div>
+  </div>
+  <div id="zones" style="margin-top:8px"></div>
+  <div class="axis-note">254 de 263 zonas con actividad. JFK y LaGuardia rompen el patrón por su distancia al centro.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n2">N2</span>
+  <div class="shead">
+    <div><h2><span>04</span>Distribución de la tarifa</h2><div class="hint">Histograma · 2025 · media marcada</div></div>
+  </div>
+  <div class="chart" id="hist"></div>
+  <div class="axis-note">Eje X: tarifa base en USD · Eje Y: viajes. La cola derecha son viajes largos y aeropuertos.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n3">N3</span>
+  <div class="shead"><div><h2>Método de pago</h2><div class="hint">Proporción · 2025</div></div></div>
+  <div class="donut-wrap">
+    <div id="donut"></div>
+    <div id="payLegend" style="flex:1"></div>
+  </div>
+  <div class="axis-note">La propina solo se registra en pagos electrónicos.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n2">N2</span>
+  <div class="shead"><div><h2><span>05</span>Duración por franja</h2><div class="hint">Boxplot · minutos · 2025</div></div></div>
+  <div class="chart" id="box"></div>
+  <div class="axis-note">Caja = P25–P75 · línea = mediana · bigotes = P05–P95.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n3">N3</span>
+  <div class="shead"><div><h2>Distancia vs. tarifa</h2><div class="hint">Dispersión · 2025</div></div></div>
+  <div class="chart" id="scatter"></div>
+  <div class="axis-note">Correlación de Pearson r = 0.907.</div>
+</section>
+
+<section class="card sec">
+  <span class="anno n3">N3</span>
+  <div class="shead"><div><h2><span>06</span>Rutas más frecuentes</h2><div class="hint">Origen → destino · 2025</div></div></div>
+  <table>
+    <thead><tr><th>Ruta</th><th class="num">Viajes</th><th class="num">Tarifa</th></tr></thead>
+    <tbody id="routes"></tbody>
+  </table>
+</section>
+
+<section class="card sec findings">
+  <span class="anno n3">N3</span>
+  <div class="shead"><div><h2>Hallazgos</h2><div class="hint">Lectura en lenguaje llano</div></div></div>
+  <ul>
+    <li><b>La ciudad se recupera lento.</b> 2025 mueve 48.0 M de viajes frente a 84.4 M en 2019.</li>
+    <li><b>Un solo borough.</b> Manhattan concentra 87.1% de las recogidas; Queens aporta 9.2%.</li>
+    <li><b>La tarifa crece más que la velocidad.</b> $20.39 por viaje y 11.09 mph.</li>
+    <li><b>El aeropuerto manda.</b> JFK es la tercera zona por recogidas.</li>
+  </ul>
+</section>
+
+<section class="card sec method">
+  <span class="anno n3">N3</span>
+  <div class="shead"><div><h2>Metodología y límites</h2><div class="hint">Qué se puede concluir</div></div></div>
+  <p><b>Fuente y muestra.</b> NYC TLC Yellow Taxi, 8 archivos anuales, 599.5 M de registros. Muestra reproducible de 500,000 viajes por año (semilla 42).</p>
+  <p><b>Limpieza.</b> Duración 1 min–6 h, distancia 0.1–100 mi, tarifa ≥ 0. Atípicos descartados, no imputados.</p>
+  <p><b>Límites.</b> La propina en efectivo no se registra; el tablero describe viajes, no personas.</p>
+</section>
+
+<div class="foot">
+  Fuente: NYC Taxi &amp; Limousine Commission · TLC Trip Record Data · dominio público.<br>
+  Wireframe móvil · 390 px · una columna · Fase 2.
+</div>
+
+<script src="_data.js"></script>
+<script>
+const MES = ['E','F','M','A','M','J','J','A','S','O','N','D'];
+const MESF = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+function spark(){
+  const v = Object.values(D.monthly[D.year]);
+  const w = 330, h = 40, pad = 3;
+  const min = Math.min(...v), max = Math.max(...v);
+  const x = i => pad + i * (w - 2 * pad) / (v.length - 1);
+  const y = n => h - pad - (n - min) / (max - min) * (h - 2 * pad - 5);
+  const line = v.map((n, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(n).toFixed(1)).join(' ');
+  const area = line + ' L' + x(v.length - 1).toFixed(1) + ',' + h + ' L' + pad + ',' + h + ' Z';
+  document.getElementById('spark').innerHTML =
+    '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+    '<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0" stop-color="#FFD23F" stop-opacity=".34"/>' +
+    '<stop offset="1" stop-color="#FFD23F" stop-opacity="0"/></linearGradient></defs>' +
+    '<path d="' + area + '" fill="url(#sg)"/>' +
+    '<path d="' + line + '" fill="none" stroke="#FFD23F" stroke-width="1.9"/>' +
+    '<circle cx="' + x(9).toFixed(1) + '" cy="' + y(v[9]).toFixed(1) + '" r="2.6" fill="#FFD23F"/></svg>';
+}
+
+function monthly(){
+  const w = 330, h = 170, ml = 30, mr = 8, mt = 14, mb = 22;
+  const y0 = 30000, y1 = 48000;
+  const v = Object.values(D.monthly[D.year]);
+  const p = Object.values(D.monthly[D.prev]);
+  const x = i => ml + i * (w - ml - mr) / 11;
+  const y = n => mt + (y1 - n) / (y1 - y0) * (h - mt - mb);
+  const path = a => a.map((n, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(n).toFixed(1)).join(' ');
+  let g = '';
+  [35000, 40000, 45000].forEach(n => {
+    g += '<line x1="' + ml + '" y1="' + y(n).toFixed(1) + '" x2="' + (w - mr) + '" y2="' + y(n).toFixed(1) + '" stroke="rgba(255,255,255,.07)"/>';
+    g += '<text x="' + (ml - 5) + '" y="' + (y(n) + 3).toFixed(1) + '" text-anchor="end" fill="#64748B" font-size="7">' + (n / 1000) + 'k</text>';
+  });
+  g += '<path d="' + path(p) + '" fill="none" stroke="#34D3C0" stroke-width="1.3" stroke-dasharray="4 3" opacity=".85"/>';
+  g += '<path d="' + path(v) + '" fill="none" stroke="#FFD23F" stroke-width="2"/>';
+  v.forEach((n, i) => { g += '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(n).toFixed(1) + '" r="1.9" fill="#FFD23F"/>'; });
+  v.forEach((n, i) => {
+    g += '<text x="' + x(i).toFixed(1) + '" y="' + (h - 7) + '" text-anchor="middle" fill="#64748B" font-size="6.5">' + MES[i] + '</text>';
+  });
+  g += '<text x="' + (x(9) + 4).toFixed(1) + '" y="' + (y(v[9]) - 6).toFixed(1) + '" fill="#FFD23F" font-size="7.5" font-weight="700">46,007</text>';
+  document.getElementById('monthly').innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '">' + g + '</svg>';
+}
+
+function heatColor(t){
+  const stops = [[0, [16, 27, 48]], [0.45, [46, 54, 52]], [0.7, [122, 92, 18]], [0.88, [200, 156, 24]], [1, [255, 210, 63]]];
+  const k = Math.pow(Math.max(0, Math.min(1, t)), 1.55);
+  for (let i = 0; i < stops.length - 1; i++) {
+    const [a, ca] = stops[i], [b, cb] = stops[i + 1];
+    if (k >= a && k <= b) {
+      const f = (k - a) / (b - a);
+      return 'rgb(' + ca.map((v, j) => Math.round(v + (cb[j] - v) * f)).join(',') + ')';
+    }
+  }
+  return 'rgb(255,210,63)';
+}
+
+function heat(){
+  const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const max = Math.max.apply(null, D.hourly.flat());
+  let html = '<div class="heat-grid"><div></div>';
+  for (let h = 0; h < 24; h++) html += '<div class="hh">' + (h % 3 === 0 ? h : '') + '</div>';
+  D.hourly.forEach((row, d) => {
+    html += '<div class="hl">' + days[d] + '</div>';
+    row.forEach((n, h) => {
+      html += '<div class="hc" style="background:' + heatColor(n / max) + '"></div>';
+    });
+  });
+  html += '</div>';
+  document.getElementById('heat').innerHTML = html;
+}
+
+function zones(){
+  const max = D.zones[0].pickups;
+  document.getElementById('zones').innerHTML = D.zones.slice(0, 5).map((z, i) =>
+    '<div class="zrow"><b>' + (i + 1) + '. ' + z.zone + '</b>' +
+    '<span class="track"><i style="width:' + (z.pickups / max * 100).toFixed(1) + '%"></i></span>' +
+    '<em>' + z.pickups.toLocaleString('es-MX') + '</em></div>'
+  ).join('');
+}
+
+function hist(){
+  const w = 330, h = 150, ml = 26, mr = 8, mt = 12, mb = 20;
+  const B = D.histFare;
+  const max = Math.max.apply(null, B.map(b => b.count));
+  const x = v => ml + (v / 80) * (w - ml - mr);
+  const y = n => mt + (1 - n / max) * (h - mt - mb);
+  let g = '';
+  [0, 20, 40, 60, 80].forEach(v => {
+    g += '<text x="' + x(v).toFixed(1) + '" y="' + (h - 6) + '" text-anchor="middle" fill="#64748B" font-size="7">$' + (v === 80 ? '80+' : v) + '</text>';
+  });
+  B.forEach(b => {
+    const x0 = x(b.bin), x1 = x(b.bin + 2) - 1;
+    g += '<rect x="' + x0.toFixed(1) + '" y="' + y(b.count).toFixed(1) + '" width="' + Math.max(1, x1 - x0).toFixed(1) + '" height="' + (h - mb - y(b.count)).toFixed(1) + '" fill="rgba(255,210,63,.55)" rx="1"/>';
+  });
+  const mx = x(20.39);
+  g += '<line x1="' + mx.toFixed(1) + '" y1="' + mt + '" x2="' + mx.toFixed(1) + '" y2="' + (h - mb) + '" stroke="#34D3C0" stroke-dasharray="3 2"/>';
+  g += '<text x="' + (mx + 4).toFixed(1) + '" y="' + (mt + 8) + '" fill="#34D3C0" font-size="7">media $20.39</text>';
+  document.getElementById('hist').innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '">' + g + '</svg>';
+}
+
+function donut(){
+  const P = D.payment;
+  const total = P.reduce((a, b) => a + b.trips, 0);
+  const cols = ['#FFD23F', '#34D3C0', '#FF9F43', '#64748B'];
+  const r = 46, C = 2 * Math.PI * r;
+  let off = 0, segs = '';
+  P.forEach((p, i) => {
+    const len = p.trips / total * C;
+    segs += '<circle cx="64" cy="64" r="' + r + '" fill="none" stroke="' + cols[i] + '" stroke-width="18" stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '" transform="rotate(-90 64 64)"/>';
+    off += len;
+  });
+  document.getElementById('donut').innerHTML =
+    '<svg viewBox="0 0 128 128">' + segs +
+    '<text x="64" y="61" text-anchor="middle" fill="#E8EEF8" font-size="19" font-weight="700">85.7%</text>' +
+    '<text x="64" y="76" text-anchor="middle" fill="#8FA0B8" font-size="7">tarjeta</text></svg>';
+  document.getElementById('payLegend').innerHTML = P.map((p, i) =>
+    '<div class="pl"><i style="background:' + cols[i] + '"></i><b>' + p.name + '</b><span>' + (p.trips / total * 100).toFixed(1) + '%</span></div>'
+  ).join('');
+}
+
+function box(){
+  const w = 330, h = 160, ml = 28, mr = 8, mt = 12, mb = 26;
+  const B = D.box;
+  const y = v => mt + (55 - v) / 55 * (h - mt - mb);
+  const gw = (w - ml - mr) / B.length;
+  let g = '';
+  [0, 15, 30, 45].forEach(v => {
+    g += '<line x1="' + ml + '" y1="' + y(v).toFixed(1) + '" x2="' + (w - mr) + '" y2="' + y(v).toFixed(1) + '" stroke="rgba(255,255,255,.07)"/>';
+    g += '<text x="' + (ml - 5) + '" y="' + (y(v) + 3).toFixed(1) + '" text-anchor="end" fill="#64748B" font-size="7">' + v + '</text>';
+  });
+  B.forEach((b, i) => {
+    const cx = ml + gw * (i + 0.5), bw = 34;
+    g += '<line x1="' + cx + '" y1="' + y(b.p05).toFixed(1) + '" x2="' + cx + '" y2="' + y(b.p95).toFixed(1) + '" stroke="#8FA0B8" stroke-width="1"/>';
+    g += '<line x1="' + (cx - 8) + '" y1="' + y(b.p05).toFixed(1) + '" x2="' + (cx + 8) + '" y2="' + y(b.p05).toFixed(1) + '" stroke="#8FA0B8"/>';
+    g += '<line x1="' + (cx - 8) + '" y1="' + y(b.p95).toFixed(1) + '" x2="' + (cx + 8) + '" y2="' + y(b.p95).toFixed(1) + '" stroke="#8FA0B8"/>';
+    g += '<rect x="' + (cx - bw / 2) + '" y="' + y(b.p75).toFixed(1) + '" width="' + bw + '" height="' + (y(b.p25) - y(b.p75)).toFixed(1) + '" fill="rgba(255,210,63,.2)" stroke="#FFD23F" stroke-width="1" rx="2"/>';
+    g += '<line x1="' + (cx - bw / 2) + '" y1="' + y(b.median).toFixed(1) + '" x2="' + (cx + bw / 2) + '" y2="' + y(b.median).toFixed(1) + '" stroke="#FFD23F" stroke-width="2"/>';
+    g += '<text x="' + cx + '" y="' + (h - 8) + '" text-anchor="middle" fill="#8FA0B8" font-size="6.8">' + b.grp + '</text>';
+    g += '<text x="' + cx + '" y="' + (y(b.median) - 4).toFixed(1) + '" text-anchor="middle" fill="#FFD23F" font-size="7">' + b.median + '</text>';
+  });
+  document.getElementById('box').innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '">' + g + '</svg>';
+}
+
+function scatter(){
+  const w = 330, h = 150, ml = 28, mr = 8, mt = 10, mb = 20;
+  const x = v => ml + Math.min(v, 25) / 25 * (w - ml - mr);
+  const y = v => mt + (1 - Math.min(v, 100) / 100) * (h - mt - mb);
+  let g = '';
+  [0, 25, 50, 75, 100].forEach(v => {
+    g += '<line x1="' + ml + '" y1="' + y(v).toFixed(1) + '" x2="' + (w - mr) + '" y2="' + y(v).toFixed(1) + '" stroke="rgba(255,255,255,.06)"/>';
+    g += '<text x="' + (ml - 5) + '" y="' + (y(v) + 3).toFixed(1) + '" text-anchor="end" fill="#64748B" font-size="6.5">$' + v + '</text>';
+  });
+  D.scatter.forEach(p => {
+    g += '<circle cx="' + x(p.d).toFixed(1) + '" cy="' + y(p.f).toFixed(1) + '" r="1.1" fill="rgba(255,210,63,.45)"/>';
+  });
+  g += '<text x="' + (w - mr) + '" y="' + (h - 6) + '" text-anchor="end" fill="#64748B" font-size="6.5">millas</text>';
+  g += '<text x="' + (ml + 5) + '" y="' + (mt + 8) + '" fill="#34D3C0" font-size="7">r = ' + D.corr + '</text>';
+  document.getElementById('scatter').innerHTML = '<svg viewBox="0 0 ' + w + ' ' + h + '">' + g + '</svg>';
+}
+
+function routes(){
+  document.getElementById('routes').innerHTML = D.routes.slice(0, 4).map(r =>
+    '<tr><td>' + r.from + ' → ' + r.to + '</td><td class="num">' + r.trips.toLocaleString('es-MX') + '</td><td class="num">$' + r.fare.toFixed(2) + '</td></tr>'
+  ).join('');
+}
+
+spark(); monthly(); heat(); zones(); hist(); donut(); box(); scatter(); routes();
+</script>
+</body>
+</html>

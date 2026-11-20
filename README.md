@@ -78,6 +78,18 @@ en cada push a `main`.
 La configuración de Vite usa `base: './'`, por lo que funciona tanto en la raíz
 como en un subdirectorio de GitHub Pages sin cambiar el nombre del repositorio.
 
+### Modo evaluación (Fase 4)
+
+El dashboard incluye una encuesta asistida que solo se activa con el parámetro
+`?evaluar=1`:
+
+**https://srmeme64.github.io/nyc-mobility-pulse/?evaluar=1**
+
+El consultor responde el instrumento dentro del sitio; al final se abre el
+formulario de Google con las respuestas cargadas. Los identificadores de
+prellenado se regeneran con `npm run form:entries`. La guía de configuración
+está en [`docs/fase4/encuesta_en_sitio.md`](docs/fase4/encuesta_en_sitio.md).
+
 ---
 
 ## 3. Arquitectura

@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>NYC Mobility Pulse · Fase 2 · Estructura visual</title>
+<style>
+  @page{size:A4;margin:16mm 15mm 17mm}
+  :root{
+    --ink:#0B1424; --body:#243244; --muted:#5B6B80; --rule:#DCE3EE; --soft:#F6F8FB;
+    --navy:#0D1B2E; --panel:#0D1526; --yellow:#FFD23F; --amber:#8A6A00; --teal:#0F7A6C;
+    --teal-soft:#DDF4EF; --yellow-soft:#FFF6D8; --n3-soft:#E9EEF6;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{margin:0;background:#fff;color:var(--body);
+    font-family:"Inter","Segoe UI",Arial,sans-serif;font-size:9.8pt;line-height:1.55}
+  h1,h2,h3,h4{font-family:"Space Grotesk","Segoe UI",Arial,sans-serif;color:var(--ink);margin:0}
+  p{margin:0 0 6.5pt;text-align:justify}
+  strong{color:var(--ink)}
+  em{font-style:normal;color:var(--amber);font-weight:600}
+  a{color:var(--teal);text-decoration:none}
+  ul,ol{margin:0 0 7pt;padding-left:14pt}
+  li{margin-bottom:2.5pt}
+
+  /* ---------- cover ---------- */
+  .cover{margin:-16mm -15mm -17mm;width:210mm;height:297mm;padding:30mm 22mm 20mm;
+    background:radial-gradient(120% 90% at 88% 0%,#182A4A 0%,#070B14 55%),#070B14;
+    color:#E8EEF8;position:relative;overflow:hidden;break-after:page}
+  .cover .glow{position:absolute;right:-40mm;top:-30mm;width:130mm;height:130mm;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,210,63,.18),transparent 62%)}
+  .cover .grid{position:absolute;inset:0;opacity:.16;
+    background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+    background-size:12mm 12mm}
+  .cover>*{position:relative;z-index:2}
+  .cov-top{display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:6mm}
+  .cov-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:12pt;letter-spacing:.04em}
+  .cov-mark{width:34px;height:34px;border-radius:9px;background:var(--yellow);color:#0B0B10;
+    display:grid;place-items:center;font-size:10pt;font-weight:900}
+  .cov-kicker{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#8FA0B8;text-align:right}
+  .cov-kicker b{color:var(--yellow)}
+  .cov-main{margin-top:34mm;max-width:158mm}
+  .cov-eyebrow{font-size:8.5pt;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+  .cov-main h1{font-size:40pt;line-height:1.02;letter-spacing:-.04em;color:#fff;margin:6mm 0 5mm;font-weight:800}
+  .cov-main h1 span{color:var(--yellow)}
+  .cov-sub{font-size:12.5pt;line-height:1.45;color:#B9C7DA;max-width:130mm}
+  .cov-meta{margin-top:26mm;display:grid;grid-template-columns:1.25fr 1fr;gap:10mm;
+    border-top:1px solid rgba(255,255,255,.14);padding-top:6mm}
+  .cover strong{color:#fff}
+  .cov-meta .lbl{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:#64748B;margin-bottom:1.5mm}
+  .cov-meta .val{font-size:10pt;color:#E8EEF8;line-height:1.5}
+  .cov-foot{position:absolute;left:22mm;right:22mm;bottom:14mm;display:flex;justify-content:space-between;
+    align-items:center;font-size:7.5pt;color:#64748B;border-top:1px solid rgba(255,255,255,.1);padding-top:4mm}
+  .cov-ticket{display:inline-flex;align-items:center;gap:7px;font-size:7.5pt;color:#8FA0B8;
+    border:1px solid rgba(255,210,63,.4);border-radius:999px;padding:2mm 3.5mm}
+  .cov-ticket b{color:var(--yellow);font-size:10pt}
+
+  /* ---------- chapters ---------- */
+  main{padding:0}
+  .chapter{break-before:page}
+  .chapter:first-child{break-before:auto}
+  .chap-head{display:flex;align-items:flex-start;gap:9px;border-bottom:2px solid var(--ink);
+    padding-bottom:3mm;margin-bottom:4.2mm}
+  .chap-num{flex:0 0 auto;width:24px;height:24px;border-radius:5px;background:var(--yellow);
+    color:#0B0B10;font-weight:800;font-size:10pt;display:grid;place-items:center;
+    font-family:"Space Grotesk","Segoe UI",sans-serif}
+  .chap-head h1{font-size:17pt;line-height:1.15;letter-spacing:-.02em}
+  .chap-head .kicker{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:1mm;font-weight:700}
+  .chap-head .lead{font-size:8.8pt;color:var(--muted);margin-top:1.2mm}
+
+  h2{font-size:11.2pt;margin:4.2mm 0 1.8mm;letter-spacing:-.01em}
+  h3{font-size:9.6pt;margin:3.5mm 0 1.5mm}
+  .small{font-size:8.4pt;line-height:1.5;color:var(--muted)}
+  .tiny{font-size:7.4pt;line-height:1.45;color:var(--muted)}
+
+  .callout{background:var(--yellow-soft);border-left:3px solid var(--yellow);padding:3mm 4mm;
+    margin:3mm 0;font-size:9pt;line-height:1.5}
+  .callout.dark{background:var(--navy);border-left:3px solid var(--yellow);color:#DCE6F5}
+  .callout.dark strong{color:#fff}
+  .callout.dark em{color:var(--yellow)}
+  .callout .tagline{font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    font-weight:800;display:block;margin-bottom:1mm}
+  .callout.dark .tagline{color:var(--yellow)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+
+  /* KPI cards */
+  .kpi-row{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr 1fr;gap:2.5mm;margin:4mm 0}
+  .kpi{border:1px solid var(--rule);border-radius:3mm;padding:3mm 3.2mm;background:var(--soft);position:relative}
+  .kpi .lbl{font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800;line-height:1.3}
+  .kpi .val{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:19pt;font-weight:800;
+    letter-spacing:-.03em;color:var(--ink);margin-top:1.2mm;line-height:1}
+  .kpi .val small{font-size:8pt;color:var(--muted);font-weight:600;letter-spacing:0}
+  .kpi .sub{font-size:7.4pt;color:var(--muted);margin-top:1.4mm;line-height:1.35}
+  .kpi.main{background:var(--navy);border-color:var(--navy)}
+  .kpi.main .lbl{color:var(--yellow)}
+  .kpi.main .val{color:var(--yellow);font-size:27pt}
+  .kpi.main .val small{color:#C7D4E6}
+  .kpi.main .sub{color:#AFC0D6}
+  .kpi .badge{position:absolute;top:2mm;right:2mm;font-size:6pt;font-weight:800;letter-spacing:.06em;
+    padding:.4mm 1.4mm;border-radius:1mm;background:var(--yellow);color:#0B0B10}
+  .kpi.main .badge{background:var(--yellow);color:#0B0B10}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;font-size:8.1pt;line-height:1.4;margin:2.5mm 0 3mm}
+  .tbl th{text-align:left;font-size:6.8pt;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+    border-bottom:1.2px solid var(--ink);padding:1.8mm 1.6mm;font-weight:800}
+  .tbl td{padding:1.5mm 1.6mm;border-bottom:.6px solid var(--rule);vertical-align:top}
+  .tbl tr:nth-child(even) td{background:#FAFBFD}
+  .tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl .tot td{border-top:1.2px solid var(--ink);border-bottom:none;font-weight:700;background:#fff!important;color:var(--ink)}
+  .tbl.compact td,.tbl.compact th{padding:1.15mm 1.4mm}
+  .tbl caption{caption-side:top;text-align:left;font-size:7.4pt;color:var(--muted);padding-bottom:1.2mm}
+
+  /* badges */
+  .n1,.n2,.n3{display:inline-block;font-size:6.4pt;font-weight:800;letter-spacing:.05em;
+    padding:.5mm 1.5mm;border-radius:1mm;vertical-align:1px}
+  .n1{background:var(--yellow);color:#0B0B10}
+  .n2{background:var(--teal-soft);color:#0F5F55}
+  .n3{background:var(--n3-soft);color:#41536B}
+
+  /* figures */
+  figure{margin:3mm 0 4mm;break-inside:avoid}
+  figure img{width:100%;display:block;border:1px solid var(--rule);border-radius:2mm}
+  figcaption{font-size:7.4pt;line-height:1.45;color:var(--muted);margin-top:1.5mm}
+  figcaption b{color:var(--ink)}
+  .fig-half{width:100%}
+  .fig-frame{border:1px solid var(--rule);border-radius:2mm;overflow:hidden}
+
+  /* palette */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:3mm 0}
+  .sw{border:1px solid var(--rule);border-radius:2mm;overflow:hidden;background:#fff}
+  .sw .chip{height:17mm}
+  .sw .info{padding:2mm 2.4mm}
+  .sw .name{font-size:7.6pt;font-weight:800;color:var(--ink);line-height:1.2}
+  .sw .hex{font-size:7pt;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:.4mm}
+  .sw .role{font-size:6.6pt;color:var(--muted);line-height:1.35;margin-top:1mm}
+  .sw .cr{font-size:6.4pt;color:var(--teal);font-weight:700;margin-top:.8mm}
+  .sw .cr.bad{color:#A33B3B}
+
+  .spec{border:1px solid var(--rule);border-radius:2mm;padding:4mm 4.5mm;background:var(--soft)}
+  .spec .display{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:30pt;font-weight:800;
+    letter-spacing:-.04em;line-height:1;color:var(--ink)}
+  .spec .body{font-size:10pt;color:var(--body);margin-top:2mm}
+  .spec .meta{font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    border-top:1px solid var(--rule);padding-top:2mm;margin-top:3mm}
+
+  .phones{display:grid;grid-template-columns:repeat(3,56mm);justify-content:center;gap:4mm;align-items:start;margin:3mm 0}
+  .phones figure{margin:0}
+  .phones img{border-radius:3mm}
+  .phones figcaption{font-size:6.8pt}
+
+  .annex-table{font-size:7.6pt}
+  .refs{font-size:8.4pt;line-height:1.55}
+  .refs li{margin-bottom:2.2mm}
+  .foot-note{font-size:6.8pt;color:var(--muted);border-top:1px solid var(--rule);
+    margin-top:6mm;padding-top:2mm;display:flex;justify-content:space-between}
+  .avoid{break-inside:avoid}
+</style>
+</head>
+<body>
+
+<!-- ================= COVER ================= -->
+<section class="cover">
+  <div class="glow"></div>
+  <div class="grid"></div>
+  <div class="cov-top">
+    <div class="cov-brand"><span class="cov-mark">NYC</span> MOBILITY PULSE</div>
+    <div class="cov-kicker">Visualización de datos<br><b>Fase 2 · Estructura visual</b></div>
+  </div>
+
+  <div class="cov-main">
+    <div class="cov-eyebrow">Proyecto 4 · La movilidad urbana y el tráfico inteligente</div>
+    <h1>El pulso de la <span>movilidad</span> en Nueva York</h1>
+    <p class="cov-sub">KPIs, gráficos, paleta y wireframes para leer la ciudad a través de
+      599.5 millones de viajes en taxi amarillo.</p>
+  </div>
+
+  <div class="cov-meta">
+    <div>
+      <div class="lbl">Equipo</div>
+      <div class="val"><strong>Mobility Pulse</strong><br>Javier Rodríguez Rodríguez<br>Diego Alonso López Ballesta</div>
+    </div>
+    <div>
+      <div class="lbl">Docente</div>
+      <div class="val">Jessica Carmin Mendiola Fuentes</div>
+      <div class="lbl" style="margin-top:4mm">Fecha</div>
+      <div class="val">Noviembre de 2026</div>
+    </div>
+  </div>
+
+  <div class="cov-foot">
+    <span>NYC TLC · Yellow Taxi Trip Record Data · dominio público</span>
+    <span class="cov-ticket">Muestra <b>4,000,000</b> viajes · 263 zonas</span>
+  </div>
+</section>
+
+<main>
+
+<!-- ================= RESUMEN ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">0</div>
+    <div>
+      <div class="kicker">Síntesis</div>
+      <h1>Resumen ejecutivo</h1>
+      <div class="lead">Qué se decidió, con qué datos y por qué la estructura visual funciona.</div>
+    </div>
+  </div>
+
+  <p>Este documento cierra la Fase 2 del proyecto <strong>NYC Mobility Pulse</strong>: la traducción de una pregunta
+  de movilidad urbana en una estructura visual concreta. No se parte de una hoja en blanco. El tablero ya
+  implementado en el repositorio sirve como referencia y los wireframes reproducen su composición real, de modo que
+  el diseño documentado y el producto construido no se contradicen.</p>
+
+  <p>La pregunta que ordena todo es <em>¿cuándo, dónde y a qué costo se mueve Nueva York?</em> Para responderla se
+  eligió un <strong>KPI principal: los viajes por mes</strong>, es decir, la demanda. Es el pulso de la ciudad:
+  distingue flujo de stock, usa la marca de tiempo de recogida —el único campo sin valores inválidos en los ocho
+  años— y conecta de forma natural con los cuatro KPIs secundarios que lo contextualizan: tarifa promedio
+  (<strong>$20.39</strong>), concentración en Manhattan (<strong>87.1%</strong>), participación de la hora pico
+  (<strong>19.4%</strong>) y velocidad promedio (<strong>11.09 mph</strong>).</p>
+
+  <p>El sistema visual es de cuatro colores base —azul noche, panel, texto marfil y amarillo taxi— con una extensión
+  categórica de cuatro tonos. El amarillo <strong>#FFD23F</strong> no es decorativo: es el color del objeto de
+  estudio y alcanza <strong>13.63:1</strong> de contraste sobre el fondo. La jerarquía se resolvió en tres niveles:
+  <span class="n1">N1</span> un solo mensaje, <span class="n2">N2</span> los gráficos que lo explican y
+  <span class="n3">N3</span> el contexto que se lee después.</p>
+
+  <div class="callout dark">
+    <span class="tagline">Hallazgo que sostiene el diseño</span>
+    <strong>Octubre de 2025 es el mes pico</strong> con 46,007 viajes de la muestra (+5.7% frente a septiembre),
+    mientras enero es el valle con 36,773. La amplitud estacional es de <strong>1.25×</strong>. Esa diferencia,
+    pequeña en apariencia, es la que justifica una serie mensual y no un solo número: la demanda no es plana,
+    y el tablero existe para mostrar su forma.
+  </div>
+
+  <h2>Ficha técnica del entregable</h2>
+  <table class="tbl compact">
+    <tr><th style="width:26%">Elemento</th><th>Definición</th></tr>
+    <tr><td>Proyecto</td><td>4 — La movilidad urbana y el tráfico inteligente</td></tr>
+    <tr><td>Dataset</td><td>NYC TLC Yellow Taxi Trip Records · 8 archivos anuales (2015, 2017–2022, 2025)</td></tr>
+    <tr><td>Volumen</td><td>599,475,232 registros fuente · 86.9 GB · 585,599,682 válidos (97.7%)</td></tr>
+    <tr><td>Muestra</td><td>500,000 viajes por año · 4,000,000 en total · semilla 42</td></tr>
+    <tr><td>Unidad espacial</td><td>263 zonas TLC (taxi zones) y 5 boroughs</td></tr>
+    <tr><td>Entregables</td><td>Reporte, wireframe de escritorio (1440 px), wireframe móvil (390 px), esquema 3×3</td></tr>
+  </table>
+
+  <h2>Contenido</h2>
+  <table class="tbl compact">
+    <tr><td style="width:8%">1</td><td>Contexto y pregunta central</td><td class="num">3</td></tr>
+    <tr><td>2</td><td>Dataset, limpieza y metodología</td><td class="num">4</td></tr>
+    <tr><td>3</td><td>KPI principal: viajes por mes</td><td class="num">5</td></tr>
+    <tr><td>4</td><td>KPIs secundarios y su justificación</td><td class="num">6</td></tr>
+    <tr><td>5</td><td>Tipo de gráfico por KPI</td><td class="num">7</td></tr>
+    <tr><td>6</td><td>Paleta de color y accesibilidad</td><td class="num">8</td></tr>
+    <tr><td>7</td><td>Tipografía y sistema visual</td><td class="num">9</td></tr>
+    <tr><td>8</td><td>Wireframe de escritorio</td><td class="num">10</td></tr>
+    <tr><td>9</td><td>Wireframe móvil</td><td class="num">13</td></tr>
+    <tr><td>10</td><td>Cuadrícula 3×3 y jerarquía N1/N2/N3</td><td class="num">14</td></tr>
+    <tr><td>11</td><td>Interacciones y hallazgos</td><td class="num">15</td></tr>
+    <tr><td>12</td><td>Limitaciones y conclusiones</td><td class="num">16</td></tr>
+    <tr><td>13</td><td>Referencias y anexo</td><td class="num">17</td></tr>
+  </table>
+</section>
+
+<!-- ================= 1 CONTEXTO ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">1</div>
+    <div>
+      <div class="kicker">Punto de partida</div>
+      <h1>Contexto y pregunta central</h1>
+      <div class="lead">Por qué el taxi amarillo es un sensor de la ciudad y qué se quiere responder.</div>
+    </div>
+  </div>
+
+  <p>Nueva York es una ciudad que se define por cómo se mueve. El taxi amarillo es uno de sus instrumentos de
+  medición más antiguos y, a la vez, uno de los más completos: cada viaje deja un registro con hora, zona de
+  recogida y de destino, distancia, duración, tarifa, propina y método de pago. Sumados, esos registros no
+  describen coches: describen <strong>la demanda de la ciudad</strong>.</p>
+
+  <p>El proyecto 4 pide analizar la movilidad urbana y el tráfico inteligente. La literatura de movilidad suele
+  distinguir entre <em>flujo</em> (lo que ocurre en un intervalo) y <em>stock</em> (lo que existe en un momento).
+  Un tablero de taxis debe trabajar con flujo: viajes por hora, por día, por zona. Esa distinción es la primera
+  decisión de diseño y explica por qué el KPI principal no es “número de taxis” ni “población atendida”, sino
+  <strong>viajes por mes</strong>.</p>
+
+  <h2>La pregunta que ordena el tablero</h2>
+  <div class="callout">
+    <span class="tagline">Pregunta central</span>
+    <strong>¿Cuándo, dónde y a qué costo se mueve Nueva York?</strong> El tablero debe permitir comparar años,
+    detectar el pico y el valle de la demanda, localizar las zonas que concentran los viajes y relacionar esa
+    demanda con la tarifa, el tiempo y la velocidad.
+  </div>
+
+  <p>De esa pregunta se derivan tres preguntas de lectura, que se corresponden con las tres filas de la cuadrícula
+  y con los tres niveles de jerarquía:</p>
+  <table class="tbl compact">
+    <tr><th style="width:30%">Pregunta</th><th>Qué debe mostrar</th><th style="width:18%">Nivel</th></tr>
+    <tr><td>¿Cuándo se mueve?</td><td>Serie mensual, estacionalidad, hora pico y ritmo semanal</td><td><span class="n1">N1</span> / <span class="n2">N2</span></td></tr>
+    <tr><td>¿Dónde se concentra?</td><td>Mapa de zonas TLC, boroughs y ranking de recogidas</td><td><span class="n2">N2</span></td></tr>
+    <tr><td>¿A qué costo y con qué eficiencia?</td><td>Tarifa, propina, duración, velocidad y relación distancia–tarifa</td><td><span class="n2">N2</span> / <span class="n3">N3</span></td></tr>
+  </table>
+
+  <h2>Por qué este dataset</h2>
+  <p>Los datos de la <strong>NYC Taxi &amp; Limousine Commission</strong> son públicos, tienen cobertura de varios
+  años, una unidad espacial estable —las 263 zonas TLC— y un nivel de detalle que pocos datasets urbanos ofrecen.
+  Esa combinación permite tres cosas que un tablero académico necesita: <strong>comparar</strong> años con la misma
+  geometría, <strong>agregar</strong> sin perder el detalle y <strong>verificar</strong> cada cifra contra el
+  archivo original.</p>
+
+  <p>El alcance temporal es 2015 y 2017–2022, más 2025. Faltan 2016, 2023 y 2024 porque los archivos no estaban
+  disponibles en el momento de la extracción. El reporte lo declara en lugar de interpolarlo: un tablero honesto
+  muestra sus huecos.</p>
+
+  <div class="callout dark">
+    <span class="tagline">Decisión de alcance</span>
+    Se analiza una <strong>muestra reproducible de 500,000 viajes por año</strong> (semilla 42), no el universo.
+    Los conteos del tablero son de la muestra; los totales de la fuente se reportan aparte y nunca se mezclan.
+    Esta separación es visible en la interfaz y se repite en la metodología.
+  </div>
+</section>
+
+<!-- ================= 2 DATASET ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">2</div>
+    <div>
+      <div class="kicker">Datos</div>
+      <h1>Dataset, limpieza y metodología</h1>
+      <div class="lead">Qué entra, qué se descarta y qué límites tiene la lectura.</div>
+    </div>
+  </div>
+
+  <p>Se procesaron ocho archivos anuales de viajes en taxi amarillo. El ETL valida tipos, rangos y coherencia
+  temporal; después extrae una muestra estratificada por año. La tabla siguiente resume el volumen y la calidad
+  de cada archivo. La columna “válidos” es la base real del análisis.</p>
+
+  <table class="tbl compact">
+    <caption>Tabla 1. Cobertura y calidad por año. Fuente: <em>data/quality_report.json</em>.</caption>
+    <tr><th>Año</th><th class="num">Registros fuente</th><th class="num">Válidos</th><th class="num">% válidos</th><th class="num">Tamaño</th><th class="num">Muestra</th></tr>
+    <tr><td>2015</td><td class="num">146,087,462</td><td class="num">142,426,581</td><td class="num">97.5%</td><td class="num">26.9 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2017</td><td class="num">113,496,874</td><td class="num">112,145,097</td><td class="num">98.8%</td><td class="num">14.6 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2018</td><td class="num">112,234,626</td><td class="num">110,766,890</td><td class="num">98.7%</td><td class="num">14.5 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2019</td><td class="num">84,399,019</td><td class="num">82,975,749</td><td class="num">98.3%</td><td class="num">11.2 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2020</td><td class="num">24,648,499</td><td class="num">24,066,597</td><td class="num">97.6%</td><td class="num">3.3 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2021</td><td class="num">30,904,072</td><td class="num">30,152,291</td><td class="num">97.6%</td><td class="num">4.1 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2022</td><td class="num">39,656,098</td><td class="num">38,637,317</td><td class="num">97.4%</td><td class="num">5.4 GB</td><td class="num">500,000</td></tr>
+    <tr><td>2025</td><td class="num">48,048,582</td><td class="num">44,429,160</td><td class="num">92.5%</td><td class="num">6.8 GB</td><td class="num">500,000</td></tr>
+    <tr class="tot"><td>Total</td><td class="num">599,475,232</td><td class="num">585,599,682</td><td class="num">97.7%</td><td class="num">86.9 GB</td><td class="num">4,000,000</td></tr>
+  </table>
+
+  <h2>Reglas de limpieza</h2>
+  <div class="two">
+    <div>
+      <ul>
+        <li><strong>Duración:</strong> entre 1 minuto y 6 horas.</li>
+        <li><strong>Distancia:</strong> entre 0.1 y 100 millas.</li>
+        <li><strong>Dinero:</strong> tarifa y total no negativos.</li>
+        <li><strong>Zonas:</strong> identificadores 1–265 del catálogo TLC.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><strong>Pasajeros:</strong> entre 0 y 6.</li>
+        <li><strong>Fechas:</strong> año dentro del archivo y marca de tiempo válida.</li>
+        <li><strong>Atípicos:</strong> se descartan, no se imputan.</li>
+        <li><strong>Duplicados:</strong> se eliminan por clave de viaje.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Un dato importa para la elección del KPI: <strong>la marca de tiempo de recogida no tiene valores inválidos en
+  ninguno de los ocho años</strong> (<em>bad_ts = 0</em>). Es el campo más confiable del dataset y el que sostiene
+  la serie mensual. En contraste, 2025 concentra la mayor proporción de descartes (7.5%), sobre todo por importes
+  y distancias inconsistentes; por eso su porcentaje de válidos cae a 92.5% y se advierte en la interfaz.</p>
+
+  <h2>Qué se puede y qué no se puede concluir</h2>
+  <table class="tbl compact">
+    <tr><th style="width:50%">Se puede afirmar</th><th>No se puede afirmar</th></tr>
+    <tr><td>Cuántos viajes de la muestra ocurren por mes, día y hora.</td><td>Cuántas personas viajan: un viaje no es una persona.</td></tr>
+    <tr><td>Qué zonas concentran las recogidas y cómo cambia su peso.</td><td>Cuánto se mueve la ciudad en metro, bus o bicicleta.</td></tr>
+    <tr><td>Cómo evoluciona la tarifa, la duración y la velocidad medias.</td><td>La propina real de quien paga en efectivo: no se registra.</td></tr>
+    <tr><td>Qué relación hay entre distancia y tarifa en la muestra.</td><td>Causalidad entre congestión y tarifa.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">Nota de transparencia</span>
+    Marzo de 2018 aparece inflado en la fuente original. El tablero lo conserva y lo documenta; no se corrige
+    porque el objetivo es describir el archivo, no maquillarlo. Los totales de la fuente y los de la muestra se
+    muestran siempre por separado.
+  </div>
+</section>
+
+<!-- ================= 3 KPI PRINCIPAL ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">3</div>
+    <div>
+      <div class="kicker">Indicador principal</div>
+      <h1>Viajes por mes: el pulso de la ciudad</h1>
+      <div class="lead">El KPI que responde “¿cuándo se mueve Nueva York?” y ordena todos los demás.</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi main">
+      <span class="badge">N1</span>
+      <div class="lbl">KPI principal</div>
+      <div class="val">46,007 <small>viajes</small></div>
+      <div class="sub">Octubre de 2025 · mes pico · +5.7% vs. septiembre</div>
+    </div>
+    <div class="kpi"><div class="lbl">Mes valle</div><div class="val">36,773</div><div class="sub">Enero · amplitud 1.25×</div></div>
+    <div class="kpi"><div class="lbl">Promedio mensual</div><div class="val">41,667</div><div class="sub">500,000 / 12 meses</div></div>
+    <div class="kpi"><div class="lbl">Pico semanal</div><div class="val">5,261</div><div class="sub">Miércoles · 18 h</div></div>
+    <div class="kpi"><div class="lbl">Hora pico 17–19</div><div class="val">19.4<small>%</small></div><div class="sub">del total de viajes</div></div>
+  </div>
+
+  <h2>Definición y fórmula</h2>
+  <p>El KPI se define como el <strong>conteo de viajes cuya marca de tiempo de recogida cae en cada mes</strong>,
+  calculado sobre la muestra de 500,000 viajes por año:</p>
+  <div class="callout dark" style="text-align:center;font-family:'Space Grotesk','Segoe UI',sans-serif;font-size:11pt">
+    Viajes<sub>m</sub> = Σ viajes con <em>pickup_ts</em> dentro del mes <em>m</em>
+  </div>
+  <p>Se usa la recogida, no la devolución, porque es el momento en que la demanda se activa. La unidad es
+  “viajes de la muestra”; el total de la fuente para 2025 es 48,048,582 registros, que se muestra aparte en el
+  ticket del dataset.</p>
+
+  <h2>Por qué es el principal</h2>
+  <table class="tbl compact">
+    <tr><th style="width:30%">Criterio</th><th>Por qué lo cumple</th></tr>
+    <tr><td><strong>Responde la pregunta central</strong></td><td>Es la forma más directa de saber cuándo se mueve la ciudad; el resto de KPIs explica ese movimiento.</td></tr>
+    <tr><td><strong>Es flujo, no stock</strong></td><td>Cuenta eventos en un intervalo, no unidades existentes. Es la métrica correcta para demanda.</td></tr>
+    <tr><td><strong>Dato confiable</strong></td><td><em>pickup_ts</em> no tiene inválidos en los ocho años (<em>bad_ts = 0</em>).</td></tr>
+    <tr><td><strong>Conecta con todo</strong></td><td>La tarifa, la zona, la hora y la velocidad se leen como explicaciones del mismo volumen.</td></tr>
+    <tr><td><strong>Es accionable</strong></td><td>Permite planear turnos, flota, precios y campañas con un horizonte mensual.</td></tr>
+  </table>
+
+  <h2>Qué aporta a la comprensión del fenómeno</h2>
+  <p>Un solo total anual esconde la historia. La serie mensual muestra tres patrones que el promedio no revela:
+  un <strong>pico de otoño</strong> (octubre, 46,007), un <strong>valle de invierno</strong> (enero, 36,773) y una
+  <strong>caída de agosto</strong> (36,949), compatible con la salida de la ciudad en vacaciones. La amplitud de
+  1.25× entre pico y valle parece pequeña, pero en una flota de miles de vehículos implica decisiones distintas
+  de capacidad y de personal.</p>
+
+  <p>La comparación con 2022 —el año válido más cercano— añade la dimensión de recuperación: 2025 supera a 2022
+  en enero, queda por debajo entre febrero y junio, y vuelve a superarlo de forma sostenida desde septiembre,
+  con un bache en agosto. Esa inversión es visible en la serie y es la razón por la que el gráfico muestra dos
+  líneas en lugar de una.</p>
+
+  <div class="callout">
+    <span class="tagline">Cómo se lee</span>
+    <strong>Octubre manda.</strong> Si el tablero solo pudiera mostrar una cifra, sería 46,007. Pero la cifra sin
+    su forma invita a conclusiones falsas: el mismo año contiene un enero 20% más bajo. La serie es el KPI, no un
+    adorno.
+  </div>
+</section>
+
+<!-- ================= 4 KPI SECUNDARIOS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">4</div>
+    <div>
+      <div class="kicker">Contexto</div>
+      <h1>Cuatro KPIs secundarios</h1>
+      <div class="lead">Cada uno responde una pregunta distinta sobre el mismo volumen de viajes.</div>
+    </div>
+  </div>
+
+  <p>Los KPIs secundarios no compiten con el principal: lo explican. Se eligieron cuatro —el máximo que permite la
+  consigna— porque cubren las tres dimensiones del fenómeno (tiempo, territorio y economía) sin repetir
+  información. Cada uno tiene una fórmula verificable, un valor 2025 y una comparación histórica.</p>
+
+  <table class="tbl compact">
+    <caption>Tabla 2. KPIs secundarios. Valores calculados sobre la muestra 2025 (500,000 viajes).</caption>
+    <tr><th style="width:22%">KPI</th><th style="width:26%">Fórmula / definición</th><th class="num">2025</th><th class="num">Comparación</th><th>Por qué acompaña al principal</th></tr>
+    <tr>
+      <td><strong>Tarifa promedio</strong></td>
+      <td>Σ tarifa base / n viajes</td>
+      <td class="num">$20.39</td>
+      <td class="num">+58.1% vs. 2015 ($12.90)</td>
+      <td>Monetiza la demanda: dice cuánto vale cada viaje que el KPI principal cuenta.</td>
+    </tr>
+    <tr>
+      <td><strong>Concentración en Manhattan</strong></td>
+      <td>Recogidas en Manhattan / total de recogidas</td>
+      <td class="num">87.1%</td>
+      <td class="num">Queens 9.2% · Brooklyn 3.0%</td>
+      <td>Ubica la demanda: el volumen no se reparte, se concentra en un borough.</td>
+    </tr>
+    <tr>
+      <td><strong>Hora pico 17–19 h</strong></td>
+      <td>Viajes entre 17 y 19 h / total de viajes</td>
+      <td class="num">19.4%</td>
+      <td class="num">Pico mié. 18 h (5,261)</td>
+      <td>Explica el ritmo intradía: cuándo se concentra el volumen que el KPI mensual promedia.</td>
+    </tr>
+    <tr>
+      <td><strong>Velocidad promedio</strong></td>
+      <td>Distancia total / duración total (mph)</td>
+      <td class="num">11.09 mph</td>
+      <td class="num">−1.9% vs. 2019 (11.31)</td>
+      <td>Mide eficiencia: la ciudad paga más tarifa por el mismo tiempo de viaje.</td>
+    </tr>
+  </table>
+
+  <div class="two">
+    <div>
+      <h3>Tarifa: el precio del pulso</h3>
+      <p>La tarifa media pasó de <strong>$12.90</strong> en 2015 a <strong>$20.39</strong> en 2025. El alza no es
+      solo inflación: la tarifa por milla subió de $4.34 (2019) a <strong>$5.93</strong> (+36.6%), mientras la
+      velocidad bajó 1.9%. Se paga más por un viaje que avanza menos.</p>
+      <h3>Concentración: un solo borough</h3>
+      <p>Manhattan recibe <strong>87.1%</strong> de las recogidas. Queens aporta 9.2%, casi todo por los
+      aeropuertos; Brooklyn, 3.0%; el Bronx, 0.6%. Las tres primeras zonas suman <strong>13.1%</strong> y las diez
+      primeras, <strong>35.1%</strong>: la demanda es un archipiélago, no una mancha uniforme.</p>
+    </div>
+    <div>
+      <h3>Hora pico: 19.4% en tres horas</h3>
+      <p>Entre 17 y 19 h ocurre casi una quinta parte de los viajes del día. El máximo semanal es el
+      <strong>miércoles a las 18 h</strong>, con 5,261 viajes; el valle, la madrugada (3–5 h). Es un patrón
+      laboral clásico, pero su intensidad justifica una vista propia.</p>
+      <h3>Velocidad: la eficiencia que no mejora</h3>
+      <p>La velocidad media es <strong>11.09 mph</strong>, 1.9% menor que en 2019. La duración media subió a
+      16.83 minutos (+14.6%). El tablero no puede resolver el tráfico, pero puede mostrar que la tarifa crece más
+      rápido que la velocidad: esa es la tensión que el usuario debe ver.</p>
+    </div>
+  </div>
+
+  <h2>Indicadores complementarios (no son tarjetas KPI)</h2>
+  <p>Algunos datos son valiosos pero no cumplen la función de un KPI: tienen alta cardinalidad, dependen del método
+  de pago o son descriptivos. Se muestran como gráficos de apoyo, no como tarjetas:</p>
+  <table class="tbl compact">
+    <tr><th style="width:28%">Indicador</th><th class="num">2025</th><th>Por qué no es tarjeta KPI</th></tr>
+    <tr><td>Propina promedio</td><td class="num">14.81%</td><td>Se calcula sobre todos los pagos; el efectivo registra 0% y sesga la media.</td></tr>
+    <tr><td>Propina con tarjeta</td><td class="num">22.86%</td><td>Mide solo pagos electrónicos; no representa a toda la demanda.</td></tr>
+    <tr><td>Pago con tarjeta</td><td class="num">85.7%</td><td>Describe el medio de pago, no el fenómeno de movilidad.</td></tr>
+    <tr><td>Distancia media</td><td class="num">3.44 mi</td><td>Es una variable de apoyo para tarifa y velocidad.</td></tr>
+    <tr><td>Rutas origen–destino</td><td class="num">—</td><td>Alta cardinalidad: se resuelve con tabla y búsqueda, no con una cifra.</td></tr>
+  </table>
+</section>
+
+<!-- ================= 5 GRAFICOS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">5</div>
+    <div>
+      <div class="kicker">Visualización</div>
+      <h1>Qué gráfico para cada KPI</h1>
+      <div class="lead">La forma se elige por la pregunta, no por la estética.</div>
+    </div>
+  </div>
+
+  <p>La consigna pide justificar el tipo de visualización para cada KPI. La regla que se aplicó es simple:
+  <strong>primero se identifica la tarea de lectura</strong> (tendencia, comparación, proporción, relación o
+  distribución espacial) y después se elige la marca. Ningún gráfico usa tres dimensiones, sombras o escalas
+  truncadas sin aviso.</p>
+
+  <table class="tbl compact">
+    <caption>Tabla 3. Correspondencia KPI → gráfico → justificación.</caption>
+    <tr><th style="width:21%">KPI</th><th style="width:20%">Gráfico</th><th>Justificación</th></tr>
+    <tr>
+      <td><strong>Viajes por mes</strong><br><span class="n1">N1</span></td>
+      <td>Línea con comparación 2022</td>
+      <td>Tendencia en el tiempo con 12 puntos ordenados. La línea conserva la continuidad y permite ver el pico y el valle; las barras fragmentarían la lectura. Se añade una segunda línea para comparar años.</td>
+    </tr>
+    <tr>
+      <td><strong>Tarifa promedio</strong></td>
+      <td>Histograma + línea anual</td>
+      <td>La media sola oculta la forma. El histograma muestra la distribución y la cola de viajes largos; la línea anual resume la evolución. La media se marca con una vertical punteada.</td>
+    </tr>
+    <tr>
+      <td><strong>Concentración en Manhattan</strong></td>
+      <td>Mapa coroplético + barras top 10</td>
+      <td>El mapa responde “dónde” con las 263 zonas reales; las barras dan la lectura exacta que el color no puede. Se usan juntas: el mapa para el patrón, las barras para la cifra.</td>
+    </tr>
+    <tr>
+      <td><strong>Hora pico 17–19 h</strong></td>
+      <td>Heatmap 7 × 24</td>
+      <td>Dos dimensiones cíclicas (día y hora) en una sola retícula. Un gráfico de líneas necesitaría 7 series y perdería la lectura cruzada; el heatmap muestra el pico del miércoles 18 h de un vistazo.</td>
+    </tr>
+    <tr>
+      <td><strong>Velocidad promedio</strong></td>
+      <td>Boxplot + dispersión</td>
+      <td>El boxplot compara distribuciones por franja (P05–P95) sin promediar los extremos. La dispersión distancia–tarifa añade la relación entre variables (r = 0.907) y justifica la economía del viaje.</td>
+    </tr>
+    <tr>
+      <td><strong>Método de pago</strong><br><span class="n3">N3</span></td>
+      <td>Anillo (donut)</td>
+      <td>Proporción simple de cuatro categorías, por debajo del límite de cinco. El anillo permite leer el total en el centro (85.7% tarjeta) sin competir con el KPI principal.</td>
+    </tr>
+    <tr>
+      <td><strong>Rutas frecuentes</strong><br><span class="n3">N3</span></td>
+      <td>Tabla ordenada</td>
+      <td>Alta cardinalidad: cientos de pares origen–destino. Una tabla con buscador es más honesta que un gráfico saturado; se muestran las cinco primeras y se ofrece “ver todas”.</td>
+    </tr>
+    <tr>
+      <td><strong>Duración por franja</strong><br><span class="n2">N2</span></td>
+      <td>Boxplot</td>
+      <td>La duración tiene cola larga; la mediana y los cuartiles describen mejor que la media. Las franjas (valle, pico, madrugada, fin de semana) permiten comparar sin perder los extremos.</td>
+    </tr>
+  </table>
+
+  <h2>Decisiones que se evitaron</h2>
+  <div class="two">
+    <div>
+      <h3>Lo que no se usó</h3>
+      <ul>
+        <li><strong>Pastel para más de cinco categorías:</strong> ilegible y difícil de comparar.</li>
+        <li><strong>Barras 3D:</strong> distorsionan la longitud y no añaden información.</li>
+        <li><strong>Doble eje Y:</strong> invita a correlaciones falsas entre tarifa y viajes.</li>
+        <li><strong>Área hasta cero en la serie mensual:</strong> exagera la variación; se usa línea y eje truncado con nota.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Lo que sí se cuidó</h3>
+      <ul>
+        <li><strong>Etiquetas directas</strong> en el pico y la media, no solo tooltips.</li>
+        <li><strong>Orden temporal</strong> siempre de enero a diciembre.</li>
+        <li><strong>Un solo acento</strong> (amarillo) para la serie focal; el resto en gris o turquesa.</li>
+        <li><strong>Notas de eje</strong> cuando la escala no empieza en cero.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="tagline">Regla de lectura</span>
+    Cada gráfico debe responder una pregunta en menos de cinco segundos. Si el título no se puede convertir en
+    una pregunta concreta —“¿en qué mes hay más viajes?”— el gráfico sobra.
+  </div>
+</section>
+
+<!-- ================= 6 PALETA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">6</div>
+    <div>
+      <div class="kicker">Identidad</div>
+      <h1>Paleta de color y accesibilidad</h1>
+      <div class="lead">Cuatro colores base, una extensión categórica y contrastes verificados.</div>
+    </div>
+  </div>
+
+  <p>La paleta nace del objeto de estudio. El <strong>amarillo taxi</strong> es el color real de los vehículos y
+  funciona como acento sobre un <strong>azul noche</strong> que reduce la fatiga visual y hace que la serie
+  destaque. El texto es un marfil frío, no blanco puro, para bajar la dureza del contraste sin perder legibilidad.
+  El panel es un azul más claro que separa las tarjetas del fondo sin introducir un quinto color.</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#070B14"></div><div class="info">
+      <div class="name">Azul noche</div><div class="hex">#070B14</div>
+      <div class="role">Fondo. Base de toda la interfaz.</div><div class="cr">Amarillo 13.63:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#0D1526"></div><div class="info">
+      <div class="name">Panel</div><div class="hex">#0D1526</div>
+      <div class="role">Superficie de tarjetas y tablas.</div><div class="cr">Texto 15.63:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#FFD23F"></div><div class="info">
+      <div class="name">Amarillo taxi</div><div class="hex">#FFD23F</div>
+      <div class="role">Acento, N1 y serie principal.</div><div class="cr">Sobre fondo 13.63:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#E8EEF8"></div><div class="info">
+      <div class="name">Marfil</div><div class="hex">#E8EEF8</div>
+      <div class="role">Texto principal y cifras.</div><div class="cr">Sobre fondo 16.89:1</div></div></div>
+  </div>
+
+  <h2>Extensión categórica</h2>
+  <p>Cuando un gráfico necesita más de dos series se usa una extensión de cuatro tonos, siempre con un máximo de
+  dos por gráfico y con la serie focal en amarillo. El turquesa se reserva para la comparación (2022) y el gris
+  para el contexto; naranja, azul, rosa y verde solo aparecen en categorías nominales.</p>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#34D3C0;height:12mm"></div><div class="info">
+      <div class="name">Turquesa</div><div class="hex">#34D3C0</div><div class="role">Comparación y series secundarias.</div><div class="cr">10.52:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#FF9F43;height:12mm"></div><div class="info">
+      <div class="name">Naranja</div><div class="hex">#FF9F43</div><div class="role">Categorías y alertas suaves.</div><div class="cr">9.65:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#5B8CFF;height:12mm"></div><div class="info">
+      <div class="name">Azul</div><div class="hex">#5B8CFF</div><div class="role">Categorías y enlaces.</div><div class="cr">6.22:1</div></div></div>
+    <div class="sw"><div class="chip" style="background:#FF5C8A;height:12mm"></div><div class="info">
+      <div class="name">Rosa</div><div class="hex">#FF5C8A</div><div class="role">Categorías y énfasis puntual.</div><div class="cr">6.70:1</div></div></div>
+  </div>
+
+  <table class="tbl compact">
+    <caption>Tabla 4. Contraste calculado con la fórmula WCAG 2.2 (ratio de luminancia). Umbral AA: 4.5:1 para texto normal.</caption>
+    <tr><th>Color</th><th>Hex</th><th class="num">Sobre #070B14</th><th class="num">Sobre #0D1526</th><th>Cumple AA</th></tr>
+    <tr><td>Texto marfil</td><td>#E8EEF8</td><td class="num">16.89:1</td><td class="num">15.63:1</td><td>Sí</td></tr>
+    <tr><td>Amarillo taxi</td><td>#FFD23F</td><td class="num">13.63:1</td><td class="num">12.62:1</td><td>Sí</td></tr>
+    <tr><td>Turquesa</td><td>#34D3C0</td><td class="num">10.52:1</td><td class="num">9.74:1</td><td>Sí</td></tr>
+    <tr><td>Verde</td><td>#47D18C</td><td class="num">10.09:1</td><td class="num">9.34:1</td><td>Sí</td></tr>
+    <tr><td>Naranja</td><td>#FF9F43</td><td class="num">9.65:1</td><td class="num">8.93:1</td><td>Sí</td></tr>
+    <tr><td>Gris medio</td><td>#8FA0B8</td><td class="num">7.39:1</td><td class="num">6.85:1</td><td>Sí</td></tr>
+    <tr><td>Rosa</td><td>#FF5C8A</td><td class="num">6.70:1</td><td class="num">6.20:1</td><td>Sí</td></tr>
+    <tr><td>Azul</td><td>#5B8CFF</td><td class="num">6.22:1</td><td class="num">5.76:1</td><td>Sí</td></tr>
+    <tr><td>Gris tenue</td><td>#64748B</td><td class="num">4.14:1</td><td class="num">3.83:1</td><td>No · solo microcopy</td></tr>
+  </table>
+
+  <h2>Reglas de uso y adaptación a impresión</h2>
+  <div class="two">
+    <div>
+      <ul>
+        <li><strong>Un acento por gráfico.</strong> El amarillo se reserva para la serie que responde la pregunta.</li>
+        <li><strong>El color no es la única señal.</strong> Los deltas llevan flecha y texto además del verde.</li>
+        <li><strong>Gris tenue solo en microcopy.</strong> No se usa para cifras ni etiquetas esenciales.</li>
+        <li><strong>Nada de rojo/verde semántico sin refuerzo.</strong> Se añade signo y palabra.</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>En papel, el amarillo no se usa como texto:</strong> sobre blanco su contraste es 1.44:1. Se
+      sustituye por ámbar <strong>#8A6A00</strong> (5.07:1) y el amarillo queda solo como relleno con tinta oscura
+      (13.63:1). El turquesa de texto se oscurece a <strong>#0F7A6C</strong> (5.25:1). Esta adaptación mantiene la
+      identidad sin sacrificar legibilidad.</p>
+      <p>La paleta se verificó con un script propio que calcula luminancia relativa y ratio de contraste; los
+      valores de la tabla son los que devuelve ese cálculo, no estimaciones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7 TIPOGRAFIA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">7</div>
+    <div>
+      <div class="kicker">Sistema visual</div>
+      <h1>Tipografía y ritmo</h1>
+      <div class="lead">Dos familias, una escala y números que se alinean.</div>
+    </div>
+  </div>
+
+  <p>El tablero usa <strong>Space Grotesk</strong> para títulos y cifras, y <strong>Inter</strong> para el cuerpo.
+  La primera tiene rasgos geométricos y un aire técnico que dialoga con el mapa; la segunda es una sans de
+  interfaz, probada en tamaños pequeños. Ambas tienen fallback a <strong>Segoe UI</strong> para que el documento y
+  el tablero se vean bien incluso sin las fuentes instaladas.</p>
+
+  <div class="two">
+    <div class="spec">
+      <div class="meta">Display · Space Grotesk 800</div>
+      <div class="display">46,007</div>
+      <div class="body" style="font-family:'Space Grotesk','Segoe UI',sans-serif;font-size:15pt;font-weight:700">
+        El pulso de la movilidad
+      </div>
+      <div class="meta">Cifras tabulares · ejes y KPI</div>
+    </div>
+    <div class="spec">
+      <div class="meta">Cuerpo · Inter 400</div>
+      <div class="body">Ocho años de viajes en taxi amarillo para leer la ciudad a través de su demanda, sus
+      tarifas y sus zonas más activas. Un tablero táctico para decidir dónde, cuándo y cómo se mueve Nueva York.</div>
+      <div class="meta">Inter 600 · etiquetas y énfasis</div>
+    </div>
+  </div>
+
+  <h2>Escala tipográfica del tablero</h2>
+  <table class="tbl compact">
+    <tr><th style="width:26%">Rol</th><th class="num">Tamaño</th><th class="num">Peso</th><th>Uso</th></tr>
+    <tr><td>H1 · Hero</td><td class="num">42 px</td><td class="num">800</td><td>Título de la portada; máx. 18 caracteres por línea.</td></tr>
+    <tr><td>KPI principal</td><td class="num">62 px</td><td class="num">800</td><td>Cifra N1; tabular, con unidad en 13 px.</td></tr>
+    <tr><td>H2 · Sección</td><td class="num">17.5 px</td><td class="num">700</td><td>Títulos 01–06; número en amarillo.</td></tr>
+    <tr><td>Cuerpo</td><td class="num">13.5 px</td><td class="num">400</td><td>Párrafos; interlineado 1.55; máx. 70 caracteres.</td></tr>
+    <tr><td>Etiqueta</td><td class="num">10 px</td><td class="num">800</td><td>Mayúsculas, tracking .18em; nunca en párrafos.</td></tr>
+    <tr><td>Microcopy</td><td class="num">9.5 px</td><td class="num">500</td><td>Notas de eje y metodología; color gris tenue.</td></tr>
+  </table>
+
+  <h2>Reglas de composición</h2>
+  <div class="three">
+    <div class="callout" style="margin:0">
+      <span class="tagline">Ritmo</span>
+      Todo el espaciado es múltiplo de 8 px: 8, 16, 24, 32, 56. El gutter de la retícula es 20 px.
+    </div>
+    <div class="callout" style="margin:0">
+      <span class="tagline">Alineación</span>
+      Cifras a la derecha con <em>font-variant-numeric: tabular-nums</em>; etiquetas a la izquierda.
+    </div>
+    <div class="callout" style="margin:0">
+      <span class="tagline">Longitud</span>
+      Párrafos de 52–70 caracteres. Los textos largos se parten en bloques con subtítulo.
+    </div>
+  </div>
+
+  <p>La jerarquía no depende solo del tamaño. El tablero combina <strong>posición</strong> (el KPI principal ocupa
+  la primera fila y el 50% del ancho), <strong>contraste</strong> (amarillo sobre azul noche),
+  <strong>aislamiento</strong> (la tarjeta N1 tiene borde y halo propios) y <strong>movimiento</strong> (un pulso
+  discreto en la marca). El resultado es que el ojo encuentra la cifra principal antes de leer el título.</p>
+
+  <div class="callout dark">
+    <span class="tagline">Accesibilidad</span>
+    El tamaño mínimo de texto es 9.5 px en el tablero y 7.4 pt en este reporte. Los controles táctiles del móvil
+    apuntan a 44 × 44 px. La interfaz respeta <em>prefers-reduced-motion</em> y no usa animaciones que impidan
+    leer una cifra.
+  </div>
+</section>
+
+<!-- ================= 8 WIREFRAME DESKTOP ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">8</div>
+    <div>
+      <div class="kicker">Wireframe · 1440 px</div>
+      <h1>Escritorio: la ciudad en una pantalla</h1>
+      <div class="lead">Composición real del tablero, en tres tramos de lectura.</div>
+    </div>
+  </div>
+
+  <p>El wireframe de escritorio se construyó sobre una retícula de <strong>12 columnas</strong>, con márgenes de
+  56 px, gutter de 20 px y un ancho de contenido de 1328 px. La página se organiza en bandas horizontales que se
+  leen de arriba abajo: identidad y filtros, hero y ticket del dataset, banda de KPIs, y después las seis
+  secciones del tablero.</p>
+
+  <figure>
+    <img src="report-desk-1.png" alt="Primer tramo del wireframe de escritorio: cabecera, hero, ticket, KPIs y serie mensual" />
+    <figcaption><b>Figura 1.</b> Primer tramo: cabecera con filtros de año, hero, ticket del dataset, KPI principal
+    (46,007) con cuatro secundarios y sección 01. El KPI principal ocupa 6 de 12 columnas; los secundarios, 3 cada uno.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="report-kpi.png" alt="Detalle de la banda de KPIs del wireframe" />
+    <figcaption><b>Figura 2.</b> Detalle de la banda N1/N2. El amarillo identifica la demanda; el turquesa, la
+    comparación; el naranja y el azul, las categorías de apoyo. La barra inferior de cada tarjeta es una
+    redundancia visual del valor, no una serie temporal.</figcaption>
+  </figure>
+
+  <p class="small">La cabecera mantiene los filtros siempre visibles: año (Todos, 2015–2025), borough y una barra
+  de navegación que ancla las cinco secciones. El hero no es decorativo: presenta la pregunta y el tamaño del
+  dataset antes de que el usuario interprete cualquier gráfico.</p>
+</section>
+
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">8</div>
+    <div>
+      <div class="kicker">Wireframe · continuación</div>
+      <h1>Del ritmo semanal al territorio</h1>
+      <div class="lead">Las secciones que explican el KPI: heatmap, mapa y ranking.</div>
+    </div>
+  </div>
+
+  <figure>
+    <img src="report-desk-2.png" alt="Segundo tramo del wireframe: heatmap, mapa de zonas y ranking" />
+    <figcaption><b>Figura 3.</b> Segundo tramo: 02 ritmo semanal (heatmap 7 × 24), 03 mapa coroplético de las 263
+    zonas TLC con el ranking de las diez primeras y el panel de concentración. El mapa usa la geometría real del
+    catálogo TLC; no hay siluetas inventadas.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="report-map.png" alt="Detalle del mapa coroplético y el panel lateral de concentración" />
+    <figcaption><b>Figura 4.</b> Detalle del mapa: escala secuencial amarilla sobre azul noche, trazo
+    <b>#2C3E60</b> para separar zonas, leyenda “Menos → Más” y panel con 87.1% de recogidas en Manhattan. Las
+    zonas sin viajes se muestran en azul oscuro, no se ocultan.</figcaption>
+  </figure>
+
+  <p class="small">El heatmap resuelve una pregunta que la serie mensual no puede: el ritmo dentro de la semana.
+  El mapa y el ranking se complementan —el primero muestra el patrón, el segundo la cifra—. Juntos ocupan 8 + 4
+  columnas, la misma proporción que el hero y el ticket, para que la página tenga un ritmo reconocible.</p>
+</section>
+
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">8</div>
+    <div>
+      <div class="kicker">Wireframe · cierre</div>
+      <h1>Economía, eficiencia y método</h1>
+      <div class="lead">El detalle que se lee después del KPI, sin competir con él.</div>
+    </div>
+  </div>
+
+  <figure>
+    <img src="report-desk-3.png" alt="Tercer tramo del wireframe: histograma, pagos, boxplot, dispersión, rutas, hallazgos y metodología" />
+    <figcaption><b>Figura 5.</b> Tercer tramo: 04 distribución de tarifa y pagos, 05 duración y dispersión,
+    06 rutas y hallazgos, y metodología. Las tarjetas N3 usan borde gris y menos saturación para que el ojo no las
+    confunda con el N1.</figcaption>
+  </figure>
+
+  <h2>Proporciones de la retícula</h2>
+  <table class="tbl compact">
+    <tr><th>Banda</th><th>Columnas</th><th>Función</th></tr>
+    <tr><td>Cabecera</td><td>12</td><td>Marca, navegación y filtros globales.</td></tr>
+    <tr><td>Hero + ticket</td><td>7 + 5</td><td>Pregunta y contexto del dataset.</td></tr>
+    <tr><td>KPI principal + secundarios</td><td>6 + (3 × 4)</td><td>N1 y cuatro N2 en dos filas.</td></tr>
+    <tr><td>01 serie + lecturas</td><td>8 + 4</td><td>Tendencia y síntesis textual.</td></tr>
+    <tr><td>02 heatmap</td><td>12</td><td>Ritmo semanal a ancho completo.</td></tr>
+    <tr><td>03 mapa + ranking</td><td>8 + 4</td><td>Patrón espacial y cifra exacta.</td></tr>
+    <tr><td>04–05 economía y eficiencia</td><td>7 + 5 / 7 + 5</td><td>Distribuciones y relaciones.</td></tr>
+    <tr><td>06 rutas + hallazgos</td><td>7 + 5</td><td>Detalle y lectura en lenguaje llano.</td></tr>
+    <tr><td>Metodología</td><td>12</td><td>Fuente, limpieza y límites.</td></tr>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">Por qué esta composición</span>
+    La página no es una cuadrícula de tarjetas iguales. El tamaño relativo cuenta la historia: el KPI principal
+    pesa más que cualquier otro bloque, el mapa pesa más que el ranking y la metodología ocupa todo el ancho
+    porque cierra la lectura. Esa diferencia de tamaños es la jerarquía hecha layout.
+  </div>
+</section>
+
+<!-- ================= 9 MOBILE ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">9</div>
+    <div>
+      <div class="kicker">Wireframe · 390 px</div>
+      <h1>Móvil: la misma historia, en una columna</h1>
+      <div class="lead">Qué se mantiene, qué se reordena y qué se resume.</div>
+    </div>
+  </div>
+
+  <p>En móvil no se encoge el escritorio: se reordena. La retícula pasa de 12 a <strong>4 columnas</strong>, los
+  márgenes bajan a 14 px y cada banda se apila en el mismo orden de lectura. El KPI principal conserva su tamaño
+  relativo —sigue siendo lo primero que se ve después del hero— y los cuatro secundarios pasan a una cuadrícula
+  2 × 2.</p>
+
+  <div class="phones">
+    <figure><img src="report-mobile-1.png" alt="Pantalla móvil 1: hero, ticket, KPI principal, KPIs secundarios y serie mensual" />
+      <figcaption><b>Pantalla 1.</b> Hero, ticket, KPI principal, 2 × 2 de secundarios y serie mensual.</figcaption></figure>
+    <figure><img src="report-mobile-2.png" alt="Pantalla móvil 2: heatmap, mapa de zonas e histograma" />
+      <figcaption><b>Pantalla 2.</b> Heatmap, mapa de zonas con top 5 e histograma de tarifa.</figcaption></figure>
+    <figure><img src="report-mobile-3.png" alt="Pantalla móvil 3: pagos, duración, dispersión, rutas, hallazgos y método" />
+      <figcaption><b>Pantalla 3.</b> Pagos, duración, dispersión, rutas, hallazgos y metodología.</figcaption></figure>
+  </div>
+
+  <h2>Decisiones de adaptación</h2>
+  <table class="tbl compact">
+    <tr><th style="width:30%">Elemento</th><th>Escritorio</th><th>Móvil</th></tr>
+    <tr><td>Filtros</td><td>Barra completa con años y borough</td><td>Chip de año + menú de filtros</td></tr>
+    <tr><td>KPIs secundarios</td><td>4 tarjetas en fila</td><td>Cuadrícula 2 × 2</td></tr>
+    <tr><td>Mapa + ranking</td><td>8 + 4 columnas, top 10</td><td>Mapa a ancho completo, top 5 debajo</td></tr>
+    <tr><td>Rutas</td><td>Tabla de 5 filas + “ver todas”</td><td>Tabla de 4 filas, sin acción secundaria</td></tr>
+    <tr><td>Metodología</td><td>Tres columnas</td><td>Párrafos apilados</td></tr>
+  </table>
+
+  <p class="small" style="margin-top:2mm"><strong>Lo que no cambia:</strong> la jerarquía N1/N2/N3 y el orden de
+  las secciones. En móvil se resume el detalle —cinco zonas en lugar de diez, cuatro rutas en lugar de cinco—,
+  pero nunca se cambia la historia ni se esconden los límites.</p>
+</section>
+
+<!-- ================= 10 GRID ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">10</div>
+    <div>
+      <div class="kicker">Estructura</div>
+      <h1>Cuadrícula 3 × 3 y jerarquía N1/N2/N3</h1>
+      <div class="lead">La retícula macro, la retícula de implementación y el marcado de niveles.</div>
+    </div>
+  </div>
+
+  <p>La estructura se documenta en dos escalas. La <strong>cuadrícula 3 × 3</strong> explica la composición
+  conceptual: qué ocupa cada zona y por qué. La <strong>retícula de 12 columnas</strong> explica la implementación:
+  cuántas columnas suma cada banda. El boceto marca cada bloque con su nivel para que la jerarquía sea
+  verificable, no una intención.</p>
+
+  <figure>
+    <img src="grid-schematic.png" alt="Esquema de cuadrícula 3x3, retícula de 12 columnas y jerarquía N1 N2 N3" style="width:94%;margin:0 auto" />
+    <figcaption><b>Figura 6.</b> A la izquierda, la cuadrícula 3 × 3 con las zonas A–H y la lectura por filas.
+    A la derecha, la retícula de 12 columnas con las proporciones reales del tablero. Abajo, la definición de los
+    tres niveles. El amarillo marca N1, el turquesa N2 y el gris N3.</figcaption>
+  </figure>
+
+  <h2>Definición operativa de los niveles</h2>
+  <table class="tbl compact">
+    <tr><th style="width:10%">Nivel</th><th style="width:22%">Qué contiene</th><th style="width:20%">Peso visual</th><th>Criterio de decisión</th></tr>
+    <tr><td><span class="n1">N1</span></td><td>Título, KPI principal y su serie</td><td>Mayor tamaño, amarillo, primera fila</td><td>Debe responderse en menos de 3 segundos. Solo puede haber uno.</td></tr>
+    <tr><td><span class="n2">N2</span></td><td>Serie mensual, heatmap, mapa, histograma, boxplot</td><td>Turquesa, tamaño medio, borde definido</td><td>Explica el N1. Si no cambia la lectura del KPI, no es N2.</td></tr>
+    <tr><td><span class="n3">N3</span></td><td>Pagos, dispersión, rutas, hallazgos, método</td><td>Gris, menor saturación, letra pequeña</td><td>Contexto o detalle. Se lee después y nunca compite por atención.</td></tr>
+  </table>
+
+  <h2>Por qué 3 × 3</h2>
+  <p>La cuadrícula 3 × 3 obliga a decidir qué merece una celda. La primera fila responde “qué pasó”; la segunda,
+  “dónde y cuándo”; la tercera, “cuánto y cómo”. Esa progresión coincide con las tres preguntas del proyecto. La
+  zona A ocupa dos celdas porque el KPI principal necesita el doble de ancho para respirar; las demás son
+  unidades simples.</p>
+
+  <p class="small" style="margin-top:2mm"><strong>Regla de oro:</strong> si un bloque no se puede clasificar como
+  N1, N2 o N3, no entra al tablero. La jerarquía no admite zonas grises: un gráfico “interesante” que no explica
+  el KPI es ruido, aunque sea correcto.</p>
+</section>
+
+<!-- ================= 11 INTERACCIONES ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">11</div>
+    <div>
+      <div class="kicker">Comportamiento</div>
+      <h1>Interacciones, estados y filtros</h1>
+      <div class="lead">El tablero es táctico: cada control debe cambiar una lectura, no solo animar.</div>
+    </div>
+  </div>
+
+  <p>Los filtros se diseñaron para responder preguntas concretas. El de año permite comparar la recuperación;
+  el de borough, aislar la concentración; el clic en el mapa, profundizar una zona. Ningún control existe por
+  completitud: si no cambia el KPI o un gráfico N2, se elimina.</p>
+
+  <table class="tbl compact">
+    <tr><th style="width:24%">Control</th><th style="width:26%">Qué cambia</th><th>Estado por defecto</th></tr>
+    <tr><td>Año (2015–2025)</td><td>Todo el tablero: KPIs, series, mapa y tablas.</td><td>2025, el año más reciente.</td></tr>
+    <tr><td>Borough</td><td>Mapa, ranking y tabla de rutas.</td><td>Todos los boroughs.</td></tr>
+    <tr><td>Comparación 2022</td><td>Serie mensual: activa o desactiva la línea punteada.</td><td>Activa.</td></tr>
+    <tr><td>Clic en zona</td><td>Filtra el ranking y resalta la zona en el mapa.</td><td>Sin selección.</td></tr>
+    <tr><td>“Ver todas” rutas</td><td>Abre la tabla completa con buscador.</td><td>Cerrado; se ven 5 rutas.</td></tr>
+    <tr><td>Tooltip</td><td>Muestra el valor exacto y la unidad.</td><td>Al pasar el cursor o enfocar.</td></tr>
+  </table>
+
+  <h2>Estados y accesibilidad</h2>
+  <div class="two">
+    <div>
+      <ul>
+        <li><strong>Reposo:</strong> 2025, sin filtros, con la serie completa.</li>
+        <li><strong>Hover:</strong> realce de la marca y tooltip; no se mueve el layout.</li>
+        <li><strong>Activo:</strong> filtro en amarillo con texto oscuro; el resto en gris.</li>
+        <li><strong>Vacío:</strong> mensaje “sin viajes para este filtro”, nunca un gráfico en blanco.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><strong>Teclado:</strong> tabulación visible y activación con Enter/Espacio.</li>
+        <li><strong>Lector de pantalla:</strong> <em>aria-label</em> en cada gráfico y tabla.</li>
+        <li><strong>Movimiento:</strong> respeta <em>prefers-reduced-motion</em>.</li>
+        <li><strong>Contraste:</strong> todos los controles superan 4.5:1.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Hallazgos que el tablero hace visibles</h2>
+  <table class="tbl compact">
+    <tr><th style="width:34%">Hallazgo</th><th class="num">Dato</th><th>Lectura</th></tr>
+    <tr><td>Octubre es el pico anual</td><td class="num">46,007</td><td>+5.7% vs. septiembre; enero es el valle (36,773).</td></tr>
+    <tr><td>Manhattan concentra la demanda</td><td class="num">87.1%</td><td>Queens 9.2%, Brooklyn 3.0%, Bronx 0.6%.</td></tr>
+    <tr><td>La demanda es un archipiélago</td><td class="num">35.1%</td><td>Las diez primeras zonas reúnen más de un tercio de las recogidas.</td></tr>
+    <tr><td>La tarifa crece más que la velocidad</td><td class="num">+58.1%</td><td>$20.39 por viaje y 11.09 mph; la duración sube 14.6% vs. 2019.</td></tr>
+    <tr><td>2020 fue el corte</td><td class="num">−70.8%</td><td>De 84.4 M a 24.6 M de viajes; 2025 sigue 43.1% por debajo de 2019.</td></tr>
+    <tr><td>El pago es digital</td><td class="num">85.7%</td><td>La propina con tarjeta (22.86%) no representa al efectivo.</td></tr>
+    <tr><td>Distancia y tarifa van juntas</td><td class="num">r = 0.907</td><td>Relación fuerte en la muestra; no implica causalidad.</td></tr>
+  </table>
+</section>
+
+<!-- ================= 12 LIMITACIONES + CONCLUSIONES ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">12</div>
+    <div>
+      <div class="kicker">Cierre</div>
+      <h1>Limitaciones y conclusiones</h1>
+      <div class="lead">Lo que el diseño no puede resolver y lo que sí logra.</div>
+    </div>
+  </div>
+
+  <h2>Limitaciones</h2>
+  <table class="tbl compact">
+    <tr><th style="width:26%">Limitación</th><th>Efecto en la lectura</th><th style="width:26%">Cómo se mitiga</th></tr>
+    <tr><td>Muestra, no censo</td><td>Los conteos son de 500,000 viajes por año, no del universo.</td><td>Se etiqueta “muestra” y se muestran los totales fuente aparte.</td></tr>
+    <tr><td>Años faltantes</td><td>No hay serie continua 2015–2025.</td><td>Se declara el hueco; no se interpola.</td></tr>
+    <tr><td>Propina en efectivo</td><td>El 12.3% de pagos en efectivo registra 0% de propina.</td><td>Se reporta la propina con tarjeta (22.86%) por separado.</td></tr>
+    <tr><td>Zonas sin actividad</td><td>9 de 263 zonas no tienen recogidas en 2025.</td><td>Se muestran en azul oscuro y se reporta “254/263”.</td></tr>
+    <tr><td>Marzo de 2018</td><td>Volumen inflado en la fuente original.</td><td>Se documenta; no se corrige ni se oculta.</td></tr>
+    <tr><td>Variables ausentes</td><td>No hay clima, eventos ni oferta de metro.</td><td>Se evita atribuir causalidad a los patrones.</td></tr>
+  </table>
+
+  <h2>Conclusiones</h2>
+  <p><strong>1. El KPI correcto es el que responde la pregunta, no el que es más fácil de calcular.</strong>
+  “Viajes por mes” es flujo, usa el campo más confiable y conecta con las tres dimensiones del proyecto. Los
+  cuatro secundarios no lo repiten: lo explican.</p>
+
+  <p><strong>2. La jerarquía se demuestra con el layout.</strong> El N1 ocupa el 50% del ancho y la primera fila;
+  el N2 explica; el N3 contextualiza. La cuadrícula 3 × 3 y la retícula de 12 columnas hacen que esa jerarquía
+  sea reproducible, no una decisión improvisada por pantalla.</p>
+
+  <p><strong>3. La paleta es una decisión de contenido.</strong> El amarillo taxi no se eligió por contraste: se
+  eligió porque es el color del objeto de estudio. Que además alcance 13.63:1 sobre el fondo es lo que permite
+  usarlo como acento sin sacrificar accesibilidad.</p>
+
+  <p><strong>4. El wireframe no es un dibujo: es un contrato.</strong> Reproduce la implementación real —mapa de
+  263 zonas, series de 2025, cifras verificadas— para que el diseño y el producto no se separen. Si una cifra
+  cambia en los datos, cambia en el wireframe.</p>
+
+  <div class="callout dark">
+    <span class="tagline">Siguiente paso</span>
+    Implementar los estados de filtro que el wireframe ya prevé, probar la lectura con cinco usuarios y publicar
+    el tablero con los años 2023 y 2024 cuando estén disponibles. El diseño está listo; la deuda es de datos.
+  </div>
+</section>
+
+<!-- ================= 13 REFERENCIAS + ANEXO ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">13</div>
+    <div>
+      <div class="kicker">Fuentes</div>
+      <h1>Referencias y anexo</h1>
+      <div class="lead">Trazabilidad de los datos y de las decisiones de diseño.</div>
+    </div>
+  </div>
+
+  <h2>Referencias</h2>
+  <ol class="refs">
+    <li>NYC Taxi &amp; Limousine Commission. (2026). <em>TLC Trip Record Data</em>. https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</li>
+    <li>NYC Open Data. (2026). <em>NYC Taxi Zones</em> (GeoJSON, 263 zonas). https://data.cityofnewyork.us/</li>
+    <li>W3C. (2023). <em>Web Content Accessibility Guidelines (WCAG) 2.2</em>. https://www.w3.org/TR/WCAG22/</li>
+    <li>Few, S. (2012). <em>Show Me the Numbers: Designing Tables and Graphs to Enlighten</em> (2.ª ed.). Analytics Press.</li>
+    <li>Cairo, A. (2016). <em>The Truthful Art: Data, Charts, and Maps for Communication</em>. New Riders.</li>
+    <li>Tufte, E. R. (2001). <em>The Visual Display of Quantitative Information</em> (2.ª ed.). Graphics Press.</li>
+    <li>Google Fonts. (2026). <em>Inter</em> y <em>Space Grotesk</em> (SIL Open Font License).</li>
+  </ol>
+
+  <h2>Anexo A · Serie mensual 2025 (muestra)</h2>
+  <table class="tbl compact annex-table">
+    <tr><th>Mes</th><th class="num">Viajes</th><th class="num">Tarifa media</th><th class="num">Duración</th><th>Mes</th><th class="num">Viajes</th><th class="num">Tarifa media</th><th class="num">Duración</th></tr>
+    <tr><td>Enero</td><td class="num">36,773</td><td class="num">$17.87</td><td class="num">14.72</td><td>Julio</td><td class="num">40,291</td><td class="num">$21.32</td><td class="num">16.79</td></tr>
+    <tr><td>Febrero</td><td class="num">37,135</td><td class="num">$18.09</td><td class="num">15.20</td><td>Agosto</td><td class="num">36,949</td><td class="num">$21.44</td><td class="num">16.82</td></tr>
+    <tr><td>Marzo</td><td class="num">42,865</td><td class="num">$19.10</td><td class="num">15.78</td><td>Septiembre</td><td class="num">43,518</td><td class="num">$21.76</td><td class="num">17.91</td></tr>
+    <tr><td>Abril</td><td class="num">40,351</td><td class="num">$19.09</td><td class="num">16.04</td><td>Octubre</td><td class="num">46,007</td><td class="num">$21.23</td><td class="num">18.02</td></tr>
+    <tr><td>Mayo</td><td class="num">45,305</td><td class="num">$20.28</td><td class="num">17.62</td><td>Noviembre</td><td class="num">43,539</td><td class="num">$21.06</td><td class="num">17.42</td></tr>
+    <tr><td>Junio</td><td class="num">43,292</td><td class="num">$20.87</td><td class="num">17.07</td><td>Diciembre</td><td class="num">43,975</td><td class="num">$21.90</td><td class="num">17.87</td></tr>
+  </table>
+
+  <h2>Anexo B · Reproducibilidad</h2>
+  <p class="small">Los agregados del tablero viven en <strong>public/data/dashboard.json</strong>; la limpieza, en
+  <strong>data/quality_report.json</strong>; el mapa, en <strong>docs/fase2/make_map.py</strong>, que lee el GeoJSON
+  de 263 zonas y colorea con las recogidas de 2025. Los wireframes consumen <strong>docs/fase2/_data.js</strong>,
+  generado desde el JSON. El PDF se produce con Edge headless a partir de <strong>docs/fase2/report.html</strong>.</p>
+
+  <p class="small">Comandos: <strong>python docs/fase2/make_map.py</strong> · <strong>python docs/fase2/build_fase2.py</strong>.
+  Todos los conteos de este documento son de la muestra de 500,000 viajes por año; los totales de la fuente se
+  citan por separado y nunca se suman con los de la muestra.</p>
+
+  <div class="foot-note">
+    <span>NYC Mobility Pulse · Fase 2 · Estructura visual</span>
+    <span>Mobility Pulse · Noviembre de 2026</span>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
