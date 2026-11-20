@@ -455,7 +455,9 @@ export function Evaluation({ enabled }: Props) {
                         {coverage.mapped < coverage.total
                           ? ` (${coverage.mapped} de ${coverage.total})`
                           : ''}
-                        . Revise y pulse <strong>Enviar</strong> allí para completar el registro.
+                        . No hace falta responderlo otra vez: avance con{' '}
+                        <strong>Siguiente</strong> en cada página y pulse{' '}
+                        <strong>Enviar</strong> al final.
                         {coverage.mapped < coverage.total && (
                           <>
                             {' '}
@@ -468,8 +470,10 @@ export function Evaluation({ enabled }: Props) {
                         <div className="eval-check correcta" role="status">
                           <strong>Formulario abierto</strong>
                           <p>
-                            Complete el envío en la pestaña nueva. Si no se abrió, use el botón
-                            otra vez o descargue el JSON como respaldo.
+                            Sus respuestas ya están cargadas. Avance con{' '}
+                            <strong>Siguiente</strong> en cada página y pulse{' '}
+                            <strong>Enviar</strong> al final. Si no se abrió, use el botón otra
+                            vez o descargue el JSON como respaldo.
                           </p>
                         </div>
                       )}
@@ -520,11 +524,13 @@ export function Evaluation({ enabled }: Props) {
               {step ? (
                 <>
                   <div className="eval-foot-info">
-                    {missing.length > 0
-                      ? 'Responda para continuar'
-                      : needsCheck
-                        ? 'Compruebe su respuesta'
-                        : 'Progreso guardado'}
+                    {declined
+                      ? 'No se guardará nada'
+                      : missing.length > 0
+                        ? 'Responda para continuar'
+                        : needsCheck
+                          ? 'Compruebe su respuesta'
+                          : 'Progreso guardado'}
                   </div>
                   <div className="eval-foot-actions">
                     {index > 0 && (

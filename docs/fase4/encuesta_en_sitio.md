@@ -46,8 +46,9 @@ Hay dos caminos, en este orden:
 
 1. **Formulario prellenado** (recomendado): al final, el botón "Enviar al
    formulario" abre Google Forms con todas las respuestas cargadas. El
-   consultor revisa y pulsa **Enviar**. Queda registrado con la fecha y hora de
-   Google, sin correo ni nombre.
+   consultor solo avanza con **Siguiente** en cada página y pulsa **Enviar** al
+   final: no tiene que volver a responder. Queda registrado con la fecha y hora
+   de Google, sin correo ni nombre.
 2. **JSON de respaldo**: "Copiar respuestas" y "Descargar JSON" siguen
    disponibles siempre. El archivo incluye las respuestas, el veredicto de cada
    tarea y la fecha de generación.
