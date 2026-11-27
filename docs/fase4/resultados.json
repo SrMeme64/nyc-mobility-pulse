@@ -1,0 +1,1353 @@
+{
+  "source": "Evaluación de Dashboard · Movilidad TLC Nueva York.csv",
+  "total_rows": 8,
+  "accepted": 7,
+  "declined": 1,
+  "declined_timestamps": [
+    "2026/11/25 4:28:51 p.m. GMT-5"
+  ],
+  "profile": {
+    "age": [
+      {
+        "value": "18 a 24 años",
+        "n": 6,
+        "pct": 85.7
+      },
+      {
+        "value": "25 a 34 años",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "gender": [
+      {
+        "value": "Masculino",
+        "n": 5,
+        "pct": 71.4
+      },
+      {
+        "value": "Femenino",
+        "n": 2,
+        "pct": 28.6
+      }
+    ],
+    "education": [
+      {
+        "value": "Licenciatura en curso",
+        "n": 6,
+        "pct": 85.7
+      },
+      {
+        "value": "Licenciatura concluida",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "field": [
+      {
+        "value": "Ingeniería en Datos",
+        "n": 6,
+        "pct": 85.7
+      },
+      {
+        "value": "Otra",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "occupation": [
+      {
+        "value": "Estudiante",
+        "n": 5,
+        "pct": 71.4
+      },
+      {
+        "value": "Otra",
+        "n": 1,
+        "pct": 14.3
+      },
+      {
+        "value": "Docente",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "semester": [
+      {
+        "value": "7.º a 9.º semestre",
+        "n": 4,
+        "pct": 57.1
+      },
+      {
+        "value": "Egresado o egresada",
+        "n": 1,
+        "pct": 14.3
+      },
+      {
+        "value": "10.º semestre o más",
+        "n": 1,
+        "pct": 14.3
+      },
+      {
+        "value": "4.º a 6.º semestre",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "dashboard_exp": [
+      {
+        "value": "Alta (los uso con frecuencia o los construyo)",
+        "n": 3,
+        "pct": 42.9
+      },
+      {
+        "value": "Baja (los he visto, pero no los he usado)",
+        "n": 2,
+        "pct": 28.6
+      },
+      {
+        "value": "Media (los uso de vez en cuando)",
+        "n": 2,
+        "pct": 28.6
+      }
+    ],
+    "viz_freq": [
+      {
+        "value": "Mensualmente",
+        "n": 3,
+        "pct": 42.9
+      },
+      {
+        "value": "Semanalmente",
+        "n": 3,
+        "pct": 42.9
+      },
+      {
+        "value": "Nunca",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "tlc": [
+      {
+        "value": "Ninguno",
+        "n": 5,
+        "pct": 71.4
+      },
+      {
+        "value": "Conozco el dataset y sus variables",
+        "n": 2,
+        "pct": 28.6
+      }
+    ],
+    "nyc": [
+      {
+        "value": "La conozco por mapas o referencias",
+        "n": 4,
+        "pct": 57.1
+      },
+      {
+        "value": "No la conozco",
+        "n": 2,
+        "pct": 28.6
+      },
+      {
+        "value": "La he visitado",
+        "n": 1,
+        "pct": 14.3
+      }
+    ],
+    "device": [
+      {
+        "value": "Laptop o computadora de escritorio",
+        "n": 7,
+        "pct": 100.0
+      }
+    ],
+    "prior_eval": [
+      {
+        "value": "Sí",
+        "n": 5,
+        "pct": 71.4
+      },
+      {
+        "value": "No",
+        "n": 2,
+        "pct": 28.6
+      }
+    ]
+  },
+  "other": [
+    "Formación: Gestión de Desarrollo Turístico · Ocupación: Desempleado"
+  ],
+  "tasks": {
+    "T1": {
+      "correcta": 4,
+      "parcial": 1,
+      "incorrecta": 2,
+      "success": 57.1,
+      "score_mean": 0.643,
+      "answers": [
+        "2020,abril.",
+        "Abril de 2020",
+        "2020, abril",
+        "NO ENCONTRADA",
+        "NO ENCONTRADA",
+        "abril de 2020",
+        "20/04"
+      ]
+    },
+    "T2": {
+      "correcta": 5,
+      "parcial": 0,
+      "incorrecta": 2,
+      "success": 71.4,
+      "score_mean": 0.714,
+      "answers": [
+        "Octubre",
+        "Octubre",
+        "octubre ",
+        "NO ENCONTRADA",
+        "NO ENCONTRADA",
+        "octubre",
+        "Octubre del 2025"
+      ]
+    },
+    "T3": {
+      "correcta": 4,
+      "parcial": 0,
+      "incorrecta": 3,
+      "success": 57.1,
+      "score_mean": 0.571,
+      "answers": [
+        "Upper East Side South",
+        "Upper East Side South",
+        "nd",
+        "NO ENCONTRADA",
+        "NO ENCONTRADA",
+        "Upper East Side South",
+        "Upper East Side South"
+      ]
+    },
+    "T4": {
+      "correcta": 4,
+      "parcial": 0,
+      "incorrecta": 3,
+      "success": 57.1,
+      "score_mean": 0.571,
+      "answers": [
+        "MIercoles,18:00",
+        "Miércoles, 18:00",
+        "nd",
+        "NO ENCONTRADA",
+        "NO ENCONTRADA",
+        "miércoles a las 18:00",
+        "miércoles a las 18:00"
+      ]
+    }
+  },
+  "task_scores": [
+    4.0,
+    4.0,
+    2.0,
+    0.0,
+    0.0,
+    4.0,
+    3.5
+  ],
+  "task_score_mean": 2.5,
+  "task_pct": 62.5,
+  "all_correct": 3,
+  "none_correct": 2,
+  "difficulty": {
+    "values": [
+      3,
+      4,
+      3,
+      1,
+      2,
+      1,
+      2
+    ],
+    "mean": 2.286,
+    "distribution": [
+      {
+        "value": "3",
+        "n": 2,
+        "pct": 28.6
+      },
+      {
+        "value": "1",
+        "n": 2,
+        "pct": 28.6
+      },
+      {
+        "value": "2",
+        "n": 2,
+        "pct": 28.6
+      },
+      {
+        "value": "4",
+        "n": 1,
+        "pct": 14.3
+      }
+    ]
+  },
+  "time": [
+    {
+      "value": "De 5 a 10 minutos",
+      "n": 4,
+      "pct": 57.1
+    },
+    {
+      "value": "De 2 a 5 minutos",
+      "n": 2,
+      "pct": 28.6
+    },
+    {
+      "value": "Más de 10 minutos",
+      "n": 1,
+      "pct": 14.3
+    }
+  ],
+  "items": {
+    "U1": {
+      "text": "Encontré rápidamente la información que buscaba.",
+      "mean": 3.571,
+      "median": 3.0,
+      "sd": 1.05,
+      "agree": 42.9,
+      "disagree": 14.3,
+      "values": [
+        3,
+        4,
+        3,
+        5,
+        3,
+        5,
+        2
+      ],
+      "distribution": {
+        "2": 1,
+        "3": 3,
+        "4": 1,
+        "5": 2
+      }
+    },
+    "U2": {
+      "text": "Los filtros y botones son intuitivos.",
+      "mean": 3.857,
+      "median": 4.0,
+      "sd": 0.833,
+      "agree": 57.1,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        3,
+        3,
+        4,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 3,
+        "4": 2,
+        "5": 2
+      }
+    },
+    "U3": {
+      "text": "El recorrido de la página va de lo general a lo particular.",
+      "mean": 4.0,
+      "median": 4.0,
+      "sd": 0.926,
+      "agree": 57.1,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        3,
+        3,
+        3,
+        5,
+        4
+      ],
+      "distribution": {
+        "3": 3,
+        "4": 1,
+        "5": 3
+      }
+    },
+    "U4": {
+      "text": "No necesité ayuda externa para moverme por el tablero.",
+      "mean": 3.143,
+      "median": 3.0,
+      "sd": 1.125,
+      "agree": 28.6,
+      "disagree": 14.3,
+      "values": [
+        1,
+        4,
+        3,
+        3,
+        3,
+        5,
+        3
+      ],
+      "distribution": {
+        "1": 1,
+        "3": 4,
+        "4": 1,
+        "5": 1
+      }
+    },
+    "U5": {
+      "text": "En general, el tablero es fácil de usar.",
+      "mean": 3.714,
+      "median": 4.0,
+      "sd": 0.7,
+      "agree": 57.1,
+      "disagree": 0.0,
+      "values": [
+        4,
+        4,
+        3,
+        4,
+        3,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 3,
+        "4": 3,
+        "5": 1
+      }
+    },
+    "C1": {
+      "text": "Los títulos de las secciones anuncian con claridad su contenido.",
+      "mean": 4.429,
+      "median": 5.0,
+      "sd": 0.728,
+      "agree": 85.7,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 1,
+        "4": 2,
+        "5": 4
+      }
+    },
+    "C2": {
+      "text": "Los ejes, leyendas y unidades se entienden sin explicación adicional.",
+      "mean": 4.0,
+      "median": 4.0,
+      "sd": 0.756,
+      "agree": 71.4,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        3,
+        4,
+        4,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 2,
+        "4": 3,
+        "5": 2
+      }
+    },
+    "C3": {
+      "text": "Entendí qué mide cada KPI sin consultar la metodología.",
+      "mean": 4.286,
+      "median": 4.0,
+      "sd": 0.7,
+      "agree": 85.7,
+      "disagree": 0.0,
+      "values": [
+        4,
+        4,
+        5,
+        5,
+        3,
+        5,
+        4
+      ],
+      "distribution": {
+        "3": 1,
+        "4": 3,
+        "5": 3
+      }
+    },
+    "C4": {
+      "text": "El mapa y su escala de color se explican por sí mismos.",
+      "mean": 4.0,
+      "median": 4.0,
+      "sd": 0.756,
+      "agree": 71.4,
+      "disagree": 0.0,
+      "values": [
+        4,
+        3,
+        5,
+        3,
+        4,
+        5,
+        4
+      ],
+      "distribution": {
+        "3": 2,
+        "4": 3,
+        "5": 2
+      }
+    },
+    "C5": {
+      "text": "Pude formular al menos una conclusión propia sobre la movilidad de Nueva York.",
+      "mean": 4.286,
+      "median": 5.0,
+      "sd": 0.881,
+      "agree": 71.4,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        3,
+        4,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 2,
+        "4": 1,
+        "5": 4
+      }
+    },
+    "K1": {
+      "text": "Los KPIs responden a la pregunta «cuándo, dónde y a qué costo se mueve la ciudad».",
+      "mean": 4.857,
+      "median": 5.0,
+      "sd": 0.35,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 1,
+        "5": 6
+      }
+    },
+    "K2": {
+      "text": "Identifiqué con facilidad el KPI más importante.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.728,
+      "agree": 85.7,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        3,
+        5,
+        5,
+        5
+      ],
+      "distribution": {
+        "3": 1,
+        "4": 1,
+        "5": 5
+      }
+    },
+    "K3": {
+      "text": "Los indicadores son suficientes para describir el fenómeno.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.495,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        4,
+        5,
+        5,
+        4
+      ],
+      "distribution": {
+        "4": 3,
+        "5": 4
+      }
+    },
+    "K4": {
+      "text": "Los indicadores son distintos entre sí, sin redundancias evidentes.",
+      "mean": 4.714,
+      "median": 5.0,
+      "sd": 0.452,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 2,
+        "5": 5
+      }
+    },
+    "E1": {
+      "text": "Los colores ayudan a interpretar los datos.",
+      "mean": 4.429,
+      "median": 5.0,
+      "sd": 0.728,
+      "agree": 85.7,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        5,
+        4,
+        5,
+        3
+      ],
+      "distribution": {
+        "3": 1,
+        "4": 2,
+        "5": 4
+      }
+    },
+    "E2": {
+      "text": "La jerarquía visual indica qué mirar primero.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.495,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        4
+      ],
+      "distribution": {
+        "4": 3,
+        "5": 4
+      }
+    },
+    "E3": {
+      "text": "La tipografía es legible en pantalla.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.495,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        4,
+        5,
+        5,
+        4
+      ],
+      "distribution": {
+        "4": 3,
+        "5": 4
+      }
+    },
+    "E4": {
+      "text": "Los tamaños y proporciones de los gráficos son adecuados.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.728,
+      "agree": 85.7,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        3,
+        5,
+        5,
+        5
+      ],
+      "distribution": {
+        "3": 1,
+        "4": 1,
+        "5": 5
+      }
+    },
+    "I1": {
+      "text": "Los filtros actualizan los datos de forma correcta y visible.",
+      "mean": 4.714,
+      "median": 5.0,
+      "sd": 0.452,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 2,
+        "5": 5
+      }
+    },
+    "I2": {
+      "text": "Los tooltips aportan información útil.",
+      "mean": 4.857,
+      "median": 5.0,
+      "sd": 0.35,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        4,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 1,
+        "5": 6
+      }
+    },
+    "I3": {
+      "text": "La interacción del mapa (zoom, clic y selección) es comprensible.",
+      "mean": 4.857,
+      "median": 5.0,
+      "sd": 0.35,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 1,
+        "5": 6
+      }
+    },
+    "G1": {
+      "text": "El tablero aporta información útil sobre la movilidad de Nueva York.",
+      "mean": 5.0,
+      "median": 5.0,
+      "sd": 0.0,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "distribution": {
+        "5": 7
+      }
+    },
+    "G2": {
+      "text": "Me permitiría argumentar una decisión o una recomendación.",
+      "mean": 4.714,
+      "median": 5.0,
+      "sd": 0.452,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        5,
+        5,
+        5,
+        4
+      ],
+      "distribution": {
+        "4": 2,
+        "5": 5
+      }
+    },
+    "G3": {
+      "text": "La información es confiable y está bien documentada.",
+      "mean": 4.714,
+      "median": 5.0,
+      "sd": 0.452,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        5
+      ],
+      "distribution": {
+        "4": 2,
+        "5": 5
+      }
+    },
+    "G4": {
+      "text": "Recomendaría el tablero a alguien interesado en movilidad urbana.",
+      "mean": 4.571,
+      "median": 5.0,
+      "sd": 0.495,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "values": [
+        5,
+        4,
+        5,
+        4,
+        5,
+        5,
+        4
+      ],
+      "distribution": {
+        "4": 3,
+        "5": 4
+      }
+    }
+  },
+  "dimensions": {
+    "U": {
+      "label": "Usabilidad",
+      "items": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5"
+      ],
+      "mean": 3.657,
+      "median": 3.0,
+      "agree": 48.6,
+      "disagree": 5.7,
+      "item_means": {
+        "U1": 3.571,
+        "U2": 3.857,
+        "U3": 4.0,
+        "U4": 3.143,
+        "U5": 3.714
+      }
+    },
+    "C": {
+      "label": "Comprensión",
+      "items": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "mean": 4.2,
+      "median": 4.0,
+      "agree": 77.1,
+      "disagree": 0.0,
+      "item_means": {
+        "C1": 4.429,
+        "C2": 4.0,
+        "C3": 4.286,
+        "C4": 4.0,
+        "C5": 4.286
+      }
+    },
+    "K": {
+      "label": "KPIs",
+      "items": [
+        "K1",
+        "K2",
+        "K3",
+        "K4"
+      ],
+      "mean": 4.679,
+      "median": 5.0,
+      "agree": 96.4,
+      "disagree": 0.0,
+      "item_means": {
+        "K1": 4.857,
+        "K2": 4.571,
+        "K3": 4.571,
+        "K4": 4.714
+      }
+    },
+    "E": {
+      "label": "Estética",
+      "items": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ],
+      "mean": 4.536,
+      "median": 5.0,
+      "agree": 92.9,
+      "disagree": 0.0,
+      "item_means": {
+        "E1": 4.429,
+        "E2": 4.571,
+        "E3": 4.571,
+        "E4": 4.571
+      }
+    },
+    "I": {
+      "label": "Interactividad",
+      "items": [
+        "I1",
+        "I2",
+        "I3"
+      ],
+      "mean": 4.81,
+      "median": 5.0,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "item_means": {
+        "I1": 4.714,
+        "I2": 4.857,
+        "I3": 4.857
+      }
+    },
+    "G": {
+      "label": "Impacto",
+      "items": [
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "mean": 4.75,
+      "median": 5.0,
+      "agree": 100.0,
+      "disagree": 0.0,
+      "item_means": {
+        "G1": 5.0,
+        "G2": 4.714,
+        "G3": 4.714,
+        "G4": 4.571
+      }
+    }
+  },
+  "global_index": 4.439,
+  "sus": {
+    "values": [
+      50.0,
+      82.5,
+      50.0,
+      70.0,
+      55.0,
+      50.0,
+      52.5
+    ],
+    "mean": 58.571,
+    "median": 52.5,
+    "min": 50.0,
+    "max": 82.5,
+    "sd": 11.79,
+    "bands": {
+      "excelente": 0,
+      "bueno": 1,
+      "aceptable": 3,
+      "pobre": 3
+    }
+  },
+  "clean_sensitivity": {
+    "n": 6,
+    "global_index": 4.395,
+    "sus_mean": 60.0,
+    "task_mean": 2.25
+  },
+  "open_answers": {
+    "O1": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "Lo primero que miré fue la tarjeta de viajes analizados. Me sirvió para ubicar el tamaño de la muestra antes de explorar la demanda por año y por zona."
+      },
+      {
+        "respondent": "R3",
+        "text": "el titulo: El pulso de la movilidad en Nueva York"
+      },
+      {
+        "respondent": "R4",
+        "text": "El boleto con datos, porque esta gigante"
+      },
+      {
+        "respondent": "R5",
+        "text": "La portada, es lo primero que sale"
+      },
+      {
+        "respondent": "R6",
+        "text": "las tarjetas con los kpis"
+      },
+      {
+        "respondent": "R7",
+        "text": "El KPI principal, porque es lo ms llamativo de base"
+      }
+    ],
+    "O2": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "Al principio me confundió que cada año mostrara 500,000 viajes. Después entendí que es el tamaño de la muestra por año y que los totales de la fuente son distintos."
+      },
+      {
+        "respondent": "R3",
+        "text": "el mapa"
+      },
+      {
+        "respondent": "R4",
+        "text": "Ritmo semanal."
+      },
+      {
+        "respondent": "R5",
+        "text": "Ninguna"
+      },
+      {
+        "respondent": "R6",
+        "text": "El examen que acaban de hacer"
+      },
+      {
+        "respondent": "R7",
+        "text": "\"Viajes por mes\", me confundió la forma de clasificar los meses"
+      }
+    ],
+    "O3": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "El mapa de calor de día y hora. Me permitió identificar que en 2025 el pico de la muestra fue el miércoles a las 18:00. Esa visualización serviría para planear turnos con base en las horas de mayor demanda."
+      },
+      {
+        "respondent": "R3",
+        "text": "todos en genral bien"
+      },
+      {
+        "respondent": "R4",
+        "text": "Geografía de la demanda por como se puede interactuar y se ve"
+      },
+      {
+        "respondent": "R5",
+        "text": "todos, todo es importante"
+      },
+      {
+        "respondent": "R6",
+        "text": "Tarifa por milla"
+      },
+      {
+        "respondent": "R7",
+        "text": "El principal, porque tiene la escancia del dashboard"
+      }
+    ],
+    "O4": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "Pondría el año seleccionado junto al título de cada gráfica. Así podría confirmar el periodo al desplazarme por el tablero, especialmente al comparar la vista histórica con la de 2025."
+      },
+      {
+        "respondent": "R3",
+        "text": "esta bien solo que este relaconado los nobres de algunas cosas del from con el dash"
+      },
+      {
+        "respondent": "R4",
+        "text": "Agregar un menú principal para dividir las secciones"
+      },
+      {
+        "respondent": "R5",
+        "text": "nada"
+      },
+      {
+        "respondent": "R7",
+        "text": "Nada"
+      }
+    ],
+    "O5": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "Para decidir dónde conviene asignar más taxis, me habría servido conocer el número de taxis disponibles y el tiempo de espera por zona y hora. Así podría identificar dónde la oferta se queda corta frente a la demanda."
+      },
+      {
+        "respondent": "R3",
+        "text": "mas intuicion para hacer los ehjrcicicos"
+      },
+      {
+        "respondent": "R4",
+        "text": "Ninguna"
+      },
+      {
+        "respondent": "R6",
+        "text": "Asi esta bien"
+      },
+      {
+        "respondent": "R7",
+        "text": "Considero que está bien como esta, como máximo en \"Viajes por mes\""
+      }
+    ],
+    "O6": [
+      {
+        "respondent": "R1",
+        "text": "a"
+      },
+      {
+        "respondent": "R2",
+        "text": "Me gustó que cada gráfica incluyera una guía de lectura y que la metodología explicara los años faltantes y el pico atípico de marzo de 2018. Eso ayuda a interpretar mejor la serie histórica."
+      },
+      {
+        "respondent": "R4",
+        "text": "Sin comentarios buen trabajo"
+      },
+      {
+        "respondent": "R6",
+        "text": "Ninguno"
+      },
+      {
+        "respondent": "R7",
+        "text": "Gracias por un dashboard tan trabajado y de una calidad tan alta que se escapa de mis paarametros"
+      }
+    ]
+  },
+  "respondents": [
+    {
+      "code": "R1",
+      "timestamp": "2026/11/19 9:18:35 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Masculino",
+      "education": "Licenciatura concluida",
+      "field": "Otra",
+      "occupation": "Otra",
+      "semester": "Egresado o egresada",
+      "dashboard_exp": "Baja (los he visto, pero no los he usado)",
+      "viz_freq": "Nunca",
+      "tlc": "Ninguno",
+      "nyc": "La he visitado",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "No",
+      "task_score": 4.0,
+      "tasks": {
+        "T1": "correcta",
+        "T2": "correcta",
+        "T3": "correcta",
+        "T4": "correcta"
+      },
+      "sus": 50.0,
+      "index": 4.7
+    },
+    {
+      "code": "R2",
+      "timestamp": "2026/11/25 1:58:42 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Masculino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Estudiante",
+      "semester": "7.º a 9.º semestre",
+      "dashboard_exp": "Media (los uso de vez en cuando)",
+      "viz_freq": "Mensualmente",
+      "tlc": "Conozco el dataset y sus variables",
+      "nyc": "La conozco por mapas o referencias",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "No",
+      "task_score": 4.0,
+      "tasks": {
+        "T1": "correcta",
+        "T2": "correcta",
+        "T3": "correcta",
+        "T4": "correcta"
+      },
+      "sus": 82.5,
+      "index": 4.345
+    },
+    {
+      "code": "R3",
+      "timestamp": "2026/11/25 3:52:20 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Femenino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Estudiante",
+      "semester": "7.º a 9.º semestre",
+      "dashboard_exp": "Baja (los he visto, pero no los he usado)",
+      "viz_freq": "Mensualmente",
+      "tlc": "Ninguno",
+      "nyc": "La conozco por mapas o referencias",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "Sí",
+      "task_score": 2.0,
+      "tasks": {
+        "T1": "correcta",
+        "T2": "correcta",
+        "T3": "incorrecta",
+        "T4": "incorrecta"
+      },
+      "sus": 50.0,
+      "index": 4.6
+    },
+    {
+      "code": "R4",
+      "timestamp": "2026/11/25 4:03:31 p.m. GMT-5",
+      "age": "25 a 34 años",
+      "gender": "Masculino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Docente",
+      "semester": "10.º semestre o más",
+      "dashboard_exp": "Alta (los uso con frecuencia o los construyo)",
+      "viz_freq": "Semanalmente",
+      "tlc": "Ninguno",
+      "nyc": "No la conozco",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "Sí",
+      "task_score": 0.0,
+      "tasks": {
+        "T1": "incorrecta",
+        "T2": "incorrecta",
+        "T3": "incorrecta",
+        "T4": "incorrecta"
+      },
+      "sus": 70.0,
+      "index": 4.095
+    },
+    {
+      "code": "R5",
+      "timestamp": "2026/11/25 4:04:09 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Femenino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Estudiante",
+      "semester": "7.º a 9.º semestre",
+      "dashboard_exp": "Alta (los uso con frecuencia o los construyo)",
+      "viz_freq": "Semanalmente",
+      "tlc": "Conozco el dataset y sus variables",
+      "nyc": "No la conozco",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "Sí",
+      "task_score": 0.0,
+      "tasks": {
+        "T1": "incorrecta",
+        "T2": "incorrecta",
+        "T3": "incorrecta",
+        "T4": "incorrecta"
+      },
+      "sus": 55.0,
+      "index": 4.222
+    },
+    {
+      "code": "R6",
+      "timestamp": "2026/11/25 4:14:53 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Masculino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Estudiante",
+      "semester": "4.º a 6.º semestre",
+      "dashboard_exp": "Media (los uso de vez en cuando)",
+      "viz_freq": "Mensualmente",
+      "tlc": "Ninguno",
+      "nyc": "La conozco por mapas o referencias",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "Sí",
+      "task_score": 4.0,
+      "tasks": {
+        "T1": "correcta",
+        "T2": "correcta",
+        "T3": "correcta",
+        "T4": "correcta"
+      },
+      "sus": 50.0,
+      "index": 5.0
+    },
+    {
+      "code": "R7",
+      "timestamp": "2026/11/25 4:24:04 p.m. GMT-5",
+      "age": "18 a 24 años",
+      "gender": "Masculino",
+      "education": "Licenciatura en curso",
+      "field": "Ingeniería en Datos",
+      "occupation": "Estudiante",
+      "semester": "7.º a 9.º semestre",
+      "dashboard_exp": "Alta (los uso con frecuencia o los construyo)",
+      "viz_freq": "Semanalmente",
+      "tlc": "Ninguno",
+      "nyc": "La conozco por mapas o referencias",
+      "device": "Laptop o computadora de escritorio",
+      "prior_eval": "Sí",
+      "task_score": 3.5,
+      "tasks": {
+        "T1": "parcial",
+        "T2": "correcta",
+        "T3": "correcta",
+        "T4": "correcta"
+      },
+      "sus": 52.5,
+      "index": 4.108
+    }
+  ],
+  "timestamps": [
+    "2026/11/19 9:18:35 p.m. GMT-5",
+    "2026/11/25 1:58:42 p.m. GMT-5",
+    "2026/11/25 3:52:20 p.m. GMT-5",
+    "2026/11/25 4:03:31 p.m. GMT-5",
+    "2026/11/25 4:04:09 p.m. GMT-5",
+    "2026/11/25 4:14:53 p.m. GMT-5",
+    "2026/11/25 4:24:04 p.m. GMT-5"
+  ]
+}

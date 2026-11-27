@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="272" viewBox="0 0 760 272" role="img">
+<rect width="760" height="272" fill="#ffffff"/>
+<text x="52.0" y="20.0" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#0B1424" font-weight="700" text-anchor="start">Puntuación SUS por participante (0–100)</text>
+<line x1="52.0" y1="232.0" x2="726.0" y2="232.0" stroke="#DCE3EE" stroke-width="1"/>
+<text x="44.0" y="235.5" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="end">0</text>
+<line x1="52.0" y1="185.0" x2="726.0" y2="185.0" stroke="#DCE3EE" stroke-width="1"/>
+<text x="44.0" y="188.5" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="end">25</text>
+<line x1="52.0" y1="138.0" x2="726.0" y2="138.0" stroke="#DCE3EE" stroke-width="1"/>
+<text x="44.0" y="141.5" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="end">50</text>
+<line x1="52.0" y1="91.0" x2="726.0" y2="91.0" stroke="#DCE3EE" stroke-width="1"/>
+<text x="44.0" y="94.5" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="end">75</text>
+<line x1="52.0" y1="44.0" x2="726.0" y2="44.0" stroke="#DCE3EE" stroke-width="1"/>
+<text x="44.0" y="47.5" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="end">100</text>
+<rect x="77.1" y="138.0" width="46.0" height="94.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="100.1" y="132.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">50,0</text>
+<text x="100.1" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R1</text>
+<rect x="173.4" y="76.9" width="46.0" height="155.1" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="196.4" y="70.9" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">82,5</text>
+<text x="196.4" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R2</text>
+<rect x="269.7" y="138.0" width="46.0" height="94.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="292.7" y="132.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">50,0</text>
+<text x="292.7" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R3</text>
+<rect x="366.0" y="100.4" width="46.0" height="131.6" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="389.0" y="94.4" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">70,0</text>
+<text x="389.0" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R4</text>
+<rect x="462.3" y="128.6" width="46.0" height="103.4" rx="3" fill="#B7791F" opacity="1"/>
+<text x="485.3" y="122.6" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">55,0</text>
+<text x="485.3" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R5</text>
+<rect x="558.6" y="138.0" width="46.0" height="94.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="581.6" y="132.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">50,0</text>
+<text x="581.6" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R6</text>
+<rect x="654.9" y="133.3" width="46.0" height="98.7" rx="3" fill="#B7791F" opacity="1"/>
+<text x="677.9" y="127.3" font-family="Segoe UI, Arial, sans-serif" font-size="9.4" fill="#0B1424" font-weight="700" text-anchor="middle">52,5</text>
+<text x="677.9" y="250.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.6" fill="#243244" font-weight="600" text-anchor="middle">R7</text>
+<line x1="52.0" y1="104.2" x2="726.0" y2="104.2" stroke="#0B1424" stroke-width="1.1" stroke-dasharray="5 4"/>
+<text x="726.0" y="99.2" font-family="Segoe UI, Arial, sans-serif" font-size="8.8" fill="#0B1424" font-weight="700" text-anchor="end">Referencia SUS 68</text>
+<line x1="52.0" y1="121.9" x2="726.0" y2="121.9" stroke="#8A6A00" stroke-width="1.1" stroke-dasharray="2 3"/>
+<text x="56.0" y="116.9" font-family="Segoe UI, Arial, sans-serif" font-size="8.8" fill="#8A6A00" font-weight="700" text-anchor="start">Media 58,6</text>
+</svg>

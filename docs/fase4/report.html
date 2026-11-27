@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>NYC Mobility Pulse · Fase 4 · Evaluación y validación</title>
+<style>
+  @page{size:A4;margin:16mm 15mm 17mm}
+  :root{
+    --ink:#0B1424; --body:#243244; --muted:#5B6B80; --rule:#DCE3EE; --soft:#F6F8FB;
+    --navy:#0D1B2E; --yellow:#FFD23F; --amber:#8A6A00; --teal:#0F7A6C;
+    --teal-soft:#DDF4EF; --yellow-soft:#FFF6D8; --n3-soft:#E9EEF6; --code:#0B1424;
+    --rose:#B8324F; --rose-soft:#FBE9ED;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{margin:0;background:#fff;color:var(--body);
+    font-family:"Inter","Segoe UI",Arial,sans-serif;font-size:9.8pt;line-height:1.55}
+  h1,h2,h3,h4{font-family:"Space Grotesk","Segoe UI",Arial,sans-serif;color:var(--ink);margin:0}
+  p{margin:0 0 6.5pt;text-align:justify}
+  strong{color:var(--ink)}
+  em{font-style:normal;color:var(--amber);font-weight:600}
+  a{color:var(--teal);text-decoration:none}
+  ul,ol{margin:0 0 7pt;padding-left:14pt}
+  li{margin-bottom:2.5pt}
+  code{font-family:"Cascadia Mono",Consolas,monospace;font-size:8.2pt;color:var(--ink)}
+
+  /* portada */
+  .cover{margin:-16mm -15mm -17mm;width:210mm;height:297mm;padding:30mm 22mm 20mm;
+    background:radial-gradient(120% 90% at 88% 0%,#182A4A 0%,#070B14 55%),#070B14;
+    color:#E8EEF8;position:relative;overflow:hidden;break-after:page}
+  .cover .glow{position:absolute;right:-40mm;top:-30mm;width:130mm;height:130mm;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,210,63,.18),transparent 62%)}
+  .cover .grid{position:absolute;inset:0;opacity:.16;
+    background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+    background-size:12mm 12mm}
+  .cover>*{position:relative;z-index:2}
+  .cov-top{display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,.14);padding-bottom:6mm}
+  .cov-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:12pt;letter-spacing:.04em}
+  .cov-mark{width:34px;height:34px;border-radius:9px;background:var(--yellow);color:#0B0B10;
+    display:grid;place-items:center;font-size:10pt;font-weight:900}
+  .cov-kicker{font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:#8FA0B8;text-align:right}
+  .cov-kicker b{color:var(--yellow)}
+  .cov-main{margin-top:26mm;max-width:160mm}
+  .cov-eyebrow{font-size:8.5pt;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow)}
+  .cov-main h1{font-size:40pt;line-height:1.02;letter-spacing:-.04em;color:#fff;margin:6mm 0 5mm;font-weight:800}
+  .cov-main h1 span{color:var(--yellow)}
+  .cov-sub{font-size:12pt;line-height:1.45;color:#B9C7DA;max-width:142mm}
+  .cov-meta{margin-top:18mm;display:grid;grid-template-columns:1.25fr 1fr;gap:10mm;
+    border-top:1px solid rgba(255,255,255,.14);padding-top:6mm}
+  .cover strong{color:#fff}
+  .cov-meta .lbl{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:#64748B;margin-bottom:1.5mm}
+  .cov-meta .val{font-size:10pt;color:#E8EEF8;line-height:1.5}
+  .cov-foot{position:absolute;left:22mm;right:22mm;bottom:14mm;display:flex;justify-content:space-between;
+    align-items:center;font-size:7.5pt;color:#64748B;border-top:1px solid rgba(255,255,255,.1);padding-top:4mm}
+  .cov-ticket{display:inline-flex;align-items:center;gap:7px;font-size:7.5pt;color:#8FA0B8;
+    border:1px solid rgba(255,210,63,.4);border-radius:999px;padding:2mm 3.5mm}
+  .cov-ticket b{color:var(--yellow);font-size:10pt}
+
+  /* capítulos */
+  main{padding:0}
+  .chapter{break-before:auto;margin-top:11mm}
+  .chapter.newpage{break-before:page;margin-top:0}
+  .chap-head{display:flex;align-items:flex-start;gap:9px;border-bottom:2px solid var(--ink);
+    padding-bottom:3mm;margin-bottom:4.2mm;break-after:avoid}
+  .chap-num{flex:0 0 auto;width:24px;height:24px;border-radius:5px;background:var(--yellow);
+    color:#0B0B10;font-weight:800;font-size:10pt;display:grid;place-items:center;
+    font-family:"Space Grotesk","Segoe UI",sans-serif}
+  .chap-head h1{font-size:17pt;line-height:1.15;letter-spacing:-.02em}
+  .chap-head .kicker{font-size:7pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+    margin-bottom:1mm;font-weight:700}
+  .chap-head .lead{font-size:8.8pt;color:var(--muted);margin-top:1.2mm}
+
+  h2{font-size:11.2pt;margin:4.2mm 0 1.8mm;letter-spacing:-.01em;break-after:avoid}
+  h3{font-size:9.6pt;margin:3.5mm 0 1.5mm;break-after:avoid}
+  .small{font-size:8.4pt;line-height:1.5;color:var(--muted)}
+  .tiny{font-size:7.4pt;line-height:1.45;color:var(--muted)}
+
+  .callout{background:var(--yellow-soft);border-left:3px solid var(--yellow);padding:3mm 4mm;
+    margin:3mm 0;font-size:9pt;line-height:1.5}
+  .callout.dark{background:var(--navy);border-left:3px solid var(--yellow);color:#DCE6F5}
+  .callout.dark strong{color:#fff}
+  .callout.dark em{color:var(--yellow)}
+  .callout .tagline{font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    font-weight:800;display:block;margin-bottom:1mm}
+  .callout.dark .tagline{color:var(--yellow)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+  .three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+
+  /* KPI */
+  .kpi-row{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;gap:2.5mm;margin:4mm 0}
+  .kpi{border:1px solid var(--rule);border-radius:3mm;padding:3mm 3.2mm;background:var(--soft);position:relative}
+  .kpi .lbl{font-size:6.6pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800;line-height:1.3}
+  .kpi .val{font-family:"Space Grotesk","Segoe UI",sans-serif;font-size:19pt;font-weight:800;
+    letter-spacing:-.03em;color:var(--ink);margin-top:1.2mm;line-height:1}
+  .kpi .val small{font-size:8pt;color:var(--muted);font-weight:600;letter-spacing:0}
+  .kpi .sub{font-size:7.4pt;color:var(--muted);margin-top:1.4mm;line-height:1.35}
+  .kpi.main{background:var(--navy);border-color:var(--navy)}
+  .kpi.main .lbl{color:var(--yellow)}
+  .kpi.main .val{color:var(--yellow);font-size:27pt}
+  .kpi.main .val small{color:#C7D4E6}
+  .kpi.main .sub{color:#AFC0D6}
+  .kpi .badge{position:absolute;top:2mm;right:2mm;font-size:6pt;font-weight:800;letter-spacing:.06em;
+    padding:.4mm 1.4mm;border-radius:1mm;background:var(--yellow);color:#0B0B10}
+
+  /* tablas */
+  .tbl{width:100%;border-collapse:collapse;font-size:8.1pt;line-height:1.4;margin:2.5mm 0 3mm}
+  .tbl th{text-align:left;font-size:6.8pt;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);
+    border-bottom:1.2px solid var(--ink);padding:1.8mm 1.6mm;font-weight:800}
+  .tbl td{padding:1.5mm 1.6mm;border-bottom:.6px solid var(--rule);vertical-align:top}
+  .tbl tr{break-inside:avoid}
+  .tbl thead{display:table-header-group}
+  .tbl.keep{break-inside:avoid}
+  .tbl tbody tr:nth-child(odd) td{background:#FAFBFD}
+  .tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl .ctr{text-align:center}
+  .tbl .tot td{border-top:1.2px solid var(--ink);border-bottom:none;font-weight:700;background:#fff!important;color:var(--ink)}
+  .tbl.compact td,.tbl.compact th{padding:1.15mm 1.4mm}
+  .tbl.tight{font-size:7.7pt}
+  .tbl.tight td,.tbl.tight th{padding:.82mm 1.3mm}
+  .tbl caption{caption-side:top;text-align:left;font-size:7.4pt;color:var(--muted);padding-bottom:1.2mm}
+  .tbl .low{color:var(--rose);font-weight:700}
+  .tbl .high{color:var(--teal);font-weight:700}
+
+  /* figuras */
+  figure{margin:3mm 0 4mm;break-inside:avoid}
+  figure img{width:100%;display:block;border:1px solid var(--rule);border-radius:2mm}
+  figcaption{font-size:7.4pt;line-height:1.45;color:var(--muted);margin-top:1.5mm}
+  figcaption b{color:var(--ink)}
+  .fig-frame{border:1px solid var(--rule);border-radius:2mm;overflow:hidden}
+  .fig-narrow{width:82%;margin-left:auto;margin-right:auto}
+
+  /* citas */
+  .quote{margin:2.5mm 0;padding:2.6mm 3.6mm;border-left:3px solid var(--yellow);background:var(--soft);
+    font-size:8.7pt;line-height:1.5;color:var(--body)}
+  .quote b{color:var(--ink)}
+  .quote .who{display:block;margin-top:1.2mm;font-size:7pt;color:var(--muted);letter-spacing:.06em;
+    text-transform:uppercase;font-weight:700}
+
+  .pill{display:inline-block;font-size:6.4pt;font-weight:800;letter-spacing:.05em;
+    padding:.5mm 1.5mm;border-radius:1mm;vertical-align:1px}
+  .pill.teal{background:var(--teal-soft);color:#0F5F55}
+  .pill.rose{background:var(--rose-soft);color:#8C2238}
+  .pill.amber{background:var(--yellow-soft);color:#7A5C00}
+  .pill.gray{background:var(--n3-soft);color:#41536B}
+
+  .refs{font-size:8pt;line-height:1.45}
+  .refs li{margin-bottom:1.1mm}
+  .avoid{break-inside:avoid}
+  .pagebreak{break-before:page}
+  .toc td{padding:1.05mm 1.2mm;border-bottom:.6px solid var(--rule);font-size:8.4pt}
+  .toc td.p{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<!-- ================= PORTADA ================= -->
+<section class="cover">
+  <div class="glow"></div>
+  <div class="grid"></div>
+  <div class="cov-top">
+    <div class="cov-brand"><span class="cov-mark">NYC</span> MOBILITY PULSE</div>
+    <div class="cov-kicker">Visualización de datos<br><b>Fase 4 · Evaluación y validación</b></div>
+  </div>
+
+  <div class="cov-main">
+    <div class="cov-eyebrow">Proyecto 4 · La movilidad urbana y el tráfico inteligente</div>
+    <h1>El tablero<br>bajo la <span>lupa</span></h1>
+    <p class="cov-sub">Siete consultores anónimos usaron el dashboard sin ayuda. Esto es lo que
+      encontraron, lo que los confundió y lo que conviene corregir antes de la siguiente versión.</p>
+  </div>
+
+  <div class="cov-meta">
+    <div>
+      <div class="lbl">Equipo</div>
+      <div class="val"><strong>Mobility Pulse</strong><br>Javier Rodríguez Rodríguez<br>Diego Alonso López Ballesta</div>
+    </div>
+    <div>
+      <div class="lbl">Docente</div>
+      <div class="val">Jessica Carmin Mendiola Fuentes</div>
+      <div class="lbl" style="margin-top:4mm">Fecha</div>
+      <div class="val">Noviembre de 2026</div>
+    </div>
+  </div>
+
+  <div class="cov-foot">
+    <span>NYC TLC · Yellow Taxi Trip Record Data · dominio público</span>
+    <span class="cov-ticket">Muestra <b>7</b> consultores · 4 tareas · 25 ítems</span>
+  </div>
+</section>
+
+<main>
+
+<!-- ================= RESUMEN ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">0</div>
+    <div>
+      <div class="kicker">Síntesis</div>
+      <h1>Resumen ejecutivo</h1>
+      <div class="lead">Un dashboard que convence cuando se explica, pero que todavía no siempre se deja consultar sin ayuda.</div>
+    </div>
+  </div>
+
+  <p>La Fase 4 cierra el ciclo de <strong>NYC Mobility Pulse</strong>. Después de definir la estructura
+  visual, implementar el dashboard y publicarlo, faltaba la prueba que no se puede hacer desde el código:
+  ponerlo frente a personas y observar si informa, si se entiende y si permite responder preguntas concretas.
+  Entre el <strong>19 y el 25 de noviembre de 2026</strong> se aplicó un cuestionario anónimo de
+  <strong>61 preguntas</strong> —perfil, cuatro tareas verificables, 25 ítems Likert, la escala SUS y seis
+  preguntas abiertas— a consultores reclutados por conveniencia. Se recibieron <strong>8 respuestas</strong>:
+  <strong>7 aceptaron participar</strong> y <strong>1 declinó</strong>; solo las primeras entran al análisis.</p>
+
+  <div class="kpi-row">
+    <div class="kpi main">
+      <span class="badge">n = 7</span>
+      <div class="lbl">Índice global</div>
+      <div class="val">4.44<small>/5</small></div>
+      <div class="sub">promedio de las seis dimensiones</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">SUS</div>
+      <div class="val">58.6<small>/100</small></div>
+      <div class="sub">debajo de la referencia 68</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">Tareas</div>
+      <div class="val">2.5<small>/4</small></div>
+      <div class="sub">62.5% de los puntos posibles</div>
+    </div>
+    <div class="kpi">
+      <div class="lbl">Respuestas válidas</div>
+      <div class="val">7<small>/8</small></div>
+      <div class="sub">una persona declinó</div>
+    </div>
+  </div>
+
+  <p>Las cifras cuentan dos historias que no se contradicen. Por un lado, la <strong>utilidad percibida es
+  alta</strong>: el índice global llega a 4.44/5, el impacto a 4.75 y los KPIs a 4.68; nadie calificó en
+  desacuerdo los ítems de interactividad ni los de impacto. Por otro, la <strong>usabilidad es la dimensión
+  más baja</strong> (3.66/5) y las tareas revelan el punto exacto donde el tablero deja de acompañar: solo
+  <strong>3 de 7</strong> personas resolvieron las cuatro preguntas sin errores, <strong>2 de 7</strong> no
+  encontraron ninguna y el SUS promedio quedó en <strong>58.6</strong>, por debajo de la referencia de 68.
+  El dashboard comunica bien el panorama; encontrar un dato específico cuesta más.</p>
+
+  <div class="callout dark">
+    <span class="tagline">La tensión central</span>
+    El tablero gusta, se entiende y se considera confiable; el problema no está en los datos ni en la
+    estética, sino en la <strong>orientación</strong>: vocabulario que no coincide entre el formulario y el
+    tablero, gráficos que no siempre dicen qué año se está viendo y una guía de evaluación que todavía
+    supone que la persona sabe dónde mirar. Las recomendaciones de la Fase 4 se concentran ahí.
+  </div>
+
+  <h2>Ficha técnica del entregable</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:24%">Elemento</th><th>Definición</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Objeto evaluado</td><td>NYC Mobility Pulse · dashboard de movilidad en Nueva York con datos TLC Yellow Taxi</td></tr>
+    <tr><td>URL</td><td><code>https://srmeme64.github.io/nyc-mobility-pulse/</code> · modo evaluación: <code>?evaluar=1</code></td></tr>
+    <tr><td>Instrumento</td><td>12 secciones · 61 preguntas (54 cerradas, 6 abiertas y 1 consentimiento) · 12–15 min</td></tr>
+    <tr><td>Escalas</td><td>Likert 1–5 por ítem · SUS de 10 ítems · cuatro tareas de respuesta corta</td></tr>
+    <tr><td>Aplicación</td><td>Google Forms + encuesta guiada embebida en el sitio · anónima, sin correo ni nombre</td></tr>
+    <tr><td>Muestra</td><td>8 respuestas · 7 válidas · 1 declinación · 19 y 25 de noviembre de 2026</td></tr>
+    <tr><td>Perfil dominante</td><td>18–24 años (85.7%) · Ingeniería en Datos (85.7%) · estudiantes (71.4%) · laptop (100%)</td></tr>
+    <tr><td>Análisis</td><td>Descriptivo: medias, medianas, porcentajes, SUS y codificación temática · sin inferencia</td></tr>
+  </tbody>
+  </table>
+
+  <p class="tiny">Las cifras se calcularon con <code>docs/fase4/analisis_fase4.py</code> a partir de la
+  exportación CSV del formulario; las figuras se generan con
+  <code>docs/fase4/make_figures_fase4.py</code>.</p>
+</section>
+
+<!-- ================= CONTENIDO ================= -->
+<section class="chapter newpage">
+  <div class="chap-head">
+    <div class="chap-num">·</div>
+    <div>
+      <div class="kicker">Mapa del informe</div>
+      <h1>Contenido</h1>
+      <div class="lead">Doce capítulos y un anexo: del diseño del instrumento al plan de mejora.</div>
+    </div>
+  </div>
+
+  <table class="tbl toc">
+    <tr><td style="width:8%">1</td><td>Introducción: qué se evalúa y cómo se lee este informe</td><td class="p">04</td></tr>
+    <tr><td>2</td><td>Diseño del instrumento: secciones, escalas, tareas y SUS</td><td class="p">05</td></tr>
+    <tr><td>3</td><td>Aplicación y muestra: quiénes respondieron y en qué condiciones</td><td class="p">07</td></tr>
+    <tr><td>4</td><td>Tareas verificables: qué se encontró y qué no</td><td class="p">08</td></tr>
+    <tr><td>5</td><td>Percepción por dimensiones: 25 ítems Likert</td><td class="p">10</td></tr>
+    <tr><td>6</td><td>Escala SUS: usabilidad estandarizada y sus límites</td><td class="p">12</td></tr>
+    <tr><td>7</td><td>Respuestas abiertas: temas, matices y contradicciones</td><td class="p">13</td></tr>
+    <tr><td>8</td><td>Hallazgos: qué funciona, qué falla y qué recomendar</td><td class="p">14</td></tr>
+    <tr><td>9</td><td>Plan de mejora: prioridades, esfuerzo e impacto</td><td class="p">16</td></tr>
+    <tr><td>10</td><td>Limitaciones y validez del estudio</td><td class="p">17</td></tr>
+    <tr><td>11</td><td>Conclusiones</td><td class="p">18</td></tr>
+    <tr><td>12</td><td>Autoevaluación frente a la rúbrica</td><td class="p">19</td></tr>
+    <tr><td>A</td><td>Anexo: matriz de respuestas, fórmulas y reproducibilidad</td><td class="p">20</td></tr>
+  </table>
+
+  <h2>Cómo está armado</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:18%">Bloque</th><th style="width:14%">Capítulos</th><th>Qué encontrará</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Diseño y aplicación</td><td>1–3</td><td>Preguntas de evaluación, estructura del cuestionario, tareas verificables y perfil de la muestra.</td></tr>
+    <tr><td>Resultados</td><td>4–7</td><td>Desempeño en las tareas, 25 ítems Likert, escala SUS y codificación de las respuestas abiertas.</td></tr>
+    <tr><td>Síntesis</td><td>8–11</td><td>Triangulación de fortalezas y problemas, plan de mejora priorizado, límites y conclusiones.</td></tr>
+    <tr><td>Trazabilidad</td><td>12 y A</td><td>Autoevaluación frente a la rúbrica, matriz de respuestas, fórmulas y comandos reproducibles.</td></tr>
+  </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">Convenciones</span>
+    Las cifras se redondean a dos decimales en el texto y a una décima en las figuras. Las citas de las
+    respuestas abiertas se presentan entre comillas y sin corregir la ortografía. Los códigos R1–R7 sustituyen
+    cualquier dato identificable. «n» indica el número de respuestas válidas y «SUS» la escala de usabilidad
+    del sistema.
+  </div>
+</section>
+
+<!-- ================= 1 INTRODUCCION ================= -->
+<section class="chapter newpage">
+  <div class="chap-head">
+    <div class="chap-num">1</div>
+    <div>
+      <div class="kicker">Punto de partida</div>
+      <h1>Introducción</h1>
+      <div class="lead">La pregunta ya no es si el tablero funciona, sino si informa cuando alguien lo consulta sin ayuda.</div>
+    </div>
+  </div>
+
+  <p>Un dashboard puede abrir sin errores, verse bien y aun así no servir para decidir. La evaluación de la
+  Fase 4 existe para detectar esa distancia: la que hay entre lo que el equipo cree que el tablero dice y lo
+  que una persona realmente encuentra, entiende y usa. El objeto evaluado es <strong>NYC Mobility Pulse</strong>,
+  una aplicación de una sola página que resume ocho años de viajes en taxi amarillo de Nueva York con seis
+  KPIs, once visualizaciones y un mapa de 263 zonas TLC. La pregunta analítica que ordena todo el producto es
+  la misma de las fases anteriores: <em>¿cuándo, dónde y a qué costo se mueve la ciudad?</em></p>
+
+  <p>La consigna de la fase pide medir seis aspectos —usabilidad, comprensión, pertinencia de los KPIs,
+  estética, interactividad e impacto— con al menos tres personas, y cerrar con promedios, fortalezas,
+  debilidades y recomendaciones. Este informe hace eso y añade una pieza que las encuestas de opinión suelen
+  omitir: <strong>cuatro tareas verificables</strong>. En lugar de preguntar solo «¿le pareció fácil?», se pidió
+  encontrar el mes más bajo de la serie, el mes más activo de 2025, la zona con más recogidas y la hora pico
+  del heatmap. Las respuestas se compararon con los valores reales del tablero. Esa combinación permite
+  contrastar la percepción con el desempeño.</p>
+
+  <figure>
+    <img src="../img/dashboard.png" alt="Vista superior del dashboard NYC Mobility Pulse">
+    <figcaption><b>Fig. 1.1.</b> El objeto evaluado: portada, ticket de datos, banda de seis KPIs y guía de
+    lectura. La evaluación se hizo sobre el sitio publicado, no sobre una maqueta.</figcaption>
+  </figure>
+
+  <h2>Las preguntas que guían la evaluación</h2>
+  <ol>
+    <li><strong>Usabilidad:</strong> ¿la información se encuentra rápido y los filtros se entienden?</li>
+    <li><strong>Comprensión:</strong> ¿los títulos, ejes, leyendas y unidades se explican por sí mismos?</li>
+    <li><strong>KPIs:</strong> ¿los indicadores responden a la pregunta del proyecto y se distingue el principal?</li>
+    <li><strong>Estética:</strong> ¿los colores, la jerarquía y las proporciones ayudan o distraen?</li>
+    <li><strong>Interactividad:</strong> ¿los filtros, tooltips y el mapa responden como se espera?</li>
+    <li><strong>Impacto:</strong> ¿el tablero permite argumentar una decisión o una recomendación?</li>
+  </ol>
+
+  <p>La evaluación no busca una calificación única. Busca un mapa de fricciones: qué partes del tablero
+  sostienen la lectura y cuáles necesitan una intervención. Por eso el informe separa tres planos que suelen
+  mezclarse: lo que la gente <strong>dice</strong> (Likert y abiertas), lo que la gente <strong>hace</strong>
+  (tareas) y lo que el instrumento <strong>estandariza</strong> (SUS). Cuando los tres coinciden, la conclusión
+  es sólida; cuando no, la discrepancia también es un hallazgo.</p>
+
+  <div class="callout">
+    <span class="tagline">Cómo leer este informe</span>
+    El capítulo 2 describe el instrumento y sus decisiones; el 3 presenta la muestra; los capítulos 4, 5 y 6
+    analizan tareas, Likert y SUS; el 7 codifica las respuestas abiertas; el 8 triangula todo en fortalezas,
+    problemas y recomendaciones; el 9 convierte esas recomendaciones en un plan; el 10 declara los límites y el
+    11 cierra. El anexo permite reconstruir cada cifra.
+  </div>
+
+  <h2>Alcance y límites</h2>
+  <p>El estudio es <strong>descriptivo y exploratorio</strong>. La muestra es pequeña (n = 7), por conveniencia
+  y compuesta en su mayoría por pares de Ingeniería en Datos. No se calculan intervalos de confianza ni pruebas
+  de significancia: con siete casos, cualquier diferencia de una décima puede deberse a una sola persona. Las
+  cifras sirven para <strong>detectar direcciones</strong> y para priorizar mejoras, no para generalizar a toda
+  la audiencia del tablero. Esa advertencia se repite en el capítulo 10 y condiciona la lectura de todos los
+  promedios.</p>
+
+  <p>Tampoco es una auditoría técnica. No se revisó el código, el rendimiento ni la accesibilidad con
+  herramientas automáticas; eso corresponde a otras fases. Aquí se evalúa la experiencia de uso y la
+  comunicación de la información. Finalmente, el estudio se hizo sobre el sitio publicado y el formulario de
+  Google; la encuesta guiada embebida se usó como apoyo, pero las respuestas analizadas son las que llegaron al
+  formulario.</p>
+</section>
+
+<!-- ================= 2 INSTRUMENTO ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">2</div>
+    <div>
+      <div class="kicker">Diseño</div>
+      <h1>El instrumento</h1>
+      <div class="lead">Doce secciones, 61 preguntas y una regla: cada ítem mide una sola cosa y se puede verificar.</div>
+    </div>
+  </div>
+
+  <p>El cuestionario se diseñó para responder a la rúbrica de la fase sin convertir la evaluación en un examen
+  del equipo. Tiene tres capas. La primera describe a la persona —edad, género, formación, experiencia con
+  dashboards y conocimiento de TLC— para poder interpretar sus respuestas. La segunda mide la percepción con
+  25 ítems Likert agrupados en seis dimensiones y la escala SUS. La tercera pide <strong>hacer</strong> cuatro
+  tareas y responder seis preguntas abiertas. Las tres capas se aplicaron en el mismo formulario, en ese orden,
+  para que la persona explorara antes de juzgar.</p>
+
+  <h2>Estructura y pesos</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:7%">#</th><th style="width:31%">Sección</th><th style="width:9%">Preguntas</th><th>Qué mide</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1</td><td>Consentimiento</td><td class="num">1</td><td>Participación voluntaria y anónima; «No acepto» cierra el formulario.</td></tr>
+    <tr><td>2</td><td>Perfil del consultor</td><td class="num">13</td><td>Edad, género, formación, ocupación, experiencia y contexto; incluye P13 para «Otra».</td></tr>
+    <tr><td>3</td><td>Tareas de uso</td><td class="num">6</td><td>Cuatro respuestas verificables, dificultad percibida y tiempo dedicado.</td></tr>
+    <tr><td>4</td><td>Usabilidad percibida</td><td class="num">5</td><td>Búsqueda, filtros, recorrido, autonomía y facilidad general.</td></tr>
+    <tr><td>5</td><td>Comprensión</td><td class="num">5</td><td>Títulos, ejes, leyendas, KPIs y capacidad de concluir.</td></tr>
+    <tr><td>6</td><td>Pertinencia de los KPIs</td><td class="num">4</td><td>Correspondencia con la pregunta, KPI principal, suficiencia y redundancia.</td></tr>
+    <tr><td>7</td><td>Estética y coherencia</td><td class="num">4</td><td>Color, jerarquía, tipografía y proporciones.</td></tr>
+    <tr><td>8</td><td>Interactividad y navegación</td><td class="num">3</td><td>Filtros, tooltips e interacción del mapa.</td></tr>
+    <tr><td>9</td><td>Impacto y utilidad</td><td class="num">4</td><td>Utilidad, argumentación, confianza y recomendación.</td></tr>
+    <tr><td>10</td><td>Escala SUS</td><td class="num">10</td><td>Usabilidad estandarizada con ítems alternados en positivo y negativo.</td></tr>
+    <tr><td>11</td><td>Preguntas abiertas</td><td class="num">6</td><td>Primera mirada, confusión, utilidad, cambios, información faltante y cierre.</td></tr>
+    <tr><td>12</td><td>Cierre</td><td class="num">0</td><td>Agradecimiento y confirmación de anonimato.</td></tr>
+    <tr class="tot"><td></td><td>Total</td><td class="num">61</td><td>54 cerradas · 6 abiertas · 1 consentimiento</td></tr>
+  </tbody>
+  </table>
+
+  <h2>Las seis dimensiones</h2>
+  <p>Los 25 ítems Likert se redactaron en primera persona y con una sola idea por enunciado. Se evita la
+  doble negación y se mantiene una dirección positiva: a mayor puntuación, mejor percepción. La escala va de
+  <strong>1 = totalmente en desacuerdo</strong> a <strong>5 = totalmente de acuerdo</strong>. Cada ítem es una
+  pregunta independiente de escala lineal, no una cuadrícula; esa decisión —que parece técnica— permite
+  prellenar el formulario desde el sitio y evita que una fila mal contestada arrastre a las demás.</p>
+
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:15%">Dimensión</th><th style="width:10%">Ítems</th><th>Qué pregunta</th><th style="width:26%">Ejemplo</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Usabilidad</td><td class="ctr">5</td><td>Encontrar, filtrar, recorrer y moverse sin ayuda.</td><td>U4. No necesité ayuda externa para moverme por el tablero.</td></tr>
+    <tr><td>Comprensión</td><td class="ctr">5</td><td>Entender títulos, ejes, leyendas, KPIs y conclusiones.</td><td>C2. Los ejes, leyendas y unidades se entienden sin explicación adicional.</td></tr>
+    <tr><td>KPIs</td><td class="ctr">4</td><td>Pertinencia, jerarquía, suficiencia y no redundancia.</td><td>K1. Los KPIs responden a la pregunta «cuándo, dónde y a qué costo».</td></tr>
+    <tr><td>Estética</td><td class="ctr">4</td><td>Color, jerarquía visual, tipografía y proporciones.</td><td>E2. La jerarquía visual indica qué mirar primero.</td></tr>
+    <tr><td>Interactividad</td><td class="ctr">3</td><td>Filtros, tooltips y mapa.</td><td>I1. Los filtros actualizan los datos de forma correcta y visible.</td></tr>
+    <tr><td>Impacto</td><td class="ctr">4</td><td>Utilidad, argumentación, confianza y recomendación.</td><td>G2. Me permitiría argumentar una decisión o una recomendación.</td></tr>
+  </tbody>
+  </table>
+
+  <h2>Las cuatro tareas y sus respuestas de referencia</h2>
+  <p>Las tareas no son preguntas de opinión: tienen una respuesta correcta que se verificó contra
+  <code>public/data/dashboard.json</code>, la misma fuente que alimenta el tablero. Se eligieron cuatro
+  operaciones distintas —leer una serie, cambiar un filtro, localizar una zona y cruzar día con hora— para
+  cubrir los tres tipos de visualización principales. La persona podía responder <strong>NO ENCONTRADA</strong>;
+  esa salida no se trata como un dato perdido, sino como evidencia de que la información no se localizó.</p>
+
+  <table class="tbl">
+    <thead>
+    <tr><th style="width:6%">Tarea</th><th>Pregunta</th><th style="width:26%">Respuesta de referencia</th><th style="width:13%">Fuente</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><b>T1</b></td><td>En la serie histórica (filtro «Todos»), ¿en qué año y mes se registra el punto más bajo de viajes?</td><td><strong>Abril de 2020</strong> · 4,702 viajes</td><td>Serie mensual</td></tr>
+    <tr><td><b>T2</b></td><td>Con el filtro en 2025, ¿cuál es el mes con más viajes?</td><td><strong>Octubre de 2025</strong> · 46,007 viajes</td><td>Serie mensual</td></tr>
+    <tr><td><b>T3</b></td><td>Con el filtro en 2025, ¿cuál es la zona con más recogidas?</td><td><strong>Upper East Side South</strong> · 22,392 recogidas</td><td>Mapa / ranking</td></tr>
+    <tr><td><b>T4</b></td><td>Con el filtro en 2025, en el heatmap de día y hora, ¿cuál es el día y la hora de mayor demanda?</td><td><strong>Miércoles a las 18:00</strong> · 5,261 viajes</td><td>Heatmap</td></tr>
+  </tbody>
+  </table>
+
+  <p>La corrección es gradual: <strong>1 punto</strong> si la respuesta es completa, <strong>0.5</strong> si
+  acierta una parte —por ejemplo, el mes pero no el año— y <strong>0</strong> si no la encuentra o se equivoca.
+  El máximo es 4 puntos por persona. En la versión embebida, el sitio aplica la misma regla y devuelve un
+  veredicto inmediato con la respuesta correcta y un enlace a la sección; en el formulario, la corrección se
+  hizo después, con la misma lógica programada en <code>src/lib/survey.ts</code>.</p>
+
+  <h2>La escala SUS</h2>
+  <p>El SUS se incluyó porque es la escala de usabilidad más usada y permite comparar el resultado con una
+  referencia externa. Son diez afirmaciones, cinco en positivo y cinco en negativo, con la misma escala 1–5.
+  La puntuación se calcula con la fórmula estándar: a los ítems impares se les resta 1; a los pares se les
+  resta su valor de 5; se suman los diez resultados y se multiplica por 2.5. El resultado va de 0 a 100. Un
+  valor de <strong>68</strong> se considera el promedio de la industria; por encima de 80 es excelente y por
+  debajo de 52, pobre. La escala se interpreta junto con las demás evidencias, nunca sola.</p>
+
+  <div class="callout">
+    <span class="tagline">Una decisión de diseño que se vuelve dato</span>
+    Cada ítem Likert y cada ítem SUS es una pregunta de escala lineal independiente. No hay cuadrículas. Eso
+    permite que la encuesta embebida construya el enlace de Google Forms con las respuestas ya cargadas y, al
+    mismo tiempo, evita el patrón de «fila completa» que aparece cuando una persona contesta una matriz de
+    prisa. El costo es un formulario más largo; el beneficio es un dato más limpio.
+  </div>
+
+  <h2>Anonimato, consentimiento y aplicación</h2>
+  <p>El formulario no pide nombre, correo ni teléfono, y no limita a una respuesta por persona. El equipo
+  asignó códigos <strong>R1–R7</strong> después de recibir las respuestas; esos códigos son los únicos
+  identificadores que aparecen en este informe. La primera pregunta es el consentimiento: quien elige «No
+  acepto» cierra el formulario y no deja respuestas. La encuesta embebida reproduce la misma lógica y borra el
+  borrador local cuando se declina. La aplicación fue voluntaria y sin incentivos.</p>
+
+  <p>Se ofrecieron dos caminos equivalentes: el formulario de Google y la guía asistida dentro del sitio, que
+  valida las tareas y al final abre el formulario con las respuestas precargadas. Las respuestas analizadas
+  provienen del formulario; la guía se usó como apoyo para que la persona supiera qué hacer sin explicarle el
+  dashboard. Esa distinción importa: el estudio evalúa el tablero, no la habilidad de seguir instrucciones
+  del equipo.</p>
+</section>
+
+<!-- ================= 3 MUESTRA ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">3</div>
+    <div>
+      <div class="kicker">Aplicación</div>
+      <h1>Quiénes respondieron</h1>
+      <div class="lead">Siete consultores anónimos, un perfil muy parecido y una advertencia: no son el público general.</div>
+    </div>
+  </div>
+
+  <p>La aplicación se hizo en dos momentos: una respuesta el <strong>19 de noviembre</strong> por la noche y
+  seis el <strong>25 de noviembre</strong> por la tarde, hora local de Ciudad de México (GMT-5). La invitación
+  se envió por conveniencia a personas con formación o interés en datos; no se explicó el dashboard antes de la
+  prueba, solo su propósito general. Cada persona exploró por su cuenta, respondió las cuatro tareas y luego
+  contestó el cuestionario. Una persona abrió el formulario y eligió «No acepto»; sus respuestas se excluyen y
+  no se usan para calcular ningún promedio.</p>
+
+  <h2>Perfil de la muestra</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:24%">Variable</th><th>Categoría</th><th style="width:9%">n</th><th style="width:9%">%</th></tr>
+    </thead>
+    <tbody>
+    <tr><td rowspan="2">Edad</td><td>18 a 24 años</td><td class="num">6</td><td class="num">85.7</td></tr>
+    <tr><td>25 a 34 años</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td rowspan="2">Género</td><td>Masculino</td><td class="num">5</td><td class="num">71.4</td></tr>
+    <tr><td>Femenino</td><td class="num">2</td><td class="num">28.6</td></tr>
+    <tr><td rowspan="2">Nivel académico</td><td>Licenciatura en curso</td><td class="num">6</td><td class="num">85.7</td></tr>
+    <tr><td>Licenciatura concluida</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td rowspan="2">Formación</td><td>Ingeniería en Datos</td><td class="num">6</td><td class="num">85.7</td></tr>
+    <tr><td>Otra (Gestión de Desarrollo Turístico)</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td rowspan="3">Ocupación</td><td>Estudiante</td><td class="num">5</td><td class="num">71.4</td></tr>
+    <tr><td>Docente</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td>Otra (desempleado)</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td rowspan="3">Experiencia con dashboards</td><td>Alta</td><td class="num">3</td><td class="num">42.9</td></tr>
+    <tr><td>Media</td><td class="num">2</td><td class="num">28.6</td></tr>
+    <tr><td>Baja</td><td class="num">2</td><td class="num">28.6</td></tr>
+    <tr><td rowspan="3">Frecuencia de uso</td><td>Semanalmente</td><td class="num">3</td><td class="num">42.9</td></tr>
+    <tr><td>Mensualmente</td><td class="num">3</td><td class="num">42.9</td></tr>
+    <tr><td>Nunca</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td rowspan="2">Conocimiento de TLC</td><td>Ninguno</td><td class="num">5</td><td class="num">71.4</td></tr>
+    <tr><td>Conoce el dataset y sus variables</td><td class="num">2</td><td class="num">28.6</td></tr>
+    <tr><td rowspan="3">Familiaridad con NYC</td><td>La conoce por mapas o referencias</td><td class="num">4</td><td class="num">57.1</td></tr>
+    <tr><td>No la conoce</td><td class="num">2</td><td class="num">28.6</td></tr>
+    <tr><td>La ha visitado</td><td class="num">1</td><td class="num">14.3</td></tr>
+    <tr><td>Dispositivo</td><td>Laptop o computadora de escritorio</td><td class="num">7</td><td class="num">100.0</td></tr>
+    <tr><td rowspan="2">Evaluó antes un dashboard</td><td>Sí</td><td class="num">5</td><td class="num">71.4</td></tr>
+    <tr><td>No</td><td class="num">2</td><td class="num">28.6</td></tr>
+  </tbody>
+  </table>
+
+  <p>La muestra es <strong>homogénea y experta en datos, pero novata en el dominio</strong>. Ocho de cada diez
+  personas estudian Ingeniería en Datos y casi la mitad usa dashboards con frecuencia; sin embargo, siete de
+  cada diez no conocían el dataset de TLC y solo una había visitado Nueva York. Esa combinación es útil para
+  evaluar la interfaz: son personas acostumbradas a leer gráficos, pero no al negocio de la movilidad. También
+  explica parte de los resultados: los KPIs y la estética reciben puntuaciones altas porque el lenguaje visual
+  les resulta familiar; las tareas de localización revelan lo que el conocimiento del dominio no compensa.</p>
+
+  <p>El perfil cumple el requisito de la fase —mínimo tres personas, con edad, nivel educativo y experiencia
+  documentados—, pero no representa al público general. No hay participantes de 35 años o más, no hay móviles
+  y no hay perfiles sin formación técnica. Las conclusiones se leen como una <strong>primera validación con
+  pares</strong>, no como un estudio de mercado. El capítulo 10 retoma esta advertencia.</p>
+
+  <h2>Condiciones de aplicación</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:26%">Aspecto</th><th>Registro</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Fechas</td><td>19 y 25 de noviembre de 2026</td></tr>
+    <tr><td>Modalidad</td><td>Remota, sin observación directa; formulario de Google y guía embebida opcional</td></tr>
+    <tr><td>Consentimiento</td><td>Primera pregunta; «No acepto» cierra el formulario sin registrar datos</td></tr>
+    <tr><td>Anonimato</td><td>Sin nombre, correo ni teléfono; códigos R1–R7 asignados por el equipo</td></tr>
+    <tr><td>Incentivos</td><td>Ninguno</td></tr>
+    <tr><td>Duración estimada</td><td>12–15 minutos; el 57.1% reportó entre 5 y 10 minutos en las tareas</td></tr>
+    <tr><td>Dispositivo</td><td>100% laptop o computadora de escritorio</td></tr>
+    <tr><td>Respuestas recibidas</td><td>8 · 7 válidas · 1 declinación</td></tr>
+  </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="tagline">Una nota sobre el anonimato</span>
+    El formulario no recoge identificadores, pero la marca temporal y el perfil podrían, en teoría, permitir
+    una reidentificación en un grupo muy pequeño. Por eso el informe no publica la fecha exacta junto con el
+    perfil de cada persona: en la matriz del anexo se usan códigos y se omiten los minutos. El riesgo es bajo,
+    pero declararlo es parte del trabajo.
+  </div>
+</section>
+
+<!-- ================= 4 TAREAS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">4</div>
+    <div>
+      <div class="kicker">Desempeño</div>
+      <h1>Las tareas verificables</h1>
+      <div class="lead">Tres personas resolvieron las cuatro preguntas; dos no encontraron ninguna. El tablero explica, pero no siempre localiza.</div>
+    </div>
+  </div>
+
+  <p>Las cuatro tareas se eligieron para recorrer el tablero de arriba abajo: una serie temporal, un filtro de
+  año, una zona del mapa y un cruce de día y hora. Todas tienen una respuesta única y verificable. La persona
+  podía escribir <strong>NO ENCONTRADA</strong> si no la hallaba; esa respuesta se conserva como dato porque
+  indica un fallo de localización, no un formulario incompleto. La corrección se aplicó con la misma regla que
+  usa la encuesta embebida: 1 punto si la respuesta es completa, 0.5 si acierta una parte y 0 si no la
+  encuentra o se equivoca.</p>
+
+  <table class="tbl keep">
+    <thead>
+    <tr><th style="width:6%">Tarea</th><th>Respuesta de referencia</th><th style="width:9%">Correctas</th><th style="width:8%">Parciales</th><th style="width:9%">Incorrectas</th><th style="width:10%">Acierto</th><th style="width:9%">Media</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><b>T1</b></td><td>Abril de 2020 · 4,702 viajes</td><td class="num">4</td><td class="num">1</td><td class="num">2</td><td class="num">57.1%</td><td class="num">0.64</td></tr>
+    <tr><td><b>T2</b></td><td>Octubre de 2025 · 46,007 viajes</td><td class="num">5</td><td class="num">0</td><td class="num">2</td><td class="num">71.4%</td><td class="num">0.71</td></tr>
+    <tr><td><b>T3</b></td><td>Upper East Side South · 22,392 recogidas</td><td class="num">4</td><td class="num">0</td><td class="num">3</td><td class="num">57.1%</td><td class="num">0.57</td></tr>
+    <tr><td><b>T4</b></td><td>Miércoles a las 18:00 · 5,261 viajes</td><td class="num">4</td><td class="num">0</td><td class="num">3</td><td class="num">57.1%</td><td class="num">0.57</td></tr>
+    <tr class="tot"><td></td><td>Total del conjunto</td><td class="num">17</td><td class="num">1</td><td class="num">10</td><td class="num">62.5%</td><td class="num">2.50 / 4</td></tr>
+  </tbody>
+  </table>
+
+  <figure>
+    <img src="f4_tasks.svg" alt="Resultado de las cuatro tareas verificables">
+    <figcaption><b>Fig. 4.1.</b> Composición de respuestas por tarea. El porcentaje de la derecha cuenta solo
+    las respuestas completamente correctas; T1 suma además una respuesta parcial («20/04»: mes correcto, año
+    ausente).</figcaption>
+  </figure>
+
+  <p>El resultado global es <strong>2.5 de 4 puntos</strong> (62.5% de los puntos posibles), con una desviación
+  estándar de 1.71: la media esconde dos extremos. <strong>Tres personas</strong> resolvieron las cuatro tareas
+  sin errores; <strong>dos</strong> no encontraron ninguna y respondieron «NO ENCONTRADA» en las cuatro;
+  una tercera encontró dos y falló en las otras dos; la última acertó tres y dejó una parcial. La distribución
+  no es un gradiente: es una división entre quienes lograron orientarse y quienes se quedaron sin punto de
+  entrada. Esa forma —más que el promedio— es la que importa para el diseño.</p>
+
+  <h2>Qué tarea costó más y por qué</h2>
+  <p><strong>T2 fue la más fácil</strong> (5 de 7 correctas). El mes con más viajes se lee en la serie mensual
+  después de cambiar el filtro a 2025; es una operación de un solo paso y el pico es visualmente evidente.
+  <strong>T1</strong> también se resolvió en cuatro casos, pero exigía mirar la serie completa y distinguir el
+  mínimo de la pandemia; una persona escribió «20/04», que acierta el mes pero no el año, y dos no lo
+  encontraron. <strong>T3 y T4</strong> empatan en 4 de 7: requieren pasar de la serie al mapa o al heatmap,
+  cambiar el filtro y leer una celda o una zona. Son las tareas que más dependen de saber <em>dónde</em> está
+  la respuesta, no solo de saber leer un gráfico.</p>
+
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:18%">Indicador</th><th>Resultado</th><th style="width:38%">Lectura</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Personas con 4/4</td><td><strong>3 de 7</strong> (42.9%)</td><td>Un tercio del grupo completó el recorrido sin errores.</td></tr>
+    <tr><td>Personas con 0/4</td><td><strong>2 de 7</strong> (28.6%)</td><td>Dos personas no localizaron ninguna respuesta y usaron «NO ENCONTRADA» en todo.</td></tr>
+    <tr><td>Dificultad percibida</td><td><strong>2.29 / 5</strong></td><td>1 = muy difícil, 5 = muy fácil; 4 de 7 calificaron entre 1 y 2.</td></tr>
+    <tr><td>Tiempo dedicado</td><td>5–10 min (4), 2–5 min (2), más de 10 min (1)</td><td>La mayoría terminó en el rango previsto; una persona necesitó más de 10 minutos.</td></tr>
+    <tr><td>Correlación dificultad–puntaje</td><td>No concluyente</td><td>Quienes fallaron no siempre se sintieron perdidos; una persona con 0/4 calificó la dificultad con 2.</td></tr>
+  </tbody>
+  </table>
+
+  <p>La percepción de dificultad (2.29/5) es coherente con el desempeño, pero no idéntica: la persona que
+  respondió «NO ENCONTRADA» en todo y calificó la dificultad con 1 (muy difícil) y la que también falló todo
+  pero la calificó con 2 muestran que el fracaso se vive de formas distintas. Una se rinde rápido; la otra
+  insiste y no encuentra. El dato que las une es el mismo: el tablero no les dio una pista de dónde buscar.
+  Ese es el hueco que la guía de evaluación intenta cubrir y que las recomendaciones del capítulo 8 retoman.</p>
+
+  <div class="callout">
+    <span class="tagline">Lo que «NO ENCONTRADA» significa</span>
+    No es una respuesta vacía ni un error de captura. Es la señal más limpia de un problema de arquitectura de
+    información: la persona sabía qué se le pedía, tenía el tablero delante y aun así no pudo llegar. Dos de
+    siete personas respondieron así en las cuatro tareas; en un estudio con más casos, esa proporción sería la
+    primera métrica a vigilar.
+  </div>
+</section>
+
+<!-- ================= 5 LIKERT ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">5</div>
+    <div>
+      <div class="kicker">Percepción</div>
+      <h1>Las seis dimensiones</h1>
+      <div class="lead">La utilidad, los KPIs y la estética convencen; la usabilidad y la búsqueda son la tarea pendiente.</div>
+    </div>
+  </div>
+
+  <p>Los 25 ítems Likert se respondieron después de las tareas, cuando la persona ya había recorrido el
+  tablero. La escala va de 1 (totalmente en desacuerdo) a 5 (totalmente de acuerdo). Para cada dimensión se
+  calculó la media de todos sus ítems, la mediana y el porcentaje de respuestas de acuerdo (4 o 5). La mediana
+  y el porcentaje ayudan a leer una muestra pequeña: si tres personas responden 5 a casi todo, la media sube
+  aunque el resto tenga dudas; la mediana y el acuerdo muestran cuántas personas sostienen esa puntuación.</p>
+
+  <table class="tbl">
+    <thead>
+    <tr><th style="width:17%">Dimensión</th><th style="width:9%">Ítems</th><th style="width:9%">Media</th><th style="width:9%">Mediana</th><th style="width:10%">Acuerdo</th><th>Lectura</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Interactividad</td><td class="num">3</td><td class="num high">4.81</td><td class="num">5.0</td><td class="num">100.0%</td><td>Filtros, tooltips y mapa responden; nadie en desacuerdo.</td></tr>
+    <tr><td>Impacto</td><td class="num">4</td><td class="num high">4.75</td><td class="num">5.0</td><td class="num">100.0%</td><td>El tablero se percibe útil, confiable y recomendable.</td></tr>
+    <tr><td>KPIs</td><td class="num">4</td><td class="num high">4.68</td><td class="num">5.0</td><td class="num">96.4%</td><td>Responden a la pregunta y no se perciben redundantes.</td></tr>
+    <tr><td>Estética</td><td class="num">4</td><td class="num high">4.54</td><td class="num">5.0</td><td class="num">92.9%</td><td>Color, jerarquía, tipografía y proporciones funcionan.</td></tr>
+    <tr><td>Comprensión</td><td class="num">5</td><td class="num">4.20</td><td class="num">4.0</td><td class="num">77.1%</td><td>Buena, con dudas en ejes, leyendas y escala del mapa.</td></tr>
+    <tr><td>Usabilidad</td><td class="num">5</td><td class="num low">3.66</td><td class="num">3.0</td><td class="num">48.6%</td><td>La más baja: encontrar y moverse sin ayuda cuesta.</td></tr>
+    <tr class="tot"><td>Índice global</td><td class="num">25</td><td class="num">4.44</td><td class="num">4.5</td><td class="num">85.7%</td><td>Promedio de las seis dimensiones.</td></tr>
+  </tbody>
+  </table>
+
+  <figure>
+    <img src="f4_dims.svg" alt="Media por dimensión">
+    <figcaption><b>Fig. 5.1.</b> Medias por dimensión frente al índice global (4.44). Usabilidad es la única
+    por debajo de 4; el resto se concentra entre 4.2 y 4.8.</figcaption>
+  </figure>
+
+  <p>El patrón es claro: las dimensiones que dependen de <strong>reconocer</strong> —color, jerarquía,
+  interactividad, utilidad— están en la parte alta; las que dependen de <strong>buscar y orientarse</strong>
+  —usabilidad, y en parte comprensión— están abajo. No es un problema de gusto: es un problema de navegación.
+  La gente valora lo que ve cuando lo encuentra; el costo aparece antes, en el trayecto. Esa lectura es
+  consistente con las tareas del capítulo 4 y con los comentarios del capítulo 7.</p>
+
+  <h2>Los 25 ítems, uno por uno</h2>
+  <table class="tbl compact tight">
+    <thead>
+    <tr><th style="width:7%">Ítem</th><th>Enunciado</th><th style="width:8%">Media</th><th style="width:8%">Mediana</th><th style="width:9%">Acuerdo</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><b>U1</b></td><td>Encontré rápidamente la información que buscaba.</td><td class="num low">3.57</td><td class="num">3.0</td><td class="num">42.9%</td></tr>
+    <tr><td><b>U2</b></td><td>Los filtros y botones son intuitivos.</td><td class="num">3.86</td><td class="num">4.0</td><td class="num">57.1%</td></tr>
+    <tr><td><b>U3</b></td><td>El recorrido de la página va de lo general a lo particular.</td><td class="num">4.00</td><td class="num">4.0</td><td class="num">57.1%</td></tr>
+    <tr><td><b>U4</b></td><td>No necesité ayuda externa para moverme por el tablero.</td><td class="num low">3.14</td><td class="num">3.0</td><td class="num">28.6%</td></tr>
+    <tr><td><b>U5</b></td><td>En general, el tablero es fácil de usar.</td><td class="num">3.71</td><td class="num">4.0</td><td class="num">57.1%</td></tr>
+    <tr><td><b>C1</b></td><td>Los títulos de las secciones anuncian con claridad su contenido.</td><td class="num">4.43</td><td class="num">5.0</td><td class="num">85.7%</td></tr>
+    <tr><td><b>C2</b></td><td>Los ejes, leyendas y unidades se entienden sin explicación adicional.</td><td class="num">4.00</td><td class="num">4.0</td><td class="num">71.4%</td></tr>
+    <tr><td><b>C3</b></td><td>Entendí qué mide cada KPI sin consultar la metodología.</td><td class="num">4.29</td><td class="num">4.0</td><td class="num">85.7%</td></tr>
+    <tr><td><b>C4</b></td><td>El mapa y su escala de color se explican por sí mismos.</td><td class="num">4.00</td><td class="num">4.0</td><td class="num">71.4%</td></tr>
+    <tr><td><b>C5</b></td><td>Pude formular al menos una conclusión propia sobre la movilidad de Nueva York.</td><td class="num">4.29</td><td class="num">5.0</td><td class="num">71.4%</td></tr>
+    <tr><td><b>K1</b></td><td>Los KPIs responden a la pregunta «cuándo, dónde y a qué costo».</td><td class="num high">4.86</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>K2</b></td><td>Identifiqué con facilidad el KPI más importante.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">85.7%</td></tr>
+    <tr><td><b>K3</b></td><td>Los indicadores son suficientes para describir el fenómeno.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>K4</b></td><td>Los indicadores son distintos entre sí, sin redundancias evidentes.</td><td class="num high">4.71</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>E1</b></td><td>Los colores ayudan a interpretar los datos.</td><td class="num">4.43</td><td class="num">5.0</td><td class="num">85.7%</td></tr>
+    <tr><td><b>E2</b></td><td>La jerarquía visual indica qué mirar primero.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>E3</b></td><td>La tipografía es legible en pantalla.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>E4</b></td><td>Los tamaños y proporciones de los gráficos son adecuados.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">85.7%</td></tr>
+    <tr><td><b>I1</b></td><td>Los filtros actualizan los datos de forma correcta y visible.</td><td class="num high">4.71</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>I2</b></td><td>Los tooltips aportan información útil.</td><td class="num high">4.86</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>I3</b></td><td>La interacción del mapa (zoom, clic y selección) es comprensible.</td><td class="num high">4.86</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>G1</b></td><td>El tablero aporta información útil sobre la movilidad de Nueva York.</td><td class="num high">5.00</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>G2</b></td><td>Me permitiría argumentar una decisión o una recomendación.</td><td class="num high">4.71</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>G3</b></td><td>La información es confiable y está bien documentada.</td><td class="num high">4.71</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+    <tr><td><b>G4</b></td><td>Recomendaría el tablero a alguien interesado en movilidad urbana.</td><td class="num">4.57</td><td class="num">5.0</td><td class="num">100.0%</td></tr>
+  </tbody>
+  </table>
+
+  <figure>
+    <img src="f4_items.svg" alt="Media de los 25 ítems Likert" style="width:90%;margin:0 auto">
+    <figcaption><b>Fig. 5.2.</b> Media de cada ítem, agrupada por dimensión. La caída de usabilidad se concentra
+    en U4 y U1; el resto de los ítems se acumula entre 4.0 y 5.0.</figcaption>
+  </figure>
+
+  <p>El ítem más bajo es <strong>U4</strong> («No necesité ayuda externa», 3.14): solo 2 de 7 estuvieron de
+  acuerdo, 4 se quedaron en el punto medio y 1 en desacuerdo. Le sigue <strong>U1</strong> («Encontré
+  rápidamente la información», 3.57), con 3 de acuerdo, 3 neutrales y 1 en desacuerdo. En el otro extremo,
+  <strong>G1</strong> recibe 5.0 de las siete personas y <strong>K1, I2 e I3</strong> llegan a 4.86. La
+  distancia entre «es fácil de usar» (U5, 3.71) y «no necesité ayuda» (U4, 3.14) es la grieta más útil del
+  capítulo: el tablero se aprende, pero no se explica solo.</p>
+
+  <p>La comprensión queda en un punto intermedio (4.20). Los títulos de sección (C1, 4.43) y la idea de cada
+  KPI (C3, 4.29) se entienden; las dudas aparecen en los ejes y leyendas (C2, 4.0) y en la escala de color del
+  mapa (C4, 4.0). No son fallos graves, pero son los mismos elementos que mencionan las respuestas abiertas:
+  «Viajes por mes» y la lectura del mapa. La estética, en cambio, no aparece como problema en ningún ítem
+  (4.43–4.57) y la interactividad es la dimensión mejor valorada (4.81).</p>
+
+  <div class="callout">
+    <span class="tagline">Cuidado con el techo</span>
+    Tres personas respondieron 5 a casi todos los ítems. Eso produce un <em>efecto techo</em>: la media sube y
+    las diferencias se comprimen. La mediana y el porcentaje de acuerdo corrigen parcialmente el sesgo, pero no
+    lo eliminan. Si se repite el estudio, conviene incluir un ítem de atención y revisar los patrones de
+    respuesta antes de promediar. Con n = 7, una sola persona puede mover una décima.
+  </div>
+</section>
+
+<!-- ================= 6 SUS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">6</div>
+    <div>
+      <div class="kicker">Escala estandarizada</div>
+      <h1>El SUS: 58.6</h1>
+      <div class="lead">Por debajo de la referencia, pero con una advertencia: tres personas respondieron 5 a todo y el SUS las castiga.</div>
+    </div>
+  </div>
+
+  <p>El SUS se incluyó para tener una medida comparable con otros productos. Son diez afirmaciones, cinco
+  positivas y cinco negativas, con la misma escala 1–5. La fórmula estándar convierte las respuestas en una
+  puntuación de 0 a 100: a los ítems impares se les resta 1, a los pares se les resta su valor de 5, se suman
+  los diez resultados y se multiplica por 2.5. Un producto con usabilidad promedio obtiene alrededor de 68;
+  por encima de 80 es excelente y por debajo de 52, pobre. El resultado de NYC Mobility Pulse es
+  <strong>58.6</strong> (mediana 52.5, desviación estándar 11.8).</p>
+
+  <table class="tbl">
+    <thead>
+    <tr><th style="width:8%">Código</th><th>Perfil breve</th><th style="width:10%">Tareas</th><th style="width:10%">Índice</th><th style="width:10%">SUS</th><th style="width:18%">Lectura</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><b>R1</b></td><td>18–24, formación en turismo, sin experiencia en dashboards</td><td class="num">4.0</td><td class="num">4.70</td><td class="num low">50.0</td><td>5 en los diez ítems SUS</td></tr>
+    <tr><td><b>R2</b></td><td>18–24, Ingeniería en Datos, experiencia media</td><td class="num">4.0</td><td class="num">4.35</td><td class="num high">82.5</td><td>El SUS más alto</td></tr>
+    <tr><td><b>R3</b></td><td>18–24, Ingeniería en Datos, experiencia baja</td><td class="num">2.0</td><td class="num">4.60</td><td class="num low">50.0</td><td>5 en los diez ítems SUS</td></tr>
+    <tr><td><b>R4</b></td><td>25–34, docente de Ingeniería en Datos, experiencia alta</td><td class="num">0.0</td><td class="num">4.10</td><td class="num high">70.0</td><td>Por encima de 68</td></tr>
+    <tr><td><b>R5</b></td><td>18–24, Ingeniería en Datos, experiencia alta</td><td class="num">0.0</td><td class="num">4.22</td><td class="num">55.0</td><td>Aceptable, con reservas</td></tr>
+    <tr><td><b>R6</b></td><td>18–24, Ingeniería en Datos, experiencia media</td><td class="num">4.0</td><td class="num">5.00</td><td class="num low">50.0</td><td>5 en los diez ítems SUS</td></tr>
+    <tr><td><b>R7</b></td><td>18–24, Ingeniería en Datos, experiencia alta</td><td class="num">3.5</td><td class="num">4.11</td><td class="num">52.5</td><td>Aceptable, cerca del límite</td></tr>
+    <tr class="tot"><td>Media</td><td>7 consultores</td><td class="num">2.50</td><td class="num">4.44</td><td class="num">58.6</td><td>—</td></tr>
+  </tbody>
+  </table>
+
+  <figure>
+    <img src="f4_sus.svg" alt="Puntuación SUS por participante" style="width:92%;margin:0 auto">
+    <figcaption><b>Fig. 6.1.</b> SUS por persona frente a la referencia de 68 y la media del grupo. Las tres
+    barras rojas corresponden a quienes respondieron 5 en los diez ítems, incluidos los negativos. Reparto por
+    bandas: 1 bueno, 3 aceptables y 3 pobres.</figcaption>
+  </figure>
+
+  <p>La distribución es bimodal: un participante supera la referencia (R2, 82.5), otro se acerca (R4, 70) y
+  cinco quedan por debajo de 68. Pero el dato más importante no es la media, sino el <strong>patrón de
+  respuesta</strong>. R1, R3 y R6 contestaron <strong>5 en los diez ítems</strong>, incluidos los negativos
+  («encontré el tablero innecesariamente complejo», «necesitaría apoyo técnico», «demasiada inconsistencia»).
+  Esa combinación es internamente contradictoria: si todo es 5, el SUS interpreta que el producto es difícil
+  en la mitad de los ítems y asigna 50. No es que el tablero sea exactamente regular para esas personas; es que
+  el patrón no permite distinguir. Lo mismo ocurre con los Likert: el efecto techo y la línea recta conviven.</p>
+
+  <p>Si se excluyen las tres respuestas con línea recta, la media del SUS sube a <strong>65.0</strong> (n = 4:
+  82.5, 70, 55 y 52.5), todavía por debajo de 68. Si se excluye solo a R1 —la respuesta con campos abiertos
+  no informativos—, la media es <strong>60.0</strong> (n = 6). En ningún escenario el SUS alcanza la referencia,
+  pero el rango 58.6–65.0 es más honesto que una cifra única. La conclusión razonable es que el SUS
+  <strong>no es concluyente</strong>: apunta a una usabilidad por debajo del promedio, pero el instrumento se
+  aplicó con un patrón de respuesta que lo distorsiona. Se recomienda repetirlo con un ítem de atención, una
+  instrucción más explícita sobre los ítems negativos y, si es posible, una versión observada.</p>
+
+  <div class="callout">
+    <span class="tagline">Cómo se lee un SUS de 58.6</span>
+    No significa «el dashboard es malo». Significa que, en esta muestra, la usabilidad percibida está por
+    debajo del promedio de la industria y que hay margen de mejora. El SUS es una señal, no un veredicto: se
+    interpreta junto con las tareas (2.5/4), la dimensión de usabilidad (3.66/5) y los comentarios abiertos.
+    Los tres apuntan en la misma dirección: encontrar cosas cuesta más de lo que debería.
+  </div>
+</section>
+
+<!-- ================= 7 CUALITATIVO ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">7</div>
+    <div>
+      <div class="kicker">Respuestas abiertas</div>
+      <h1>Lo que dicen las palabras</h1>
+      <div class="lead">Los comentarios confirman lo que miden las escalas y añaden un matiz: el problema no es el qué, sino el dónde.</div>
+    </div>
+  </div>
+
+  <p>Las seis preguntas abiertas se analizaron con un criterio de <strong>análisis temático simple</strong>: se
+  leyó cada respuesta, se asignó a una categoría y se contaron las menciones. No se busca saturación teórica ni
+  se construyó un libro de códigos formal; con siete personas, el objetivo es identificar patrones y conservar
+  el lenguaje literal. Las respuestas de R1 —seis letras «a»— no aportan contenido y se excluyen de la
+  codificación, aunque su perfil y sus escalas se mantienen en el análisis cuantitativo. Se conservan las citas
+  textuales, sin corregir la ortografía, para no borrar la voz de quien respondió.</p>
+
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:20%">Tema</th><th style="width:9%">Menciones</th><th>Qué aparece</th><th style="width:30%">Ejemplo</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Primera mirada</td><td class="num">6</td><td>KPIs y tarjetas (3), portada o título (2), ticket de datos (1).</td><td>«Las tarjetas con los KPIs.» (R6)</td></tr>
+    <tr><td>Lo más útil</td><td class="num">7</td><td>Mapa o geografía (2), KPIs (2), heatmap (1), tarifa por milla (1), todo (1).</td><td>«Geografía de la demanda por cómo se puede interactuar y se ve.» (R4)</td></tr>
+    <tr><td>Confusión</td><td class="num">6</td><td>«Viajes por mes» (1), muestra de 500,000 (1), mapa (1), «Ritmo semanal» (1), las tareas de la evaluación (1), ninguna (1).</td><td>«“Viajes por mes”, me confundió la forma de clasificar los meses.» (R7)</td></tr>
+    <tr><td>Cambios</td><td class="num">6</td><td>Año junto a cada gráfico (1), menú principal (1), unificar nombres formulario–tablero (1), nada (3).</td><td>«Agregar un menú principal para dividir las secciones.» (R4)</td></tr>
+    <tr><td>Información faltante</td><td class="num">5</td><td>Taxistas disponibles y tiempo de espera (1), más guía para las tareas (1), nada o «está bien» (2), sin respuesta (2).</td><td>«Conocer el número de taxis disponibles y el tiempo de espera por zona y hora.» (R2)</td></tr>
+    <tr><td>Tono de cierre</td><td class="num">4</td><td>Positivo o de agradecimiento (3), «ninguno» (1), sin respuesta (3).</td><td>«Gracias por un dashboard tan trabajado y de una calidad tan alta.» (R7)</td></tr>
+  </tbody>
+  </table>
+
+  <h2>La primera impresión: los KPIs y la portada</h2>
+  <p>Seis personas describieron dónde pusieron los ojos al abrir el tablero. Tres mencionaron las tarjetas de
+  KPIs; dos, la portada o el título; una, el ticket de datos. Ese resultado es una buena noticia para la
+  jerarquía visual: el primer golpe de vista coincide con lo que el diseño quería destacar. R2 lo explica con
+  una lógica de analista: «Lo primero que miré fue la tarjeta de viajes analizados. Me sirvió para ubicar el
+  tamaño de la muestra antes de explorar la demanda por año y por zona». R7 lo dice desde la intuición: «El
+  KPI principal, porque es lo más llamativo de base». La portada y el ticket cumplen su función de anclaje.</p>
+
+  <h2>Lo que se valora: mapa, heatmap y guías de lectura</h2>
+  <p>Las visualizaciones más mencionadas como útiles son el <strong>mapa de zonas</strong> y el
+  <strong>heatmap</strong>, seguidas por los KPIs y la tarifa por milla. R2 encontró en el heatmap una aplicación
+  concreta: «Me permitió identificar que en 2025 el pico de la muestra fue el miércoles a las 18:00. Esa
+  visualización serviría para planear turnos con base en las horas de mayor demanda». R4 valoró la geografía
+  «por cómo se puede interactuar y se ve». La guía de lectura y la metodología también recibieron elogios
+  explícitos: «Me gustó que cada gráfica incluyera una guía de lectura y que la metodología explicara los años
+  faltantes y el pico atípico de marzo de 2018» (R2). Ese es el tipo de comentario que valida una decisión de
+  diseño, no solo un gusto.</p>
+
+  <h2>Las fricciones: nombres, muestras y puntos de entrada</h2>
+  <p>Las quejas no son sobre el color ni sobre la calidad de los datos. Son sobre <strong>orientación</strong>.
+  R7 se perdió en la clasificación de los meses de «Viajes por mes»; R2 tardó en entender que cada año muestra
+  500,000 viajes y que ese número es una muestra, no el total de la fuente; R4 encontró confuso «Ritmo semanal»;
+  R3 señaló el mapa; y R6 dijo que lo que le resultó confuso fue «el examen que acaban de hacer», es decir, las
+  tareas de la propia evaluación. Cada comentario apunta a un punto de entrada distinto, pero comparten una
+  causa: el tablero no siempre dice <em>qué se está mirando</em> ni <em>cómo se relaciona con lo que se pide</em>.</p>
+
+  <div class="quote">
+    «Al principio me confundió que cada año mostrara 500,000 viajes. Después entendí que es el tamaño de la
+    muestra por año y que los totales de la fuente son distintos.»
+    <span class="who">R2 · sobre la serie mensual y el tamaño de la muestra</span>
+  </div>
+
+  <div class="quote">
+    «Está bien, solo que esté relacionado los nombres de algunas cosas del form con el dash.»
+    <span class="who">R3 · sobre la correspondencia entre el formulario y el tablero</span>
+  </div>
+
+  <div class="quote">
+    «“Viajes por mes”, me confundió la forma de clasificar los meses.»
+    <span class="who">R7 · sobre la lectura de la serie mensual</span>
+  </div>
+
+  <h2>Lo que falta y lo que se cambiaría</h2>
+  <p>Las propuestas son concretas y de bajo costo: poner el año seleccionado junto al título de cada gráfico
+  (R2), añadir un menú principal para dividir las secciones (R4), unificar el vocabulario entre el formulario y
+  el tablero (R3) y dar más intuición para resolver las tareas (R3). Tres personas no cambiarían nada y dos
+  consideran que la información faltante es «ninguna» o «está bien». La única petición de datos nuevos es la de
+  R2: número de taxis disponibles y tiempo de espera por zona y hora para decidir dónde asignar más unidades.
+  Es una demanda legítima, pero exige una fuente que el dataset de TLC no contiene; el tablero puede declarar
+  esa ausencia en lugar de simular una oferta que no mide.</p>
+
+  <p>También hay <strong>contradicciones productivas</strong>. R4 encontró confuso el heatmap, mientras que R2 lo
+  consideró la visualización más útil. R7 se perdió en «Viajes por mes» pero calificó los KPIs con 5. R3 dijo
+  que el mapa le resultó confuso y, aun así, valoró «todos en general bien». Esas diferencias no invalidan los
+  datos: muestran que el mismo elemento puede funcionar para un perfil y fallar para otro. La recomendación no
+  es eliminar el heatmap ni el mapa, sino añadir una capa de entrada —una leyenda, una nota, un ejemplo— que
+  reduzca la dependencia del conocimiento previo.</p>
+
+  <div class="callout">
+    <span class="tagline">La frase que más importa</span>
+    «El examen que acaban de hacer» (R6, sobre lo que le resultó confuso) no es una crítica al dashboard: es
+    una crítica al instrumento. La evaluación también se evalúa. Si la guía no dice con claridad dónde mirar,
+    la persona atribuye la confusión al producto. Ese hallazgo justifica las mejoras de orientación de la
+    encuesta —pasos enfocados, ayuda visible— que se proponen en el capítulo 9.
+  </div>
+</section>
+
+<!-- ================= 8 HALLAZGOS ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">8</div>
+    <div>
+      <div class="kicker">Triangulación</div>
+      <h1>Qué funciona, qué falla y qué recomendar</h1>
+      <div class="lead">Tres apartados, una misma conclusión: conservar la narrativa visual y mejorar la orientación.</div>
+    </div>
+  </div>
+
+  <p>Este capítulo cruza las tres fuentes —tareas, escalas y comentarios— para separar lo que se sostiene con
+  más de una evidencia de lo que es una impresión aislada. La regla es simple: una fortaleza o un problema
+  entra en la lista solo si aparece en al menos dos planos. Con n = 7, la triangulación es la mejor defensa
+  contra el azar de una respuesta.</p>
+
+  <h2>Aspectos que funcionan bien</h2>
+  <ol>
+    <li><strong>La jerarquía visual y la primera impresión.</strong> E2 y E3 reciben 4.57 y el 100% de acuerdo;
+    tres personas mencionaron los KPIs como primera mirada. El tablero dice dónde empezar.</li>
+    <li><strong>La utilidad percibida y la confianza.</strong> G1 obtiene 5.0, G2 y G3 4.71, y el impacto
+    promedia 4.75. El tablero se percibe como una base para argumentar, no como un adorno.</li>
+    <li><strong>La pertinencia de los KPIs.</strong> K1, K3 y K4 superan 4.5; el 96.4% de los ítems de la
+    dimensión están en 4 o 5. Los indicadores responden a la pregunta del proyecto.</li>
+    <li><strong>La interactividad.</strong> I1, I2 e I3 promedian 4.81; nadie calificó por debajo de 4. Los
+    filtros, los tooltips y el mapa responden como se espera.</li>
+    <li><strong>Las guías de lectura y la metodología.</strong> R2 las elogia explícitamente; la comprensión de
+    los KPIs (C3, 4.29) y la capacidad de concluir (C5, 4.29) son consistentes con ese apoyo.</li>
+  </ol>
+
+  <h2>Problemas detectados</h2>
+  <ol>
+    <li><strong>La búsqueda de un dato específico no es inmediata.</strong> U1 (3.57), U4 (3.14), las tareas
+    (2.5/4) y el SUS (58.6) apuntan al mismo lugar: encontrar cuesta. Dos personas no localizaron ninguna
+    respuesta.</li>
+    <li><strong>El vocabulario no coincide entre el formulario y el tablero.</strong> R3 lo dice de forma
+    directa; la tarea T3 usa «zona con más recogidas» y el tablero habla de «geografía» y «ranking». La
+    persona tiene que traducir.</li>
+    <li><strong>La serie mensual necesita más contexto.</strong> R2 tardó en entender la muestra de 500,000 por
+    año; R7 se perdió con la clasificación de los meses. C2 y C4 (4.0) bajan respecto al resto de comprensión.</li>
+    <li><strong>El heatmap y el mapa no se explican solos para todos.</strong> R4 encontró confuso «Ritmo
+    semanal»; R3 señaló el mapa. La interactividad se valora, pero la lectura inicial no siempre.</li>
+    <li><strong>La navegación larga pierde al usuario.</strong> R4 pide un menú principal; la página es una
+    sucesión de secciones sin un índice persistente. En móvil, el nav se oculta por debajo de 1180 px, lo que
+    agrava el problema.</li>
+    <li><strong>El instrumento también confunde.</strong> R6 señaló las tareas de la evaluación. La guía debe
+    decir dónde mirar y qué formato usar, no solo qué preguntar.</li>
+  </ol>
+
+  <h2>Recomendaciones</h2>
+  <table class="tbl keep">
+    <thead>
+    <tr><th style="width:5%">#</th><th style="width:25%">Acción</th><th>Por qué</th><th style="width:9%">Prioridad</th><th style="width:9%">Esfuerzo</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1</td><td>Unificar el vocabulario entre formulario, tareas y tablero; añadir un glosario breve.</td><td>R3 y las tareas T3/T4 muestran que la persona traduce términos. Es la mejora con mejor relación costo/impacto.</td><td><span class="pill rose">Alta</span></td><td><span class="pill teal">Bajo</span></td></tr>
+    <tr><td>2</td><td>Mostrar el año activo junto al título de cada gráfico y en el heatmap.</td><td>R2 lo pide; al desplazarse, el filtro global deja de ser visible y se pierde el contexto temporal.</td><td><span class="pill rose">Alta</span></td><td><span class="pill teal">Bajo</span></td></tr>
+    <tr><td>3</td><td>Añadir una nota de muestra (500,000 por año) y una pista de lectura en «Viajes por mes».</td><td>R2 y R7 se confundieron con la clasificación y el tamaño de la muestra; C2/C4 bajan a 4.0.</td><td><span class="pill rose">Alta</span></td><td><span class="pill teal">Bajo</span></td></tr>
+    <tr><td>4</td><td>Incorporar un índice de secciones persistente (menú lateral o barra superior).</td><td>R4 lo pide; la página es larga y el nav desaparece en anchos menores de 1180 px.</td><td><span class="pill rose">Alta</span></td><td><span class="pill amber">Medio</span></td></tr>
+    <tr><td>5</td><td>Reforzar la guía de la encuesta: paso enfocado, sección resaltada y formato visible.</td><td>R6 encontró confusas las tareas; la ayuda «Formato lunes, 8:00» debe ser visible y no perderse.</td><td><span class="pill rose">Alta</span></td><td><span class="pill amber">Medio</span></td></tr>
+    <tr><td>6</td><td>Añadir una capa de entrada al heatmap y al mapa: leyenda, ejemplo y enlace al ranking.</td><td>R4 y R3 se pierden en esas visualizaciones; la interacción se valora, pero la lectura inicial no.</td><td><span class="pill amber">Media</span></td><td><span class="pill amber">Medio</span></td></tr>
+    <tr><td>7</td><td>Declarar los límites de la fuente: no hay taxis disponibles ni tiempo de espera.</td><td>R2 los pide para decidir asignación; el dataset TLC no los contiene. Declararlo evita una expectativa falsa.</td><td><span class="pill amber">Media</span></td><td><span class="pill teal">Bajo</span></td></tr>
+    <tr><td>8</td><td>Mejorar el instrumento: ítem de atención, detección de línea recta y anclas más claras en el SUS.</td><td>Tres personas respondieron 5 a todo; el SUS y los Likert quedan distorsionados.</td><td><span class="pill amber">Media</span></td><td><span class="pill amber">Medio</span></td></tr>
+  </tbody>
+  </table>
+
+  <div class="callout dark">
+    <span class="tagline">Qué no cambiar</span>
+    La paleta, la tipografía, la banda de KPIs, el mapa y el heatmap no necesitan un rediseño. La evidencia
+    los respalda: estética 4.54, interactividad 4.81, impacto 4.75, y comentarios que los nombran como lo más
+    útil. El problema está en las <strong>costuras</strong> entre esas piezas: los nombres, el año activo, la
+    muestra y el punto de entrada. Cambiar lo que funciona sería una reacción al promedio, no a los datos.
+  </div>
+</section>
+
+<!-- ================= 9 PLAN ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">9</div>
+    <div>
+      <div class="kicker">Mejora</div>
+      <h1>Plan de acción</h1>
+      <div class="lead">Cinco cambios de bajo costo, dos de esfuerzo medio y una medición mejor para la siguiente ronda.</div>
+    </div>
+  </div>
+
+  <p>Las recomendaciones se ordenaron por <strong>impacto esperado</strong> y <strong>esfuerzo</strong>. La
+  primera ola no requiere datos nuevos ni un rediseño: son cambios de texto, etiquetas y navegación que atacan
+  la fricción detectada. La segunda ola añade capas de lectura y contexto. La tercera es de investigación: un
+  estudio más amplio y mejor instrumentado.</p>
+
+  <h2>Ahora: corregir la orientación (0–2 semanas)</h2>
+  <table class="tbl compact tight">
+    <thead>
+    <tr><th style="width:28%">Cambio</th><th>Criterio de aceptación</th><th style="width:18%">Evidencia</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Glosario y nombres consistentes</td><td>Las tareas y el tablero usan el mismo término para serie mensual, heatmap, mapa y ranking; el glosario aparece en la guía y en la metodología.</td><td>R3; T3/T4</td></tr>
+    <tr><td>Año activo por gráfico</td><td>Cada tarjeta muestra el año del filtro junto al título o en una etiqueta visible al hacer scroll.</td><td>R2; U1</td></tr>
+    <tr><td>Nota de muestra y lectura</td><td>«Viajes por mes» explica que cada año son 500,000 viajes de muestra y cómo se comparan los años.</td><td>R2, R7; C2/C4</td></tr>
+    <tr><td>Índice de secciones</td><td>Un menú persistente permite saltar a Demanda, Zonas, Tarifas, Eficiencia y Metodología en cualquier ancho.</td><td>R4; U4</td></tr>
+    <tr><td>Guía de tareas enfocada</td><td>Al entrar en una tarea, la sección relevante se resalta, el panel indica dónde mirar y la ayuda de formato es visible; «Ver dónde está» sigue disponible.</td><td>R6; T1–T4</td></tr>
+  </tbody>
+  </table>
+
+  <h2>Siguiente: reducir la dependencia de conocimiento previo (1–2 meses)</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:28%">Cambio</th><th>Criterio de aceptación</th><th style="width:18%">Evidencia</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Onboarding del heatmap</td><td>Una leyenda y un ejemplo explican cómo se lee la celda y qué representa el color; el pico se puede identificar sin ayuda.</td><td>R4; C2</td></tr>
+    <tr><td>Onboarding del mapa</td><td>La escala de color tiene una nota y un enlace al ranking; la selección de zona es reversible.</td><td>R3; C4</td></tr>
+    <tr><td>Límites de la fuente</td><td>La metodología declara que no hay taxis disponibles ni tiempo de espera y sugiere qué sí se puede decidir con los datos.</td><td>R2; G3</td></tr>
+    <tr><td>Instrumento de evaluación</td><td>El formulario incluye un ítem de atención, advierte sobre los ítems negativos del SUS y permite detectar líneas rectas.</td><td>R1/R3/R6; SUS</td></tr>
+  </tbody>
+  </table>
+
+  <h2>Después: validar con más evidencia (siguiente iteración)</h2>
+  <ul>
+    <li><strong>Muestra más amplia y diversa:</strong> al menos 15–20 personas, con perfiles fuera de Ingeniería
+    en Datos, participantes de 35 años o más y al menos cinco pruebas en móvil.</li>
+    <li><strong>Pruebas observadas:</strong> registrar dónde mira la persona, cuánto tarda y en qué momento
+    abandona; complementar el cuestionario con una sesión de 10 minutos.</li>
+    <li><strong>Medición antes/después:</strong> repetir las cuatro tareas y el SUS con los cambios de la primera
+    ola para estimar si la orientación mejora el desempeño.</li>
+    <li><strong>Accesibilidad:</strong> auditar contraste, foco y navegación por teclado; el estudio actual no
+    cubre esos criterios.</li>
+  </ul>
+
+  <div class="callout">
+    <span class="tagline">Cómo sabremos que funcionó</span>
+    El éxito de la primera ola no se mide con una opinión más alta, sino con tres indicadores: más personas
+    completan las cuatro tareas (meta: 5 de 7), menos respuestas «NO ENCONTRADA» (meta: ≤ 1 por tarea) y un SUS
+    por encima de 68 sin líneas rectas. Si la percepción sube pero las tareas no, el problema no era de
+    etiquetas.
+  </div>
+</section>
+
+<!-- ================= 10 LIMITACIONES ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">10</div>
+    <div>
+      <div class="kicker">Validez</div>
+      <h1>Lo que este estudio no puede decir</h1>
+      <div class="lead">Siete casos describen direcciones, no verdades. La muestra y el instrumento ponen límites que conviene declarar.</div>
+    </div>
+  </div>
+
+  <p>La evaluación cumple el mínimo de la fase —tres personas o más— pero no es un estudio representativo.
+  La muestra se reclutó por conveniencia, en su mayoría entre pares de Ingeniería en Datos, y todas las
+  respuestas se registraron en laptop. Con <strong>n = 7</strong>, una sola persona puede mover una media en
+  más de una décima y una respuesta extrema puede cambiar el signo de una comparación. Por eso el informe no
+  usa pruebas de significancia ni afirma relaciones causales: describe lo observado y propone hipótesis de
+  mejora.</p>
+
+  <h2>Límites de la muestra</h2>
+  <ul>
+    <li><strong>Tamaño y selección:</strong> siete personas, por conveniencia, sin marco muestral. No
+    representan al público general ni a los usuarios potenciales del tablero.</li>
+    <li><strong>Homogeneidad:</strong> 85.7% tiene 18–24 años y 85.7% estudia Ingeniería en Datos. Falta
+    diversidad de edad, formación y ocupación.</li>
+    <li><strong>Dispositivo:</strong> 100% respondió en laptop. El comportamiento en móvil, donde el nav se
+    oculta y el panel de evaluación cambia de forma, no se evaluó.</li>
+    <li><strong>Momento:</strong> dos fechas separadas por seis días. No se controló el contexto (cansancio,
+    prisa, familiaridad previa con el proyecto).</li>
+    <li><strong>Autoselección:</strong> quienes aceptaron pueden tener más interés en datos o en el proyecto que
+    quienes no respondieron.</li>
+  </ul>
+
+  <h2>Límites del instrumento</h2>
+  <ul>
+    <li><strong>Línea recta y efecto techo:</strong> tres personas respondieron 5 a casi todos los ítems,
+    incluidos los negativos del SUS. Eso infla los Likert y deprime el SUS; la media de 58.6 debe leerse como
+    un rango, no como un valor exacto.</li>
+    <li><strong>Autorreporte:</strong> las escalas miden lo que la persona dice, no lo que hace. Las tareas
+    compensan en parte esa limitación, pero no sustituyen una prueba observada.</li>
+    <li><strong>Sin observación directa:</strong> no se registró dónde miraba, cuánto tardaba en cada tarea ni
+    en qué momento abandonaba. Esa información habría permitido distinguir «no lo encontré» de «me cansé».</li>
+    <li><strong>Orden fijo:</strong> todas las personas hicieron las tareas antes de las escalas. El orden
+    puede inducir aprendizaje o fatiga; no se contrabalanceó.</li>
+    <li><strong>Ambigüedad de «NO ENCONTRADA»:</strong> puede significar que la información no estaba, que no se
+    supo dónde buscar o que no hubo tiempo. El dato es válido como señal, pero no distingue la causa.</li>
+    <li><strong>Codificación cualitativa de un solo analista:</strong> no hubo segundo codificador ni cálculo de
+    acuerdo intercodificador; los temas son una lectura razonada, no una taxonomía validada.</li>
+  </ul>
+
+  <h2>Límites del análisis</h2>
+  <p>Los promedios y porcentajes son descriptivos. No se estimaron intervalos de confianza, no se aplicaron
+  pruebas de hipótesis y no se modeló el efecto del perfil sobre el desempeño: con siete casos, cualquier
+  modelo sería inestable. La comparación entre perfiles —por ejemplo, alta vs. baja experiencia— se menciona
+  solo como pista, nunca como conclusión. La sensibilidad sin R1 y sin las tres líneas rectas se incluye para
+  mostrar cuánto dependen los resultados de unas pocas respuestas, no para elegir el número más favorable.</p>
+
+  <div class="callout">
+    <span class="tagline">Qué sí se puede afirmar</span>
+    Que en esta muestra el tablero se percibe útil, claro y estéticamente sólido; que la búsqueda de datos
+    específicos es el punto débil; que el vocabulario y el contexto temporal son las fricciones más repetidas;
+    y que esas fricciones son corregibles con cambios de bajo costo. Eso es suficiente para priorizar la
+    siguiente versión. Lo que no se puede afirmar es que estos porcentajes se repetirán en otra población.
+  </div>
+</section>
+
+<!-- ================= 11 CONCLUSIONES ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">11</div>
+    <div>
+      <div class="kicker">Cierre</div>
+      <h1>Conclusiones</h1>
+      <div class="lead">El dashboard aprueba como producto informativo; la consulta precisa es la deuda pendiente.</div>
+    </div>
+  </div>
+
+  <p>La Fase 4 cumplió su propósito: puso el tablero frente a personas reales, midió lo que dicen y lo que
+  logran, y convirtió los hallazgos en un plan. El balance es positivo en lo que el dashboard se propuso hacer
+  —explicar la movilidad de Nueva York y sostener una conversación con datos— y crítico en lo que un dashboard
+  también debe hacer: permitir que alguien llegue a un dato concreto sin perderse. Las seis dimensiones de la
+  fase se comportan así:</p>
+
+  <table class="tbl">
+    <thead>
+    <tr><th style="width:22%">Objetivo de la fase</th><th style="width:12%">Resultado</th><th>Conclusión</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Medir la usabilidad</td><td class="num low">3.66 / 5<br>SUS 58.6</td><td>Es la dimensión más baja. El tablero se aprende, pero no se explica solo; encontrar un dato específico cuesta y dos personas no completaron ninguna tarea.</td></tr>
+    <tr><td>Evaluar la claridad</td><td class="num">4.20 / 5</td><td>Los títulos y los KPIs se entienden; los ejes, las leyendas y la escala del mapa necesitan una capa de ayuda.</td></tr>
+    <tr><td>Validar los KPIs</td><td class="num high">4.68 / 5</td><td>Responden a la pregunta del proyecto, se distingue el principal y no se perciben redundantes. La validación es sólida.</td></tr>
+    <tr><td>Comprobar la coherencia visual</td><td class="num high">4.54 / 5</td><td>Color, jerarquía, tipografía y proporciones funcionan; no hay que rediseñar la identidad visual.</td></tr>
+    <tr><td>Evaluar la interactividad</td><td class="num high">4.81 / 5</td><td>Filtros, tooltips y mapa responden; es la dimensión mejor valorada y nadie calificó por debajo de 4.</td></tr>
+    <tr><td>Medir el impacto</td><td class="num high">4.75 / 5</td><td>El tablero se percibe útil, confiable y recomendable; permite argumentar una decisión.</td></tr>
+  </tbody>
+  </table>
+
+  <p>El veredicto se puede resumir en una frase: <strong>apto para comunicar y argumentar, mejorable para
+  consultar con precisión</strong>. Las tareas son la evidencia más dura: 3 de 7 personas resolvieron las
+  cuatro, 2 de 7 no resolvieron ninguna y el promedio fue 2.5/4. El SUS, aun con sus problemas de aplicación,
+  apunta en la misma dirección. Los comentarios explican el porqué: nombres que no coinciden, un año que se
+  pierde al hacer scroll, una muestra que no se entiende a la primera y una navegación larga sin índice. Nada
+  de eso es un fallo de datos o de estética; es una deuda de orientación.</p>
+
+  <h2>Qué conservar</h2>
+  <ul>
+    <li>La banda de KPIs y la jerarquía visual: es el ancla de la primera mirada y la dimensión mejor valorada
+    junto con la interactividad.</li>
+    <li>El mapa de zonas y el heatmap: son las visualizaciones que la gente recuerda y usa para argumentar.</li>
+    <li>Las guías de lectura y la metodología: R2 las elogia y explican los años faltantes y el pico de 2018.</li>
+    <li>La paleta y la tipografía: 4.54 de estética y cero comentarios negativos sobre el estilo.</li>
+  </ul>
+
+  <h2>Qué corregir primero</h2>
+  <ol>
+    <li>Unificar el vocabulario entre el formulario, las tareas y el tablero; añadir un glosario.</li>
+    <li>Mostrar el año activo en cada gráfico y en el heatmap.</li>
+    <li>Explicar la muestra de 500,000 por año y la clasificación de «Viajes por mes».</li>
+    <li>Añadir un índice de secciones persistente, especialmente en móvil.</li>
+    <li>Hacer que la guía de evaluación indique la sección y el formato, con la ayuda visible.</li>
+  </ol>
+
+  <p>La siguiente ronda debería ampliar la muestra, incluir móvil y observación directa, y repetir las tareas
+  después de los cambios. Si el desempeño sube y el SUS supera 68, la mejora será real; si solo sube la
+  opinión, el problema era otro. La Fase 4 deja el diagnóstico, la evidencia y el plan. La Fase 5 —si existe—
+  tendrá la prueba de si el plan funcionó.</p>
+</section>
+
+<!-- ================= 12 AUTOEVALUACION ================= -->
+<section class="chapter">
+  <div class="chap-head">
+    <div class="chap-num">12</div>
+    <div>
+      <div class="kicker">Rúbrica</div>
+      <h1>Autoevaluación</h1>
+      <div class="lead">Qué se entregó, con qué evidencia y qué queda declarado como límite.</div>
+    </div>
+  </div>
+
+  <p>La rúbrica de la fase pondera cinco criterios. La tabla siguiente no pretende sustituir la evaluación
+  docente; ordena la evidencia para que pueda verificarse. Cada fila remite a un capítulo o a un archivo
+  reproducible.</p>
+
+  <table class="tbl">
+    <thead>
+    <tr><th style="width:27%">Criterio</th><th style="width:7%">Pts</th><th>Cómo se cumple</th><th style="width:17%">Evidencia</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Diseño adecuado del instrumento</td><td class="num">20</td><td>12 secciones, 61 preguntas, seis dimensiones, SUS, cuatro tareas verificables, consentimiento y anonimato. Escalas lineales de una pregunta por ítem y corrección 1/0.5/0.</td><td>Caps. 2 y 4; anexo A.1</td></tr>
+    <tr><td>Aplicación correcta de la estrategia</td><td class="num">25</td><td>Ocho respuestas reales, siete válidas y una declinación; fechas, perfiles, dispositivo y condiciones documentados; sin incentivos y con anonimato.</td><td>Cap. 3; matriz A.3</td></tr>
+    <tr><td>Análisis e interpretación</td><td class="num">25</td><td>Medias, medianas, porcentajes, SUS por persona, tareas, codificación temática, triangulación y sensibilidad. Se declaran los límites y no se sobreinterpreta.</td><td>Caps. 4–8 y 10</td></tr>
+    <tr><td>Identificación de áreas de mejora</td><td class="num">20</td><td>Ocho recomendaciones priorizadas por impacto y esfuerzo, con criterios de aceptación y un plan en tres olas.</td><td>Caps. 8 y 9</td></tr>
+    <tr><td>Presentación y redacción</td><td class="num">10</td><td>Informe estructurado, tablas y figuras propias, citas textuales anonimizadas, anexo reproducible y lenguaje claro.</td><td>Todo el informe</td></tr>
+    <tr class="tot"><td>Total</td><td class="num">100</td><td>Entrega completa, con alcance descriptivo declarado.</td><td>—</td></tr>
+  </tbody>
+  </table>
+
+  <div class="callout dark">
+    <span class="tagline">La frase que resume la fase</span>
+    Evaluar un dashboard no es preguntar «¿te gustó?». Es poner a alguien frente al producto, pedirle algo
+    concreto y observar si lo encuentra. La Fase 4 hizo eso: el tablero salió bien parado en lo que muestra y
+    quedó al descubierto en lo que cuesta encontrar.
+  </div>
+</section>
+
+<!-- ================= ANEXO ================= -->
+<section class="chapter newpage">
+  <div class="chap-head">
+    <div class="chap-num">A</div>
+    <div>
+      <div class="kicker">Trazabilidad</div>
+      <h1>Anexo</h1>
+      <div class="lead">Matriz de respuestas, fórmulas, archivos y comandos para reconstruir cada cifra.</div>
+    </div>
+  </div>
+
+  <h2>A.1 Instrumento, en una página</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:8%">Sección</th><th>Contenido</th><th style="width:9%">Preguntas</th><th style="width:15%">Tipo</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1</td><td>Consentimiento informado</td><td class="num">1</td><td>Única</td></tr>
+    <tr><td>2</td><td>Perfil: edad, género, formación, ocupación, experiencia, contexto y P13</td><td class="num">13</td><td>Única / corta</td></tr>
+    <tr><td>3</td><td>Tareas T1–T4, dificultad y tiempo</td><td class="num">6</td><td>Corta / escala</td></tr>
+    <tr><td>4</td><td>Usabilidad U1–U5</td><td class="num">5</td><td>Likert 1–5</td></tr>
+    <tr><td>5</td><td>Comprensión C1–C5</td><td class="num">5</td><td>Likert 1–5</td></tr>
+    <tr><td>6</td><td>KPIs K1–K4</td><td class="num">4</td><td>Likert 1–5</td></tr>
+    <tr><td>7</td><td>Estética E1–E4</td><td class="num">4</td><td>Likert 1–5</td></tr>
+    <tr><td>8</td><td>Interactividad I1–I3</td><td class="num">3</td><td>Likert 1–5</td></tr>
+    <tr><td>9</td><td>Impacto G1–G4</td><td class="num">4</td><td>Likert 1–5</td></tr>
+    <tr><td>10</td><td>SUS1–SUS10</td><td class="num">10</td><td>Likert 1–5</td></tr>
+    <tr><td>11</td><td>Abiertas O1–O6</td><td class="num">6</td><td>Texto</td></tr>
+    <tr><td>12</td><td>Cierre</td><td class="num">0</td><td>—</td></tr>
+    <tr class="tot"><td></td><td>Total</td><td class="num">61</td><td>—</td></tr>
+  </tbody>
+  </table>
+
+  <p class="tiny">El instrumento suma 61 preguntas: 54 cerradas, 6 abiertas y 1 de consentimiento. La pregunta
+  P13 solo se envía si se elige «Otra» en formación.</p>
+
+  <h2>A.2 Fórmulas</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th style="width:24%">Indicador</th><th>Fórmula</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Tarea</td><td>1 si la respuesta es completa; 0.5 si acierta una parte; 0 si no la encuentra o se equivoca. Máximo 4.</td></tr>
+    <tr><td>Dimensión</td><td>Media aritmética de los ítems de la dimensión, en escala 1–5.</td></tr>
+    <tr><td>Índice global</td><td>Media de las seis medias de dimensión.</td></tr>
+    <tr><td>SUS</td><td>Σ (ítem impar − 1) + Σ (5 − ítem par); el total se multiplica por 2.5. Rango 0–100.</td></tr>
+    <tr><td>Acuerdo</td><td>Porcentaje de respuestas 4 o 5 sobre el total de respuestas válidas del ítem o dimensión.</td></tr>
+    <tr><td>Mediana</td><td>Valor central de las respuestas ordenadas; con n par, media de los dos centrales.</td></tr>
+  </tbody>
+  </table>
+
+  <h2>A.3 Matriz de respuestas</h2>
+  <table class="tbl compact">
+    <thead>
+    <tr><th>Código</th><th>Edad</th><th>Género</th><th>Formación</th><th>Experiencia</th><th>TLC</th><th>Tareas</th><th>Índice</th><th>SUS</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><b>R1</b></td><td>18–24</td><td>M</td><td>Otra</td><td>Baja</td><td>Ninguno</td><td class="num">4.0</td><td class="num">4.70</td><td class="num">50.0</td></tr>
+    <tr><td><b>R2</b></td><td>18–24</td><td>M</td><td>Ing. Datos</td><td>Media</td><td>Conoce</td><td class="num">4.0</td><td class="num">4.35</td><td class="num">82.5</td></tr>
+    <tr><td><b>R3</b></td><td>18–24</td><td>F</td><td>Ing. Datos</td><td>Baja</td><td>Ninguno</td><td class="num">2.0</td><td class="num">4.60</td><td class="num">50.0</td></tr>
+    <tr><td><b>R4</b></td><td>25–34</td><td>M</td><td>Ing. Datos</td><td>Alta</td><td>Ninguno</td><td class="num">0.0</td><td class="num">4.10</td><td class="num">70.0</td></tr>
+    <tr><td><b>R5</b></td><td>18–24</td><td>F</td><td>Ing. Datos</td><td>Alta</td><td>Conoce</td><td class="num">0.0</td><td class="num">4.22</td><td class="num">55.0</td></tr>
+    <tr><td><b>R6</b></td><td>18–24</td><td>M</td><td>Ing. Datos</td><td>Media</td><td>Ninguno</td><td class="num">4.0</td><td class="num">5.00</td><td class="num">50.0</td></tr>
+    <tr><td><b>R7</b></td><td>18–24</td><td>M</td><td>Ing. Datos</td><td>Alta</td><td>Ninguno</td><td class="num">3.5</td><td class="num">4.11</td><td class="num">52.5</td></tr>
+  </tbody>
+  </table>
+
+  <p class="tiny">M = masculino, F = femenino. «Conoce» = conoce el dataset y sus variables. La formación «Otra»
+  corresponde a Gestión de Desarrollo Turístico. Se omiten ocupación, semestre y familiaridad con NYC para
+  mantener la tabla legible; están en el CSV y en <code>resultados.json</code>.</p>
+
+  <h2>A.4 Respuestas abiertas</h2>
+  <p class="small"><strong>O1. ¿Qué fue lo primero que miró al abrir el tablero y por qué?</strong> R2: la
+  tarjeta de viajes analizados, para ubicar el tamaño de la muestra. R3: el título «El pulso de la movilidad en
+  Nueva York». R4: el ticket con datos, «porque está gigante». R5: la portada. R6: las tarjetas con los KPIs.
+  R7: el KPI principal, «porque es lo más llamativo de base».</p>
+  <p class="small"><strong>O2. ¿Qué parte le resultó confusa o difícil de entender?</strong> R2: que cada año
+  mostrara 500,000 viajes, hasta entender que es la muestra. R3: el mapa. R4: «Ritmo semanal». R5: ninguna.
+  R6: «El examen que acaban de hacer». R7: «Viajes por mes», por la forma de clasificar los meses.</p>
+  <p class="small"><strong>O3. ¿Qué KPI o gráfico le resultó más útil y por qué?</strong> R2: el heatmap, para
+  identificar el pico del miércoles a las 18:00 y planear turnos. R3: «todos en general bien». R4: la geografía
+  de la demanda por la interacción y la lectura. R5: todos, «todo es importante». R6: la tarifa por milla.
+  R7: el KPI principal, «porque tiene la esencia del dashboard».</p>
+  <p class="small"><strong>O4. ¿Qué cambiaría del diseño, de los gráficos o de la navegación?</strong> R2: el
+  año seleccionado junto al título de cada gráfica. R3: relacionar los nombres del formulario con los del
+  tablero. R4: un menú principal para dividir las secciones. R5: nada. R6: nada. R7: nada.</p>
+  <p class="small"><strong>O5. ¿Qué información le faltó para tomar una decisión?</strong> R2: número de taxis
+  disponibles y tiempo de espera por zona y hora. R3: «más intuición para hacer los ejercicios». R4: ninguna.
+  R5 y R6: sin respuesta. R7: «está bien como está, como máximo en “Viajes por mes”».</p>
+  <p class="small"><strong>O6. Comentarios adicionales.</strong> R2: valora la guía de lectura y la metodología
+  que explica los años faltantes y el pico de marzo de 2018. R4: «Sin comentarios, buen trabajo». R7:
+  agradecimiento por la calidad del dashboard. R3, R5 y R6: sin comentario o «ninguno».</p>
+
+  <h2>A.5 Archivos y comandos</h2>
+  <table class="tbl compact keep">
+    <thead>
+    <tr><th style="width:36%">Archivo / comando</th><th>Qué hace</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><code>docs/Evaluación de Dashboard · Movilidad TLC Nueva York.csv</code></td><td>Exportación original de Google Forms (8 filas, 62 columnas).</td></tr>
+    <tr><td><code>docs/fase4/analisis_fase4.py</code></td><td>Limpia, valida y calcula todos los estadísticos; escribe <code>resultados.json</code> y <code>resultados.md</code>.</td></tr>
+    <tr><td><code>docs/fase4/make_figures_fase4.py</code></td><td>Genera las cuatro figuras SVG a partir de <code>resultados.json</code>.</td></tr>
+    <tr><td><code>docs/fase4/report.html</code></td><td>Este informe, en HTML imprimible.</td></tr>
+    <tr><td><code>docs/fase4/build_fase4.py</code></td><td>Convierte el HTML en <code>docs/Fase4_Evaluacion_Dashboard.pdf</code> y añade pie y numeración.</td></tr>
+    <tr><td><code>python docs/fase4/analisis_fase4.py</code></td><td>Reproduce las cifras desde el CSV.</td></tr>
+    <tr><td><code>python docs/fase4/make_figures_fase4.py</code></td><td>Reproduce las figuras.</td></tr>
+    <tr><td><code>python docs/fase4/build_fase4.py</code></td><td>Reproduce el PDF.</td></tr>
+    <tr><td><code>npm run form:entries</code></td><td>Actualiza los <code>entry</code> del formulario si se agregan o reordenan preguntas.</td></tr>
+  </tbody>
+  </table>
+
+  <h2>A.6 Referencias</h2>
+  <ol class="refs">
+    <li>Brooke, J. (1996). SUS: A quick and dirty usability scale. En <em>Usability Evaluation in Industry</em> (pp. 189–194). Taylor &amp; Francis.</li>
+    <li>Sauro, J. (2011). <em>A Practical Guide to the System Usability Scale</em>. Measuring Usability LLC.</li>
+    <li>ISO 9241-11:2018. <em>Ergonomics of human–system interaction — Usability: Definitions and concepts</em>.</li>
+    <li>NYC Taxi &amp; Limousine Commission. <em>Yellow Taxi Trip Record Data</em>. https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page</li>
+    <li>W3C (2023). <em>Web Content Accessibility Guidelines (WCAG) 2.2</em>. https://www.w3.org/TR/WCAG22/</li>
+    <li>Knaflic, C. N. (2015). <em>Storytelling with Data</em>. Wiley.</li>
+  </ol>
+
+  <p class="tiny">Informe generado a partir de la exportación del formulario y del dashboard publicado. Las
+  cifras se redondearon a dos decimales en el texto y a una décima en las figuras; los valores completos están
+  en <code>resultados.json</code>. Última actualización: 26 de noviembre de 2026.</p>
+</section>
+
+
+
+
+</main>
+</body>
+</html>

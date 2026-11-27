@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="240" viewBox="0 0 760 240" role="img">
+<rect width="760" height="240" fill="#ffffff"/>
+<text x="170.0" y="20.0" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#0B1424" font-weight="700" text-anchor="start">Resultado de las cuatro tareas verificables (n = 7)</text>
+<rect x="170.0" y="30.0" width="10.0" height="10.0" rx="2" fill="#0F7A6C" opacity="1"/>
+<text x="185.0" y="39.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="#5B6B80" font-weight="400" text-anchor="start">Correcta</text>
+<rect x="264.0" y="30.0" width="10.0" height="10.0" rx="2" fill="#B7791F" opacity="1"/>
+<text x="279.0" y="39.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="#5B6B80" font-weight="400" text-anchor="start">Parcial</text>
+<rect x="350.0" y="30.0" width="10.0" height="10.0" rx="2" fill="#B8324F" opacity="1"/>
+<text x="365.0" y="39.0" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="#5B6B80" font-weight="400" text-anchor="start">Incorrecta / no encontrada</text>
+<text x="158.0" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B1424" font-weight="700" text-anchor="end">T1</text>
+<text x="126.0" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="#243244" font-weight="400" text-anchor="end">Punto más bajo</text>
+<rect x="170.0" y="52.0" width="315.6" height="20.0" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="328.3" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">4</text>
+<rect x="486.6" y="52.0" width="78.1" height="20.0" rx="3" fill="#B7791F" opacity="1"/>
+<text x="526.1" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">1</text>
+<rect x="565.7" y="52.0" width="157.3" height="20.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="644.9" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">2</text>
+<text x="732.0" y="66.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5B6B80" font-weight="700" text-anchor="start">57%</text>
+<text x="158.0" y="100.0" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B1424" font-weight="700" text-anchor="end">T2</text>
+<text x="126.0" y="100.0" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="#243244" font-weight="400" text-anchor="end">Mes más activo de 2025</text>
+<rect x="170.0" y="86.0" width="394.7" height="20.0" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="367.9" y="100.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">5</text>
+<rect x="565.7" y="86.0" width="157.3" height="20.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="644.9" y="100.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">2</text>
+<text x="732.0" y="100.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5B6B80" font-weight="700" text-anchor="start">71%</text>
+<text x="158.0" y="134.0" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B1424" font-weight="700" text-anchor="end">T3</text>
+<text x="126.0" y="134.0" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="#243244" font-weight="400" text-anchor="end">Zona con más recogidas</text>
+<rect x="170.0" y="120.0" width="315.6" height="20.0" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="328.3" y="134.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">4</text>
+<rect x="486.6" y="120.0" width="236.4" height="20.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="605.3" y="134.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">3</text>
+<text x="732.0" y="134.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5B6B80" font-weight="700" text-anchor="start">57%</text>
+<text x="158.0" y="168.0" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#0B1424" font-weight="700" text-anchor="end">T4</text>
+<text x="126.0" y="168.0" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="#243244" font-weight="400" text-anchor="end">Pico de la semana</text>
+<rect x="170.0" y="154.0" width="315.6" height="20.0" rx="3" fill="#0F7A6C" opacity="1"/>
+<text x="328.3" y="168.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">4</text>
+<rect x="486.6" y="154.0" width="236.4" height="20.0" rx="3" fill="#B8324F" opacity="1"/>
+<text x="605.3" y="168.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="700" text-anchor="middle">3</text>
+<text x="732.0" y="168.0" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#5B6B80" font-weight="700" text-anchor="start">57%</text>
+<text x="170.0" y="224.0" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="#5B6B80" font-weight="400" text-anchor="start">El porcentaje a la derecha indica respuestas completamente correctas.</text>
+</svg>
